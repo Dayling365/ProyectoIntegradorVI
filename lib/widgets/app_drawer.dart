@@ -61,7 +61,6 @@ class AppDrawer extends StatelessWidget{
     );
   }
  
-  /// Cabecera azul con el avatar y el nombre del usuario.
   Widget _header() {
     return Container(
       width: double.infinity,

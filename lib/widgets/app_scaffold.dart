@@ -45,7 +45,6 @@ class AppScaffold extends StatelessWidget {
               ),
             ],
       ),
-      // Si es detalle no hay drawer: Flutter pone la flecha automaticamente.
       drawer: showBack ? null : AppDrawer(currentRoute: currentRoute),
       body: SafeArea(child: body),
       floatingActionButton: floatingActionButton,
