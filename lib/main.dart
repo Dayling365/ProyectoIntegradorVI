@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_routes.dart';
 import 'screens/dashboard/dashboard.screen.dart';
+import 'screens/report/report_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoutes.dashboard, // ISRAEL DEBES DE CAMBIAR A QUI POR EL DE LOGIN CUANDO LO TENGAS
       routes: {
         AppRoutes.dashboard: (context) => const DashboardScreen(),
+        AppRoutes.report: (context) => const ReportScreen(),
         // Agregar las demás rutas aquí
       },
      
