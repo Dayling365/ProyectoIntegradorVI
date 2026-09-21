@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_routes.dart';
 import 'screens/dashboard/dashboard.screen.dart';
+import 'screens/report/report_screen.dart';
 
 void main() {
   runApp(const MyApp());
