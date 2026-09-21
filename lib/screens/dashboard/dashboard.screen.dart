@@ -16,7 +16,7 @@ class DashboardScreen extends StatelessWidget {
     const Color info = Color(0xFF2563EB);
     const Color warning = Color(0xFFF59E0B);
     const Color success = Color(0xFF16A34A);
-    const Color danger = Color(0xFFDC2626);
+    
     return AppScaffold(
       currentRoute: AppRoutes.dashboard,
 
@@ -41,7 +41,7 @@ class DashboardScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             InkWell(
-              onTap: () => Navigator.of(context).pushNamed(AppRoutes.inventory),
+              onTap: () => Navigator.of(context). pushNamed(AppRoutes.inventory),
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -79,7 +79,6 @@ class DashboardScreen extends StatelessWidget {
                   iconColor: info,
                   label: 'Ventas del día',
                   value: 'C\$124,500.00',
-                  trend: '+12.5%',
                 ),
 
                 StatCard(
@@ -87,7 +86,6 @@ class DashboardScreen extends StatelessWidget {
                   iconColor: warning,
                   label: 'Productos en inventario',
                   value: '1,245',
-                  trend: '+8.2%',
                 ),
 
                 StatCard(
@@ -95,7 +93,6 @@ class DashboardScreen extends StatelessWidget {
                   iconColor: success,
                   label: 'Compras del mes',
                   value: '18',
-                  trend: '+2.3%',
                 ),
 
                 StatCard(
@@ -103,7 +100,6 @@ class DashboardScreen extends StatelessWidget {
                   iconColor: info,
                   label: 'Clientes activos',
                   value: '156',
-                  trend: '+5.1%',
                 ),
 
               ],

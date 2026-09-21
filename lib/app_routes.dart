@@ -7,8 +7,13 @@ class AppRoutes {
   static const String report = '/report';
   static const String inventory = '/inventory';
   static const String logs = '/logs';
+  static const String preferences = '/preferences';
+  static const String purchasesHistory = '/purchase_history';
+  static const String salesHistory = '/sales_history';
+  static const String users = '/users';
+  //static const String productDetails = '/product-details';
 
-  // aqui devemos agregar las demas rutas 
+
 
 
 }
