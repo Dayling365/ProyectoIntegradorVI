@@ -14,10 +14,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Librería Don César',
-      initialRoute: AppRoutes.dashboard, // ISRAEL DEBES DE CAMBIAR A QUI POR EL DE LOGIN CUANDO LO TENGAS
+      initialRoute: AppRoutes.login, 
       routes: {
         AppRoutes.dashboard: (context) => const DashboardScreen(),
-        // Agregar las demás rutas aquí
+        AppRoutes.login: (context) => const DashboardScreen(), 
+        AppRoutes.inventory: (context) => const DashboardScreen(),
+        AppRoutes.logs: (context) => const DashboardScreen(),
+        AppRoutes.preferences: (context) => const DashboardScreen(),
+        AppRoutes.purchasesHistory: (context) => const DashboardScreen(),
+        AppRoutes.salesHistory: (context) => const DashboardScreen(),
+        AppRoutes.users: (context) => const DashboardScreen(),
+        AppRoutes.report: (context) => const DashboardScreen(),
+
+       
       },
      
     );
