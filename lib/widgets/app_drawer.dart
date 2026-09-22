@@ -33,33 +33,13 @@ class AppDrawer extends StatelessWidget {
       [UserRole.admin, UserRole.vendedor],
     ),
     _MenuEntry(
-      Icons.bar_chart_rounded,
-      'Reportes',
-      'Visualiza y analiza tu información',
-      AppRoutes.report,
-      [UserRole.admin],
-    ),
-    _MenuEntry(
-      Icons.description_outlined,
-      'Logs',
-      'Historial de actividades',
-      AppRoutes.logs,
-      [UserRole.admin],
-    ),
-    _MenuEntry(
-      Icons.settings_outlined,
-      'Preferencias',
-      'Configura tu aplicación',
-      AppRoutes.preferences,
-      [UserRole.admin, UserRole.vendedor],
-    ),
-    _MenuEntry(
       Icons.shopping_cart_outlined,
       'Historial de compras',
       'Revisa tus compras pasadas',
       AppRoutes.purchasesHistory,
       [UserRole.admin],
     ),
+
     _MenuEntry(
       Icons.sell_outlined,
       'Historial de ventas',
@@ -67,13 +47,7 @@ class AppDrawer extends StatelessWidget {
       AppRoutes.salesHistory,
       [UserRole.admin, UserRole.vendedor],
     ),
-    _MenuEntry(
-      Icons.people_outline,
-      'Usuarios',
-      'Gestiona los usuarios de la app',
-      AppRoutes.users,
-      [UserRole.admin],
-    ),
+
     _MenuEntry(
       Icons.inventory_2_outlined,
       'Inventario',
@@ -81,6 +55,41 @@ class AppDrawer extends StatelessWidget {
       AppRoutes.inventory,
       [UserRole.admin, UserRole.vendedor],
     ),
+
+    _MenuEntry(
+      Icons.bar_chart_rounded,
+      'Reportes',
+      'Visualiza y analiza tu información',
+      AppRoutes.report,
+      [UserRole.admin],
+    ),
+    
+    _MenuEntry(
+      Icons.description_outlined,
+      'Logs',
+      'Historial de actividades',
+      AppRoutes.logs,
+      [UserRole.admin],
+    ),
+
+    _MenuEntry(
+      Icons.people_outline,
+      'Usuarios',
+      'Gestiona los usuarios de la app',
+      AppRoutes.users,
+      [UserRole.admin],
+    ),
+
+    _MenuEntry(
+      Icons.settings_outlined,
+      'Preferencias',
+      'Configura tu aplicación',
+      AppRoutes.preferences,
+      [UserRole.admin, UserRole.vendedor],
+    ),
+    
+  
+   
   ];
 
   @override
@@ -99,8 +108,12 @@ class AppDrawer extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: _items
-                  .where((e) => e.allowedRoles.contains(context.watch<AppState>().role),)
-                  .map((e) => _tile(context, e, e.route == currentRoute)).toList(),
+                  .where(
+                    (e) =>
+                        e.allowedRoles.contains(context.watch<AppState>().role),
+                  )
+                  .map((e) => _tile(context, e, e.route == currentRoute))
+                  .toList(),
             ),
           ),
           const Divider(height: 1),

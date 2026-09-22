@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../app_routes.dart';
+import '../../app_state.dart';
 import '../../widgets/app_scaffold.dart';
 import 'widgets/category_sales_section.dart';
 import 'widgets/low_stock_section.dart';
@@ -16,7 +18,8 @@ class DashboardScreen extends StatelessWidget {
     const Color info = Color(0xFF2563EB);
     const Color warning = Color(0xFFF59E0B);
     const Color success = Color(0xFF16A34A);
-    
+    final isAdmin = context.watch<AppState>().isAdmin;
+
     return AppScaffold(
       currentRoute: AppRoutes.dashboard,
 
@@ -25,8 +28,8 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              '¡Hola, Administrador!',
+            Text(
+              isAdmin ? '¡Hola, Administrador!' : '¡Hola, Vendedor!',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -34,14 +37,14 @@ class DashboardScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            const Text(
-              'Aquí tienes un resumen de tu negocio hoy.',
+             Text(
+              isAdmin ? 'Aquí tienes un resumen de tu negocio hoy.' : 'Aquí tienes un resumen del negocio hoy.',
               style: TextStyle(color: textSecondary, fontSize: 13),
             ),
             const SizedBox(height: 16),
 
             InkWell(
-              onTap: () => Navigator.of(context). pushNamed(AppRoutes.inventory),
+              onTap: () => Navigator.of(context).pushNamed(AppRoutes.inventory),
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -101,7 +104,6 @@ class DashboardScreen extends StatelessWidget {
                   label: 'Clientes activos',
                   value: '156',
                 ),
-
               ],
             ),
 
@@ -112,7 +114,6 @@ class DashboardScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             const CategorySalesSection(),
-
           ],
         ),
       ),
