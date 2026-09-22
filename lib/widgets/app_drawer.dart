@@ -20,6 +20,11 @@ class AppDrawer extends StatelessWidget{
     _MenuEntry(Icons.dashboard_outlined, 'Dashboard', 'Resumen general',AppRoutes.dashboard),
     _MenuEntry(Icons.bar_chart_rounded, 'Reportes','Visualiza y analiza tu información', AppRoutes.report),
     _MenuEntry(Icons.description_outlined, 'Logs', 'Historial de actividades',AppRoutes.logs),
+    _MenuEntry(Icons.settings_outlined, 'Preferencias', 'Configura tu aplicación',AppRoutes.preferences),
+    _MenuEntry(Icons.shopping_cart_outlined, 'Historial de compras', 'Revisa tus compras pasadas',AppRoutes.purchasesHistory),
+    _MenuEntry(Icons.sell_outlined, 'Historial de ventas', 'Revisa tus ventas pasadas',AppRoutes.salesHistory),
+    _MenuEntry(Icons.people_outline, 'Usuarios', 'Gestiona los usuarios de la app',AppRoutes.users),
+    
   ];
 
  @override
