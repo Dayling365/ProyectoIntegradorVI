@@ -1,33 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../app_routes.dart';
+import '../app_state.dart';
 
-class _MenuEntry{
+class _MenuEntry {
   final IconData icon;
   final String title;
   final String subtitle;
   final String route;
+  final List<UserRole> allowedRoles;
 
-  const _MenuEntry(this.icon,this.title,this.subtitle,this.route);
+  const _MenuEntry(
+    this.icon,
+    this.title,
+    this.subtitle,
+    this.route,
+    this.allowedRoles,
+  );
 }
 
-class AppDrawer extends StatelessWidget{
-
+class AppDrawer extends StatelessWidget {
   final String currentRoute;
 
   const AppDrawer({super.key, required this.currentRoute});
-  
-   static const List<_MenuEntry> _items = [
-    _MenuEntry(Icons.dashboard_outlined, 'Dashboard', 'Resumen general',AppRoutes.dashboard),
-    _MenuEntry(Icons.bar_chart_rounded, 'Reportes','Visualiza y analiza tu información', AppRoutes.report),
-    _MenuEntry(Icons.description_outlined, 'Logs', 'Historial de actividades',AppRoutes.logs),
-    _MenuEntry(Icons.settings_outlined, 'Preferencias', 'Configura tu aplicación',AppRoutes.preferences),
-    _MenuEntry(Icons.shopping_cart_outlined, 'Historial de compras', 'Revisa tus compras pasadas',AppRoutes.purchasesHistory),
-    _MenuEntry(Icons.sell_outlined, 'Historial de ventas', 'Revisa tus ventas pasadas',AppRoutes.salesHistory),
-    _MenuEntry(Icons.people_outline, 'Usuarios', 'Gestiona los usuarios de la app',AppRoutes.users),
-    
+
+  static const List<_MenuEntry> _items = [
+    _MenuEntry(
+      Icons.dashboard_outlined,
+      'Dashboard',
+      'Resumen general',
+      AppRoutes.dashboard,
+      [UserRole.admin, UserRole.vendedor],
+    ),
+    _MenuEntry(
+      Icons.bar_chart_rounded,
+      'Reportes',
+      'Visualiza y analiza tu información',
+      AppRoutes.report,
+      [UserRole.admin],
+    ),
+    _MenuEntry(
+      Icons.description_outlined,
+      'Logs',
+      'Historial de actividades',
+      AppRoutes.logs,
+      [UserRole.admin],
+    ),
+    _MenuEntry(
+      Icons.settings_outlined,
+      'Preferencias',
+      'Configura tu aplicación',
+      AppRoutes.preferences,
+      [UserRole.admin, UserRole.vendedor],
+    ),
+    _MenuEntry(
+      Icons.shopping_cart_outlined,
+      'Historial de compras',
+      'Revisa tus compras pasadas',
+      AppRoutes.purchasesHistory,
+      [UserRole.admin],
+    ),
+    _MenuEntry(
+      Icons.sell_outlined,
+      'Historial de ventas',
+      'Revisa tus ventas pasadas',
+      AppRoutes.salesHistory,
+      [UserRole.admin, UserRole.vendedor],
+    ),
+    _MenuEntry(
+      Icons.people_outline,
+      'Usuarios',
+      'Gestiona los usuarios de la app',
+      AppRoutes.users,
+      [UserRole.admin],
+    ),
+    _MenuEntry(
+      Icons.inventory_2_outlined,
+      'Inventario',
+      'Gestiona tus productos y stock',
+      AppRoutes.inventory,
+      [UserRole.admin, UserRole.vendedor],
+    ),
   ];
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.white,
@@ -43,29 +99,36 @@ class AppDrawer extends StatelessWidget{
             child: ListView(
               padding: EdgeInsets.zero,
               children: _items
-                  .map((e) => _tile(context, e, e.route == currentRoute))
-                  .toList(),
+                  .where((e) => e.allowedRoles.contains(context.watch<AppState>().role),)
+                  .map((e) => _tile(context, e, e.route == currentRoute)).toList(),
             ),
           ),
           const Divider(height: 1),
+
           ListTile(
-            leading: const Icon(Icons.logout, color: Color(0xFFDC2626), size: 20),
+            leading: const Icon(
+              Icons.logout,
+              color: Color(0xFFDC2626),
+              size: 20,
+            ),
             title: const Text(
               'Cerrar sesión',
               style: TextStyle(
-                  color: Color(0xFFDC2626),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500),
+                color: Color(0xFFDC2626),
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-            onTap: () => Navigator.of(context)
-                .pushNamedAndRemoveUntil(AppRoutes.login, (_) => false),
+            onTap: () => Navigator.of(
+              context,
+            ).pushNamedAndRemoveUntil(AppRoutes.login, (_) => false),
           ),
           const SizedBox(height: 8),
         ],
       ),
     );
   }
- 
+
   Widget _header() {
     return Container(
       width: double.infinity,
@@ -111,7 +174,7 @@ class AppDrawer extends StatelessWidget{
       ),
     );
   }
- 
+
   Widget _tile(BuildContext context, _MenuEntry item, bool selected) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
@@ -119,9 +182,7 @@ class AppDrawer extends StatelessWidget{
         color: selected ? const Color(0xFFEEF2FB) : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
         border: selected
-            ? const Border(
-                left: BorderSide(color: Color(0xFF1B2A5C), width: 4),
-              )
+            ? const Border(left: BorderSide(color: Color(0xFF1B2A5C), width: 4))
             : null,
       ),
       child: ListTile(
@@ -152,12 +213,15 @@ class AppDrawer extends StatelessWidget{
           item.subtitle,
           style: const TextStyle(fontSize: 11, color: Color(0xFF8A94A6)),
         ),
-        trailing: const Icon(Icons.chevron_right,
-            size: 18, color: Color(0xFF8A94A6)),
+        trailing: const Icon(
+          Icons.chevron_right,
+          size: 18,
+          color: Color(0xFF8A94A6),
+        ),
         onTap: () {
-          Navigator.of(context).pop(); // 1. cierra el menu
-          if (selected) return; // 2. ya estamos ahi, no hacemos nada
-          Navigator.of(context).pushReplacementNamed(item.route); 
+          Navigator.of(context).pop();
+          if (selected) return;
+          Navigator.of(context).pushReplacementNamed(item.route);
         },
       ),
     );
