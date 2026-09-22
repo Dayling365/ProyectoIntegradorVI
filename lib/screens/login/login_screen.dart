@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../app_routes.dart';
+import '../../app_state.dart';
 
-class LoginScreen extends StatelessWidget {
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _usuarioController = TextEditingController();
+  @override
+  void dispose() {
+    _usuarioController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +83,7 @@ class LoginScreen extends StatelessWidget {
                     hint: "Ingresa tu nombre de usuario...",
                     circleColor: paleAmber,
                     navy: navy,
+                    controller: _usuarioController,
                   ),
                   const SizedBox(height: 16),
                   _campo(
@@ -85,21 +101,64 @@ class LoginScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 54,
                     child: ElevatedButton(
-                      onPressed: () => Navigator.pushNamed(context, AppRoutes.dashboard),
+                      onPressed: () {
+                        final username = _usuarioController.text.trim();
+
+                        if (username.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Por favor, ingresa un nombre de usuario.',
+                              ),
+                              backgroundColor: Colors.redAccent,
+                            ),
+                          );
+                          return;
+                        }
+
+                        if (username == 'admin' ||username == 'vendedor' ||username == 'carlos') {
+                          context.read<AppState>().login(username);
+
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.dashboard,
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Usuario incorrector.",
+                              ),
+                              backgroundColor: Colors.redAccent,
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: navy,
                         elevation: 0,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Iniciar sesión",
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
                           ),
                           SizedBox(width: 8),
-                          Icon(Icons.arrow_forward, color: Colors.white, size: 18),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 18,
+                          ),
                         ],
                       ),
                     ),
@@ -120,6 +179,7 @@ class LoginScreen extends StatelessWidget {
     required String hint,
     required Color circleColor,
     required Color navy,
+    TextEditingController? controller,
     bool obscureText = false,
     IconData? trailingIcon,
   }) {
@@ -144,14 +204,22 @@ class LoginScreen extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: navy),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13,
+                    color: navy,
+                  ),
                 ),
                 TextField(
+                  controller: controller,
                   obscureText: obscureText,
                   style: const TextStyle(fontSize: 13),
                   decoration: InputDecoration(
                     hintText: hint,
-                    hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+                    hintStyle: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
                     border: InputBorder.none,
                     isDense: true,
                     contentPadding: EdgeInsets.zero,
@@ -160,7 +228,8 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
           ),
-          if (trailingIcon != null) Icon(trailingIcon, color: Colors.grey, size: 20),
+          if (trailingIcon != null)
+            Icon(trailingIcon, color: Colors.grey, size: 20),
         ],
       ),
     );
