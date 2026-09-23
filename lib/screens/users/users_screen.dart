@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app_routes.dart';
 import '../../widgets/app_scaffold.dart';
 import 'widgets/user_card.dart';
+import 'widgets/user_details_sheet.dart'; 
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({super.key});
@@ -30,7 +31,7 @@ class UsersScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Barra de búsqueda
+          
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14),
             decoration: BoxDecoration(
@@ -58,7 +59,7 @@ class UsersScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          // Dropdowns: Estado / Ordenar por
+          
           Row(
             children: [
               Expanded(child: _dropdownChip('Estado', Icons.toggle_off_outlined)),
@@ -68,7 +69,7 @@ class UsersScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          // Pastillas de filtro por rol (deslizable horizontal para evitar overflow)
+          
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -90,7 +91,7 @@ class UsersScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          // Lista de usuarios
+          
           UserCard(
             initials: 'AM',
             name: 'Ana Morales',
@@ -101,7 +102,32 @@ class UsersScreen extends StatelessWidget {
             statusLabel: 'Activo',
             statusColor: const Color(0xFF16A34A),
             statusBgColor: const Color(0xFFDCFCE7),
-          ),
+            onMenuTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                builder: (_) => const UserDetailsSheet(
+                  initials: 'AM',
+                  name: 'Ana Morales',
+                  email: 'ana.morales@gmail.com',
+                  roleLabel: 'Administrador',
+                  roleColor: Color(0xFF3B82F6),
+                  roleBgColor: Color(0xFFDCEEFB),
+                  statusLabel: 'Activo',
+                  statusColor: Color(0xFF16A34A),
+                  statusBgColor: Color(0xFFDCFCE7),
+                  fechaRegistro: '15 Mar 2023',
+                  ultimoAcceso: 'Hace 2 horas',
+                ),
+              );
+            },
+          ), 
           const SizedBox(height: 10),
           UserCard(
             initials: 'CR',
