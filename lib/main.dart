@@ -33,12 +33,12 @@ class MyApp extends StatelessWidget {
         AppRoutes.salesHistory: (context) => const SalesHistoryScreen(),
         AppRoutes.users: (context) => const UsersScreen(),
         AppRoutes.report: (context) => const ReportScreen(),
-        AppRoutes.saleDetails: (context) => const SalesDetailsScreen(),
-        AppRoutes.purchaseDetails: (context) => const PurchaseDetailsScreen(),
-        AppRoutes.alertLogs: (context) => const AlertLogsScreen(),
-        AppRoutes.alertStock: (context) => const AlertStockScreen(),
-        AppRoutes.inventoryMovement: (context) => const InventoryMovementScreen(),
-        AppRoutes.productDetails: (context) => const ProductDetailsScreen(),  
+       // AppRoutes.saleDetails: (context) => const SalesDetailsScreen(),
+       // AppRoutes.purchaseDetails: (context) => const PurchaseDetailsScreen(),
+       // AppRoutes.alertLogs: (context) => const AlertLogsScreen(),
+       // AppRoutes.alertStock: (context) => const AlertStockScreen(),
+       // AppRoutes.inventoryMovement: (context) => const InventoryMovementScreen(),
+       //    AppRoutes.productDetails: (context) => const ProductDetailsScreen(),  
         
         
 
