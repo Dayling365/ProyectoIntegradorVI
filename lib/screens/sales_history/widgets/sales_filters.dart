@@ -5,120 +5,90 @@ class SalesFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color primary = Color(0xFF1B2A5C);
-    const Color info = Color(0xFF2563EB);
-
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      child: Card(
-        elevation: 0,
-        color: const Color(0xFFFAFAFA),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: Colors.grey.shade200),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              // Buscador
-              SizedBox(
-                height: 42,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Buscar',
-                    hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13),
-                    prefixIcon: const Icon(Icons.search, size: 18),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
-                    ),
-                  ),
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 42,
+          child: TextField(
+            decoration: InputDecoration(
+              hintText: 'Buscar',
+              hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13),
+              prefixIcon: const Icon(Icons.search, size: 18),
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.symmetric(vertical: 0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
               ),
-              const SizedBox(height: 10),
-
-              // Fechas Desde / Hasta
-              Row(
-                children: [
-                  Expanded(
-                    child: _filtro(Icons.calendar_today_outlined, '01/10/2026'),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _filtro(Icons.calendar_today_outlined, '31/10/2026'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-
-              // Cliente / Ordenar por / Limpiar
-              Row(
-                children: [
-                  Expanded(
-                    child: _filtro(Icons.person_outline, 'Cliente', arrow: true),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _filtro(Icons.swap_vert, 'Ordenar por', arrow: true),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {},
-                      child: SizedBox(
-                        height: 42,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(Icons.close, size: 15, color: info),
-                            SizedBox(width: 3),
-                            Text(
-                              'Limpiar filtros',
-                              style: TextStyle(color: info, fontSize: 11, fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+        const SizedBox(height: 10),
+        Row(
+          children: const [
+            Expanded(child: _FilterField(icon: Icons.calendar_today_outlined, label: 'Desde', value: '01/10/2026')),
+            SizedBox(width: 10),
+            Expanded(child: _FilterField(icon: Icons.calendar_today_outlined, label: 'Hasta', value: '31/10/2026')),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: const [
+            Expanded(child: _FilterField(icon: Icons.person_outline, label: 'Cliente', value: 'Todos')),
+            SizedBox(width: 10),
+            Expanded(child: _FilterField(icon: Icons.swap_vert, label: 'Ordenar por', value: 'Más recientes')),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.close, size: 14, color: Color(0xFF8A94A6)),
+            label: const Text('Limpiar filtros', style: TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+          ),
+        ),
+      ],
     );
   }
+}
 
-  Widget _filtro(
-    IconData icon,
-    String text, {
-    bool arrow = false,
-    Color color = Colors.white,
-    Color iconColor = Colors.black87,
-    Color textColor = Colors.black87,
-  }) {
+class _FilterField extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  const _FilterField({required this.icon, required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      height: 42,
-      padding: const EdgeInsets.symmetric(horizontal: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: color,
-        border: Border.all(
-          color: color == Colors.white ? Colors.grey.shade300 : color,
-        ),
-        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 15, color: iconColor),
-          const SizedBox(width: 4),
-          Text(text, style: TextStyle(fontSize: 11, color: textColor)),
-          if (arrow) const Icon(Icons.keyboard_arrow_down, size: 14),
+          Icon(icon, size: 16, color: const Color(0xFF1B2A5C)),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF1A1F36))),
+                Text(
+                  value,
+                  style: const TextStyle(fontSize: 11, color: Color(0xFF8A94A6)),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          const Icon(Icons.keyboard_arrow_down, size: 16, color: Color(0xFF8A94A6)),
         ],
       ),
     );
