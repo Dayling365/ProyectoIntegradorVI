@@ -43,7 +43,7 @@ class UserDetailsSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Barra pequeña (drag handle)
+          
           Center(
             child: Container(
               width: 40,
@@ -56,7 +56,7 @@ class UserDetailsSheet extends StatelessWidget {
             ),
           ),
 
-          // Título + botón cerrar (X)
+          
           Row(
             children: [
               const Expanded(
@@ -79,7 +79,7 @@ class UserDetailsSheet extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Avatar + nombre + correo + badge de rol + estado
+          
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -203,7 +203,7 @@ class UserDetailsSheet extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Botón Cerrar
+          
           SizedBox(
             width: double.infinity,
             child: OutlinedButton.icon(

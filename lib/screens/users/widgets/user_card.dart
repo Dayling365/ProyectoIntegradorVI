@@ -38,7 +38,7 @@ class UserCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Avatar circular con iniciales
+          
           CircleAvatar(
             radius: 18,
             backgroundColor: const Color(0xFFCFE0F5),
@@ -53,7 +53,7 @@ class UserCard extends StatelessWidget {
           ),
           const SizedBox(width: 10),
 
-          // Nombre, correo y badge de rol
+          
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,8 +76,8 @@ class UserCard extends StatelessWidget {
                   style: const TextStyle(color: Colors.grey, fontSize: 12),
                 ),
                 const SizedBox(height: 8),
-                // Badge de rol — FittedBox garantiza que nunca desborde,
-                // se achica automáticamente si no cabe.
+                
+                
                 Align(
                   alignment: Alignment.centerLeft,
                   child: FittedBox(
@@ -111,7 +111,7 @@ class UserCard extends StatelessWidget {
           ),
           const SizedBox(width: 6),
 
-          // Badge de estado + menú de tres puntos
+          
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
