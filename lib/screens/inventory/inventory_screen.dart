@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../app_routes.dart';
 import '../../widgets/app_scaffold.dart';
-import '../inventory/widgets/product.dart';
+import '../models_product/product.dart';
 import '../inventory/widgets/inventory_product_card.dart';
 import '../inventory/widgets/inventory_search_bar.dart';
 import '../inventory/widgets/inventory_filters.dart';
