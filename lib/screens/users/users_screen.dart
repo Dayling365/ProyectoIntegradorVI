@@ -139,6 +139,31 @@ class UsersScreen extends StatelessWidget {
             statusLabel: 'Activo',
             statusColor: const Color(0xFF16A34A),
             statusBgColor: const Color(0xFFDCFCE7),
+            onMenuTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                builder: (_) => const UserDetailsSheet(
+                  initials: 'CR',
+                  name: 'Carlos Rojas',
+                  email: 'crojas@gmail.com',
+                  roleLabel: 'Vendedor',
+                  roleColor: Color(0xFFF59E0B),
+                  roleBgColor: Color(0xFFFEF3C7),
+                  statusLabel: 'Activo',
+                  statusColor: Color(0xFF16A34A),
+                  statusBgColor: Color(0xFFDCFCE7),
+                  fechaRegistro: '02 Jun 2023',
+                  ultimoAcceso: 'Hace 1 día',
+                ),
+              );
+            },
           ),
           const SizedBox(height: 10),
           UserCard(
@@ -151,6 +176,31 @@ class UsersScreen extends StatelessWidget {
             statusLabel: 'Inactivo',
             statusColor: Colors.grey[600]!,
             statusBgColor: const Color(0xFFF0F0F0),
+            onMenuTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                builder: (_) => UserDetailsSheet(
+                  initials: 'MV',
+                  name: 'Miguel Vargas',
+                  email: 'mvargas@gmail.com',
+                  roleLabel: 'Administrador',
+                  roleColor: const Color(0xFF3B82F6),
+                  roleBgColor: const Color(0xFFDCEEFB),
+                  statusLabel: 'Inactivo',
+                  statusColor: Colors.grey[600]!,
+                  statusBgColor: const Color(0xFFF0F0F0),
+                  fechaRegistro: '20 Ene 2023',
+                  ultimoAcceso: 'Hace 3 semanas',
+                ),
+              );
+            },
           ),
           const SizedBox(height: 10),
           UserCard(
@@ -163,6 +213,31 @@ class UsersScreen extends StatelessWidget {
             statusLabel: 'Activo',
             statusColor: const Color(0xFF16A34A),
             statusBgColor: const Color(0xFFDCFCE7),
+            onMenuTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ), 
+                builder: (_) => const UserDetailsSheet(
+                  initials: 'LG',
+                  name: 'Laura Gómez',
+                  email: 'lgomez@gmail.com',
+                  roleLabel: 'Vendedor',
+                  roleColor: Color(0xFFF59E0B),
+                  roleBgColor: Color(0xFFFEF3C7),
+                  statusLabel: 'Activo',
+                  statusColor: Color(0xFF16A34A),
+                  statusBgColor: Color(0xFFDCFCE7),
+                  fechaRegistro: '10 Ago 2023',
+                  ultimoAcceso: 'Hace 5 horas',
+                ),
+              );
+            },
           ),
         ],
       ),
