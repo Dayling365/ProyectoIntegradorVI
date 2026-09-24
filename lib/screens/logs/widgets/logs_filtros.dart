@@ -6,103 +6,97 @@ class LogsFiltros extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const Color primary = Color(0xFF1B2A5C);
-    const Color info = Color(0xFF2563EB);
 
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 4),
-      child: Card(
-        elevation: 0,
-        color: const Color(0xFFFAFAFA),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(
-            color: Colors.grey.shade200,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: _filtro(
-                      Icons.filter_alt_outlined,
-                      'Filtrar',
-                      color: primary,
-                      iconColor: Colors.white,
-                      textColor: Colors.white,
-                    ),
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: _filtro(
+                    Icons.calendar_today_outlined,
+                    '01/10/2026',
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _filtro(
-                      Icons.calendar_today_outlined,
-                      'Fecha',
-                      arrow: true,
-                    ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _filtro(
+                    Icons.calendar_today_outlined,
+                    '31/10/2026',
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _filtro(
-                      Icons.person_outline,
-                      'Usuario',
-                      arrow: true,
-                    ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 8),
+
+            Row(
+              children: [
+                Expanded(
+                  child: _filtro(
+                    Icons.person_outline,
+                    'Usuario',
+                    subtitulo: 'Todos',
+                    arrow: true,
                   ),
-                ],
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _filtro(
+                    Icons.grid_view_outlined,
+                    'Módulo',
+                    subtitulo: 'Todos',
+                    arrow: true,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 8),
+
+            Row(
+              children: [
+                Expanded(
+                  child: _filtro(
+                    Icons.shield_outlined,
+                    'Estado',
+                    subtitulo: 'Todos',
+                    arrow: true,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _filtro(
+                    Icons.access_time,
+                    'Ordenar por',
+                    subtitulo: 'Más recientes',
+                    arrow: true,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 4),
+
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {},
+                child: const Text(
+                  '×  Limpiar filtros',
+                  style: TextStyle(
+                    color: primary,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: _filtro(
-                      Icons.grid_view_outlined,
-                      'Módulo',
-                      arrow: true,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _filtro(
-                      Icons.toggle_off_outlined,
-                      'Estado',
-                      arrow: true,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {},
-                      child: SizedBox(
-                        height: 42,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.close,
-                              size: 15,
-                              color: info,
-                            ),
-                            const SizedBox(width: 3),
-                            const Text(
-                              'Limpiar filtros',
-                              style: TextStyle(
-                                color: info,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -110,43 +104,65 @@ class LogsFiltros extends StatelessWidget {
 
   Widget _filtro(
     IconData icon,
-    String text, {
+    String texto, {
+    String? subtitulo,
     bool arrow = false,
-    Color color = Colors.white,
-    Color iconColor = Colors.black87,
-    Color textColor = Colors.black87,
   }) {
     return Container(
-      height: 42,
-      padding: const EdgeInsets.symmetric(horizontal: 7),
+      height: 48,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: color,
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: color == Colors.white
-              ? Colors.grey.shade300
-              : color,
+          color: Colors.grey.shade200,
         ),
-        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
           Icon(
             icon,
-            size: 15,
-            color: iconColor,
+            size: 17,
+            color: const Color(0xFF1B2A5C),
           ),
-          const SizedBox(width: 4),
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 11,
-              color: textColor,
-            ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: subtitulo == null
+                ? Text(
+                    texto,
+                    style: const TextStyle(
+                      color: Color(0xFF1B2A5C),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        texto,
+                        style: const TextStyle(
+                          color: Color(0xFF1B2A5C),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        subtitulo,
+                        style: const TextStyle(
+                          color: Color(0xFF8A94A6),
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                  ),
           ),
           if (arrow)
             const Icon(
               Icons.keyboard_arrow_down,
-              size: 14,
+              size: 16,
+              color: Color(0xFF8A94A6),
             ),
         ],
       ),
