@@ -45,8 +45,9 @@ class AppDrawer extends StatelessWidget {
       'Historial de ventas',
       'Revisa tus ventas pasadas',
       AppRoutes.salesHistory,
-      [UserRole.admin, UserRole.vendedor],
+      [UserRole.admin],
     ),
+    
 
     _MenuEntry(
       Icons.inventory_2_outlined,
@@ -88,6 +89,7 @@ class AppDrawer extends StatelessWidget {
       [UserRole.admin, UserRole.vendedor],
     ),
     
+
   
    
   ];

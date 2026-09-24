@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../../app_routes.dart';
 import '../../widgets/app_scaffold.dart';
 import '../models_product/product.dart';
-import '../inventory/widgets/inventory_product_card.dart';
-import '../inventory/widgets/inventory_search_bar.dart';
-import '../inventory/widgets/inventory_filters.dart';
-import '../inventory/widgets/inventory_pagination.dart';
+import 'widgets_inventory/inventory_product_card.dart';
+import 'widgets_inventory/inventory_search_bar.dart';
+import 'widgets_inventory/inventory_filters.dart';
+import 'widgets_inventory/inventory_pagination.dart';
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen({super.key});

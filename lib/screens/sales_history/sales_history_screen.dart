@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../app_routes.dart';
 import '../../widgets/app_scaffold.dart';
-import 'widgets/sales_filters.dart';
-import 'widgets/sales_list.dart';
-import 'widgets/sales_pagination.dart';
+import 'widgets_sales_history/sales_filters.dart';
+import 'widgets_sales_history/sales_list.dart';
+import 'widgets_sales_history/sales_pagination.dart';
 
 class SalesHistoryScreen extends StatefulWidget {
   const SalesHistoryScreen({super.key});
