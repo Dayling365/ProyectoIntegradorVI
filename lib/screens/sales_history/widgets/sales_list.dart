@@ -1,0 +1,152 @@
+import 'package:flutter/material.dart';
+
+class Sale {
+  final String invoiceNumber;
+  final String clientName;
+  final String date;
+  final String amount;
+  final String productsSummary;
+
+  const Sale(
+    this.invoiceNumber,
+    this.clientName,
+    this.date,
+    this.amount,
+    this.productsSummary,
+  );
+}
+
+class SalesList extends StatelessWidget {
+  const SalesList({super.key});
+
+  static const List<Sale> _sales = [
+    Sale(
+      'Factura #F-001248',
+      'Genérico',
+      '24 Oct 2026 • 11:45 AM',
+      'C\$450.00',
+      '2x Cuaderno Espiral A4, 1x Bolígrafo azul...',
+    ),
+    Sale(
+      'Factura #F-001247',
+      'Instituto Juan XXIII',
+      '24 Oct 2026 • 09:15 AM',
+      'C\$1,850.00',
+      '4x Resma de Papel Bond, 2x Marcador...',
+    ),
+    Sale(
+      'Factura #F-001245',
+      'Distribuidora del Norte',
+      '23 Oct 2026 • 02:10 PM',
+      'C\$2,100.00',
+      '3x Resma Papel Bond, 1x Caja Bolígrafos...',
+    ),
+    Sale(
+      'Factura #F-001244',
+      'Tienda Escolar Los Cedros',
+      '22 Oct 2026 • 11:20 AM',
+      'C\$3,400.00',
+      '4x Cuaderno Univ. Docena, 2x Marcadores...',
+    ),
+  ];
+
+  static const Color card = Colors.white;
+  static const Color border = Color(0xFFE5E7EB);
+  static const Color textPrimary = Color(0xFF1A1F36);
+  static const Color textSecondary = Color(0xFF8A94A6);
+  static const Color primary = Color(0xFF1B2A5C);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: _sales.map((sale) {
+        final isLast = sale == _sales.last;
+
+        return Container(
+          margin: EdgeInsets.only(bottom: isLast ? 0 : 12),
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: card,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: border),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      sale.invoiceNumber,
+                      style: const TextStyle(
+                        color: textPrimary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    sale.amount,
+                    style: const TextStyle(
+                      color: primary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Text.rich(
+                TextSpan(
+                  style: const TextStyle(color: textSecondary, fontSize: 13),
+                  children: [
+                    const TextSpan(text: 'Cliente: '),
+                    TextSpan(
+                      text: sale.clientName,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: textPrimary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  const Icon(Icons.calendar_today_outlined, size: 12, color: textSecondary),
+                  const SizedBox(width: 4),
+                  Text(
+                    sale.date,
+                    style: const TextStyle(color: textSecondary, fontSize: 12),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      sale.productsSummary,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: textSecondary, fontSize: 12),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Ver recibo →',
+                    style: TextStyle(
+                      color: primary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
