@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../app_routes.dart';
 import '../../widgets/app_scaffold.dart';
-import 'widgets/purchase_filters.dart';
-import 'widgets/purchase_summary.dart';
-import 'widgets/purchase_list.dart';
-import 'widgets/purchase_pagination.dart';
+import 'widgets_purchase_history/purchase_filters.dart';
+import 'widgets_purchase_history/purchase_summary.dart';
+import 'widgets_purchase_history/purchase_list.dart';
+import 'widgets_purchase_history/purchase_pagination.dart';
 
 class PurchasesHistoryScreen extends StatelessWidget {
   const PurchasesHistoryScreen({super.key});
