@@ -46,12 +46,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
             const SizedBox(height: 14),
             const Text('1,248 productos', style: TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
             const SizedBox(height: 12),
-            ...demoProducts.map(
-              (p) => InventoryProductCard(
-                product: p,
-                onTap: () => Navigator.pushNamed(context, AppRoutes.productDetails),
-              ),
-            ),
+            ...demoProducts.map((p) => InventoryProductCard(product: p,)),
             const SizedBox(height: 8),
             InventoryPagination(
               currentPage: _currentPage,
