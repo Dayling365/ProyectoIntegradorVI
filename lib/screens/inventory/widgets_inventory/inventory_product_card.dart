@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../models_product/product.dart';
+import '../../../app_routes.dart';
 
 class InventoryProductCard extends StatelessWidget {
   final Product product;
-  final VoidCallback onTap;
-  const InventoryProductCard({super.key, required this.product, required this.onTap});
+
+  const InventoryProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +56,15 @@ class InventoryProductCard extends StatelessWidget {
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1B2A5C))),
           const SizedBox(height: 8),
           GestureDetector(
-            onTap: onTap,
-            child: const Row(
-              children: [
-                Text('Ver detalle', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF2563EB))),
-                SizedBox(width: 4),
-                Icon(Icons.arrow_forward, size: 12, color: Color(0xFF2563EB)),
-              ],
-            ),
+              onTap: () => Navigator.pushNamed(context, AppRoutes.productDetails, arguments: product),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Ver detalle', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF2563EB))),
+                  SizedBox(width: 4),
+                  Icon(Icons.arrow_forward, size: 12, color: Color(0xFF2563EB)),
+                ],
+              ),
           ),
         ],
       ),
