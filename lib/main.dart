@@ -7,6 +7,7 @@ import 'screens/login/login_screen.dart';
 import 'screens/inventory/inventory_screen.dart';
 import 'screens/logs/logs_screen.dart';
 import 'screens/preferences/preferences_screen.dart';
+import 'screens/inventory/product_details_screen.dart';
 import 'screens/purchases_history/purchase_history_screen.dart';
 import 'screens/sales_history/sales_history_screen.dart';
 import 'screens/users/users_screen.dart';
@@ -44,9 +45,9 @@ class MyApp extends StatelessWidget {
         AppRoutes.purchaseDetails: (context) => const PurchaseDetailsScreen(),
         AppRoutes.alertLogs: (context) => const AlertLogsScreen(),
         AppRoutes.alertStock: (context) => const AlertStockScreen(),
-        AppRoutes.inventoryMovement: (context) => const InventoryMovementScreen(),
+        AppRoutes.inventoryMovement: (context) => const InventoryMovementScreen(),*/
         AppRoutes.productDetails: (context) => const ProductDetailsScreen(),
-        */
+        
       },
     );
   }
