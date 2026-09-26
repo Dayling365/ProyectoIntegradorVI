@@ -21,7 +21,7 @@ class SalesMeta extends StatelessWidget {
         const SizedBox(height: 10),
         _row(Icons.person_outline, 'Cliente', clientName),
         const SizedBox(height: 10),
-        _row(Icons.badge_outlined, 'Cajero', cashier, valueColor: const Color(0xFF2563EB)),
+        _row(Icons.badge_outlined, 'Cajero', cashier, valueColor: const Color(0xFF475569)),
       ],
     );
   }
