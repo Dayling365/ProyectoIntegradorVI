@@ -1,13 +1,49 @@
 import 'package:flutter/material.dart';
 import '../../app_routes.dart';
+import '../../widgets/app_scaffold.dart';
+import 'widgets/account_card.dart';
+import 'widgets/appearance_section.dart';
 
-class PreferencesScreen extends StatelessWidget {
+class PreferencesScreen extends StatefulWidget {
   const PreferencesScreen({super.key});
 
   @override
+  State<PreferencesScreen> createState() => _PreferencesScreenState();
+}
+
+class _PreferencesScreenState extends State<PreferencesScreen> {
+  bool _darkMode = false;
+  String _textSize = 'Mediano';
+  String _language = 'Español (Latinoamérica)';
+
+  @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Preferences Screen'),
+    return AppScaffold(
+      currentRoute: AppRoutes.preferences,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Preferencias',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF1A1F36))),
+            const SizedBox(height: 4),
+            const Text('Configura las opciones y preferencias del sistema.',
+                style: TextStyle(fontSize: 13, color: Color(0xFF8A94A6))),
+            const SizedBox(height: 18),
+            const AccountCard(),
+            const SizedBox(height: 16),
+            AppearanceSection(
+              darkMode: _darkMode,
+              onDarkModeChanged: (v) => setState(() => _darkMode = v),
+              textSize: _textSize,
+              onTextSizeChanged: (v) => setState(() => _textSize = v ?? _textSize),
+              language: _language,
+              onLanguageChanged: (v) => setState(() => _language = v ?? _language),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
