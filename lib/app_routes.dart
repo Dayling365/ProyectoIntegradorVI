@@ -17,7 +17,7 @@ class AppRoutes {
   static const String inventoryMovement = '/inventory_movement';
   static const String inventoryMovementDetails = '/inventory_movement_details';
   static const String alertStock = '/alert_stock';
-  static const String salesHistotyseller = '/sales_history_seller';
+  static const String salesHistorySeller = '/sales_history_seller';
 
 
 

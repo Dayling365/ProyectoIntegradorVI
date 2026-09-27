@@ -3,9 +3,18 @@ import '../../app_routes.dart';
 import '../../widgets/app_scaffold.dart';
 import 'widgets_sales_history_seller/sales_filters_seller.dart';
 import 'widgets_sales_history_seller/sales_list_seller.dart';
+import 'widgets_sales_history_seller/sales_pagination_seller.dart';
 
-class SalesHistorySellerScreen extends StatelessWidget {
+class SalesHistorySellerScreen extends StatefulWidget {
   const SalesHistorySellerScreen({super.key});
+
+  @override
+  State<SalesHistorySellerScreen> createState() => _SalesHistorySellerScreenState();
+}
+
+class _SalesHistorySellerScreenState extends State<SalesHistorySellerScreen> {
+  int _currentPage = 1;
+  final int _totalPages = 39;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +66,14 @@ class SalesHistorySellerScreen extends StatelessWidget {
             const SizedBox(height: 4),
 
             const SalesListSeller(),
+
+            const SizedBox(height: 16),
+
+            SalesPaginationSeller(
+              currentPage: _currentPage,
+              totalPages: _totalPages,
+              onPageChanged: (p) => setState(() => _currentPage = p),
+            ),
           ],
         ),
       ),
