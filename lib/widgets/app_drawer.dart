@@ -51,7 +51,7 @@ class AppDrawer extends StatelessWidget {
       Icons.sell_outlined,
       "Historial de Mis Ventas",
       "Revisa tus ventas pasadas",
-      AppRoutes.salesHistotyseller,
+      AppRoutes.salesHistorySeller,
       [UserRole.vendedor],
     ),
 
