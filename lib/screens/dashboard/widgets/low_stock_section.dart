@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../models_product/product.dart';
 import '../../../app_routes.dart';
 
 class LowStockItem {
@@ -8,45 +8,19 @@ class LowStockItem {
   final int quantity;
   final IconData icon;
 
-  const LowStockItem(
-    this.name,
-    this.category,
-    this.quantity,
-    this.icon,
-  );
+  const LowStockItem(this.name, this.category, this.quantity, this.icon);
 }
 
 class LowStockSection extends StatelessWidget {
   const LowStockSection({super.key});
 
   static const List<LowStockItem> _items = [
-    LowStockItem(
-      'Cuaderno Espiral A4',
-      'Papelería',
-      3,
-      Icons.menu_book,
-    ),
-    LowStockItem(
-      'Lápiz Grafito HB',
-      'Escritura',
-      6,
-      Icons.edit,
-    ),
-    LowStockItem(
-      'Goma de borrar Blanca',
-      'Útiles',
-      8,
-      Icons.crop_square,
-    ),
-    LowStockItem(
-      'Marcador Permanente',
-      'Escritura',
-      12,
-      Icons.brush,
-    ),
+    LowStockItem('Cuaderno Espiral A4', 'Papelería', 3, Icons.menu_book),
+    LowStockItem('Lápiz Grafito HB', 'Escritura', 6, Icons.edit),
+    LowStockItem('Goma de borrar Blanca', 'Útiles', 8, Icons.crop_square),
+    LowStockItem('Marcador Permanente', 'Escritura', 12, Icons.brush),
   ];
 
-  
   static const int criticalThreshold = 8;
 
   static const Color card = Colors.white;
@@ -81,15 +55,20 @@ class LowStockSection extends StatelessWidget {
     }
   }
 
+  Product? _findProduct(String name) {
+    for (final p in demoProducts) {
+      if (p.name == name) return p;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: card,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: border,
-        ),
+        border: Border.all(color: border),
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -99,9 +78,7 @@ class LowStockSection extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: const BoxDecoration(
               color: dangerSoft,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(13),
-              ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(13)),
             ),
             child: Row(
               children: [
@@ -177,10 +154,7 @@ class LowStockSection extends StatelessWidget {
 
                 subtitle: Text(
                   item.category,
-                  style: const TextStyle(
-                    color: textSecondary,
-                    fontSize: 12.5,
-                  ),
+                  style: const TextStyle(color: textSecondary, fontSize: 12.5),
                 ),
 
                 trailing: Row(
@@ -209,20 +183,21 @@ class LowStockSection extends StatelessWidget {
                   ],
                 ),
 
-                /* Todavia no la tengo pero a qui tiene que ir a detalle de producto 
-                onTap: () => Navigator.of(context).pushNamed(
-                  AppRoutes.productDetail,
-                  arguments: item.name,
-                ),*/
+                onTap: () {
+                  final product = _findProduct(item.name);
+                  if (product == null) return;
+                  Navigator.of(
+                    context,
+                  ).pushNamed(AppRoutes.productDetails, arguments: product);
+                },
               ),
             );
           }),
 
           TextButton(
-            onPressed: () => Navigator.of(context).pushNamed(
-              AppRoutes.inventory,
-            ),
-            child: const Row(
+            onPressed: () =>
+             Navigator.of(context).pushNamed(AppRoutes.alertStock),
+              child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Ver todas las alertas'),
