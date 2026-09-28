@@ -196,8 +196,8 @@ class LowStockSection extends StatelessWidget {
 
           TextButton(
             onPressed: () =>
-                Navigator.of(context).pushNamed(AppRoutes.inventory),
-            child: const Row(
+             Navigator.of(context).pushNamed(AppRoutes.alertStock),
+              child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Ver todas las alertas'),
