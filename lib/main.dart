@@ -13,6 +13,9 @@ import 'screens/purchases_history/purchases_details_screen.dart';
 import 'screens/sales_history_seller/sales_history_seller_screen.dart';
 import 'screens/sales_history/sales_history_screen.dart';
 import 'screens/sales_history/sales_details_screen.dart';
+import 'screens/alert_stock/alert_stock_screen.dart';
+import 'screens/inventory_movement/inventory_movement_screen.dart';
+import 'screens/inventory_movement/inventory_movement_details_screen.dart';
 import 'screens/users/users_screen.dart';
 import 'screens/report/report_screen.dart';
 
@@ -47,10 +50,9 @@ class MyApp extends StatelessWidget {
         AppRoutes.saleDetails: (context) => const SalesDetailsScreen(),
         AppRoutes.purchaseDetails: (context) => const PurchaseDetailScreen(),
         AppRoutes.salesHistorySeller: (context) => const SalesHistorySellerScreen(),
-
-        /*AppRoutes.alertStock: (context) => const AlertStockScreen(),
+        AppRoutes.alertStock: (context) => const AlertStockScreen(),
         AppRoutes.inventoryMovement: (context) => const InventoryMovementScreen(),
-        AppRoutes.inventoryMovementDetails: (context) => const InventoryMovementDetailsScreen(),*/
+        AppRoutes.inventoryMovementDetails: (context) => const InventoryMovementDetailsScreen(),
         AppRoutes.productDetails: (context) => const ProductDetailsScreen(),
         
       },
