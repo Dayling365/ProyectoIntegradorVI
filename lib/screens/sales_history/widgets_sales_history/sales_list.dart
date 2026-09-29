@@ -75,7 +75,7 @@ class SalesList extends StatelessWidget {
                 totalAmount: sale.amount,
                 date: sale.date,
                 clientName: sale.clientName,
-                cashier: 'Don César Admin',
+                seller: 'Don César Admin',
                 items: const [
                   SaleLineItem('Cuaderno Espiral A4 (100 hojas)', 'Papelería', 2, 125.00, 250.00),
                   SaleLineItem('Bolígrafo azul Bic Cristal', 'Papelería', 1, 35.00, 35.00),
