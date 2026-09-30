@@ -85,7 +85,7 @@ class PurchaseFilters extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: _filtro(
-                    Icons.calendar_today_outlined,
+                    Icons.swap_vert,
                     'Ordenar por',
                     subtitulo: 'Más recientes',
                     arrow: true,
