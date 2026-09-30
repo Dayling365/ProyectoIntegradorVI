@@ -1,31 +1,13 @@
 import 'package:flutter/material.dart';
+import '../../../app_routes.dart';
+import '../../models_movement/movement.dart';
 
 class MovementItem extends StatelessWidget {
-  final String producto;
-  final String categoria;
-  final String fecha;
-  final String stockAntes;
-  final String stockDespues;
-  final String motivo;
-  final IconData motivoIcon;
-  final String etiqueta;
-  final Color etiquetaColor;
-  final Color etiquetaBg;
-  final bool esAlerta;
+  final Movement movement;
 
   const MovementItem({
     super.key,
-    required this.producto,
-    required this.categoria,
-    required this.fecha,
-    required this.stockAntes,
-    required this.stockDespues,
-    required this.motivo,
-    required this.motivoIcon,
-    required this.etiqueta,
-    required this.etiquetaColor,
-    required this.etiquetaBg,
-    this.esAlerta = false,
+    required this.movement,
   });
 
   @override
@@ -54,7 +36,7 @@ class MovementItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      producto,
+                      movement.productName,
                       style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.w700,
                         color: textPrimary,
@@ -62,7 +44,7 @@ class MovementItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      categoria,
+                      movement.category,
                       style: const TextStyle(fontSize: 12, color: textSecondary),
                     ),
                   ],
@@ -71,14 +53,14 @@ class MovementItem extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: etiquetaBg,
+                  color: movement.movementBgColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  etiqueta,
+                  movement.movementLabel,
                   style: TextStyle(
                     fontSize: 11,
-                    color: etiquetaColor,
+                    color: movement.movementColor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -92,75 +74,87 @@ class MovementItem extends StatelessWidget {
             children: [
               const Icon(Icons.access_time, size: 12, color: textSecondary),
               const SizedBox(width: 4),
-              Text( fecha,
+              Text(
+                movement.fechaHora,
                 style: const TextStyle(fontSize: 11, color: textSecondary),
               ),
             ],
           ),
 
           const SizedBox(height: 10),
-          if (esAlerta)
-            Row(
+          if (movement.esAlerta)
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: textPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      children: [
-                        const TextSpan(text: 'Stock: '),
-                        TextSpan(text: stockAntes),
-                        const TextSpan(text: ' → '),
-                        TextSpan(text: stockDespues),
-                        const TextSpan(
-                          text: ' unid.',
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            color: textSecondary,
-                          ),
-                        ),
-                      ],
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: textPrimary,
+                      fontWeight: FontWeight.w600,
                     ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: warning.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.circle, size: 6, color: warning),
-                      const SizedBox(width: 4),
-                      Text(
-                        motivo,
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: warning,
-                          fontWeight: FontWeight.w600,
+                      const TextSpan(text: 'Stock: '),
+                      TextSpan(text: '${movement.stockPrevio}'),
+                      const TextSpan(text: ' → '),
+                      TextSpan(text: '${movement.stockFinal}'),
+                      const TextSpan(
+                        text: ' unid.',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: textSecondary,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 8),
-                const Row(
-                  mainAxisSize: MainAxisSize.min,
+                const SizedBox(height: 8),
+                Row(
                   children: [
-                    Text( 'Ver detalle',
-                      style: TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w600,
-                        color: info,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: warning.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.circle, size: 6, color: warning),
+                          const SizedBox(width: 4),
+                          Text(
+                            movement.motivo,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: warning,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(width: 2),
-                    Icon(Icons.arrow_forward, size: 12, color: info),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        AppRoutes.inventoryMovementDetails,
+                        arguments: movement,
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Ver detalle',
+                            style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w600,
+                              color: info,
+                            ),
+                          ),
+                          SizedBox(width: 2),
+                          Icon(Icons.arrow_forward, size: 12, color: info),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -178,10 +172,11 @@ class MovementItem extends StatelessWidget {
                       ),
                       children: [
                         const TextSpan(text: 'Stock: '),
-                        TextSpan(text: stockAntes),
+                        TextSpan(text: '${movement.stockPrevio}'),
                         const TextSpan(text: ' → '),
-                        TextSpan(text: stockDespues),
-                        const TextSpan( text: ' unid.',
+                        TextSpan(text: '${movement.stockFinal}'),
+                        const TextSpan(
+                          text: ' unid.',
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             color: textSecondary,
@@ -194,26 +189,35 @@ class MovementItem extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(motivoIcon, size: 14, color: textSecondary),
+                    Icon(movement.movementIcon, size: 14, color: textSecondary),
                     const SizedBox(width: 4),
-                    Text( motivo,
+                    Text(
+                      movement.motivo,
                       style: const TextStyle(fontSize: 12, color: textSecondary),
                     ),
                   ],
                 ),
                 const SizedBox(width: 10),
-                const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text( 'Ver detalle',
-                      style: TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w600,
-                        color: info,
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AppRoutes.inventoryMovementDetails,
+                    arguments: movement,
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Ver detalle',
+                        style: TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600,
+                          color: info,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 2),
-                    Icon(Icons.arrow_forward, size: 12, color: info),
-                  ],
+                      SizedBox(width: 2),
+                      Icon(Icons.arrow_forward, size: 12, color: info),
+                    ],
+                  ),
                 ),
               ],
             ),
