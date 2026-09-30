@@ -113,7 +113,7 @@ class AppDrawer extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _header(),
+          _header(context),
           const SizedBox(height: 8),
           Expanded(
             child: ListView(
@@ -153,8 +153,10 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Widget _header() {
-    return Container(
+  Widget _header(BuildContext context) {
+  final appState = context.watch<AppState>();
+
+  return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 48, 20, 22),
       decoration: const BoxDecoration(
@@ -173,13 +175,13 @@ class AppDrawer extends StatelessWidget {
             child: const Icon(Icons.person, color: Color(0xFF1B2A5C), size: 26),
           ),
           const SizedBox(width: 12),
-          const Expanded(
+           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Don César Admin',
+                  appState.userName,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
@@ -188,7 +190,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  'Administrador',
+                  appState.isAdmin ? 'Administrador' : 'Vendedor',
                   style: TextStyle(color: Colors.white70, fontSize: 12),
                 ),
               ],
