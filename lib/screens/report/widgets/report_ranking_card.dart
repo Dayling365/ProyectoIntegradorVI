@@ -1,155 +1,102 @@
 import 'package:flutter/material.dart';
 
-class RankingItem {
-  final int? number;
-  final IconData? icon;
-  final Color? iconColor;
-  final String title;
-  final String? subtitle;
-  final String trailingText;
-  final Color trailingColor;
-
-  const RankingItem({
-    this.number,
-    this.icon,
-    this.iconColor,
-    required this.title,
-    this.subtitle,
-    required this.trailingText,
-    required this.trailingColor,
-  });
-}
 
 class ReportRankingCard extends StatelessWidget {
-  final IconData headerIcon;
-  final String title;
-  final List<RankingItem> items;
+  final int rank;
+  final IconData icon;
+  final Color iconColor;
+  final Color iconBgColor;
+  final String productName;
+  final String value;
+  final String percentLabel;
+  final double progress;
 
   const ReportRankingCard({
     super.key,
-    required this.headerIcon,
-    required this.title,
-    required this.items,
+    required this.rank,
+    required this.icon,
+    required this.iconColor,
+    required this.iconBgColor,
+    required this.productName,
+    required this.value,
+    required this.percentLabel,
+    required this.progress,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Encabezado: ícono + título + "Ver todos >"
-          Row(
-            children: [
-              Icon(headerIcon, color: const Color(0xFF1B2A5C), size: 16),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 3),
-          const Text(
-            'Ver todos >',
-            style: TextStyle(color: Color(0xFF3B82F6), fontSize: 11),
-          ),
-          const SizedBox(height: 10),
-          // Lista de items
-          for (int i = 0; i < items.length; i++) ...[
-            _rankingRow(items[i]),
-            if (i != items.length - 1) const SizedBox(height: 10),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _rankingRow(RankingItem item) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Numeral o ícono, según cuál venga
-        if (item.number != null)
-          Container(
+          SizedBox(
             width: 20,
-            height: 20,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF2F2F2),
-              borderRadius: BorderRadius.circular(6),
-            ),
             child: Text(
-              '${item.number}',
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+              '$rank',
+              style: TextStyle(color: Colors.grey[400], fontWeight: FontWeight.bold),
             ),
-          )
-        else if (item.icon != null)
-          Container(
-            width: 26,
-            height: 26,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: (item.iconColor ?? Colors.grey).withOpacity(0.15),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(item.icon, color: item.iconColor, size: 14),
           ),
-        const SizedBox(width: 8),
-        // Título (+ subtítulo si existe)
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                item.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 12, color: Color(0xFF16233F)),
-              ),
-              if (item.subtitle != null) ...[
-                const SizedBox(height: 1),
-                Text(
-                  item.subtitle!,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 10, color: Colors.grey),
+          const SizedBox(width: 6),
+          Container(
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(color: iconBgColor, borderRadius: BorderRadius.circular(8)),
+            child: Icon(icon, size: 14, color: iconColor),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        productName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                          color: Color(0xFF16233F),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      value,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        color: Color(0xFF16233F),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: progress,
+                          minHeight: 6,
+                          backgroundColor: const Color(0xFFEDEDED),
+                          valueColor: const AlwaysStoppedAnimation(Color(0xFF3B82F6)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(percentLabel, style: TextStyle(fontSize: 11, color: Colors.grey[500])),
+                  ],
                 ),
               ],
-            ],
+            ),
           ),
-        ),
-        const SizedBox(width: 5),
-        // Porcentaje / tendencia a la derecha
-        Text(
-          item.trailingText,
-          style: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w600,
-            color: item.trailingColor,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
