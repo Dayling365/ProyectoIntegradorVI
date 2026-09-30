@@ -1,411 +1,362 @@
 import 'package:flutter/material.dart';
-
-import '../../app_routes.dart';
-import '../../widgets/app_scaffold.dart';
+import '../../widgets/app_drawer.dart';
 import 'widgets/report_metric_card.dart';
+import 'widgets/report_bar_chart.dart';
+import 'widgets/report_category_donut.dart';
 import 'widgets/report_ranking_card.dart';
+import '../../app_routes.dart';
 
-class ReportScreen extends StatelessWidget {
+class ReportScreen extends StatefulWidget {
   const ReportScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return AppScaffold(
-      currentRoute: AppRoutes.report,
-      body: ListView(
-        padding: const EdgeInsets.all(14),
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(9),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFDCE6FA),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(Icons.bar_chart_rounded, color: Color(0xFF1B2A5C), size: 20),
-              ),
-              const SizedBox(width: 10),
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Reportes',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF16233F),
-                      ),
-                    ),
-                    SizedBox(height: 3),
-                    Text(
-                      'Visualiza y analiza el rendimiento de tu negocio.',
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                _periodChip('Hoy', selected: true),
-                const SizedBox(width: 8),
-                _periodChip('Semana', selected: false),
-                const SizedBox(width: 8),
-                _periodChip('Mes', selected: false),
-                const SizedBox(width: 8),
-                _periodChip('Trimestre', selected: false),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.85,
-            children: [
-              ReportMetricCard(
-                icon: Icons.attach_money,
-                iconColor: const Color(0xFF3B82F6),
-                label: 'Monto total de ventas',
-                value: '\$124,500.00',
-                trendText: '+12.5% vs período anterior',
-                trendColor: const Color(0xFF16A34A),
-                sparklineColor: const Color(0xFF3B82F6),
-                sparklineData: const [20, 22, 21, 25, 30, 28, 35, 40],
-              ),
-              ReportMetricCard(
-                icon: Icons.inventory_2_outlined,
-                iconColor: const Color(0xFFF59E0B),
-                label: 'Unidades vendidas',
-                value: '3,420',
-                trendText: '+8.2% vs período anterior',
-                trendColor: const Color(0xFF16A34A),
-                sparklineColor: const Color(0xFFF59E0B),
-                sparklineData: const [10, 12, 11, 14, 13, 15, 17, 18],
-              ),
-              ReportMetricCard(
-                icon: Icons.receipt_long_outlined,
-                iconColor: const Color(0xFF10B981),
-                label: 'Ticket promedio',
-                value: '\$36.40',
-                trendText: '+5.1% vs período anterior',
-                trendColor: const Color(0xFF16A34A),
-                sparklineColor: const Color(0xFF10B981),
-                sparklineData: const [30, 28, 31, 29, 33, 32, 34, 36],
-              ),
-              ReportMetricCard(
-                icon: Icons.sell_outlined,
-                iconColor: const Color(0xFFA855F7),
-                label: 'Categorías activas',
-                value: '6',
-                trendText: '+1.7% vs período anterior',
-                trendColor: const Color(0xFF16A34A),
-                sparklineColor: const Color(0xFFA855F7),
-                sparklineData: const [5, 6, 5, 6, 6, 6, 6, 6],
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.bar_chart_rounded, color: Color(0xFF1B2A5C), size: 18),
-                    const SizedBox(width: 6),
-                    const Expanded(
-                      child: Text(
-                        'Ventas por categoría',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                      ),
-                    ),
-                    const Text(
-                      'Ver detalle >',
-                      style: TextStyle(color: Color(0xFF3B82F6), fontSize: 11),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                _categoryRow('Libros', 0.42, const Color(0xFF16233F)),
-                const SizedBox(height: 10),
-                _categoryRow('Útiles escolares', 0.26, const Color(0xFFF59E0B)),
-                const SizedBox(height: 10),
-                _categoryRow('Papelería', 0.18, const Color(0xFF3B82F6)),
-                const SizedBox(height: 10),
-                _categoryRow('Otros', 0.14, Colors.grey),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.show_chart_rounded, color: Color(0xFF1B2A5C), size: 18),
-                    const SizedBox(width: 6),
-                    const Expanded(
-                      child: Text(
-                        'Ventas por mes',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF2F2F2),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          Text('Últimos 6 meses', style: TextStyle(fontSize: 10)),
-                          SizedBox(width: 3),
-                          Icon(Icons.keyboard_arrow_down, size: 14),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  height: 150,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text('\$180k', style: TextStyle(fontSize: 9, color: Colors.grey)),
-                          Text('\$135k', style: TextStyle(fontSize: 9, color: Colors.grey)),
-                          Text('\$90k', style: TextStyle(fontSize: 9, color: Colors.grey)),
-                          Text('\$45k', style: TextStyle(fontSize: 9, color: Colors.grey)),
-                          Text('\$0', style: TextStyle(fontSize: 9, color: Colors.grey)),
-                        ],
-                      ),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: CustomPaint(
-                          painter: _MonthlyChartPainter(
-                            data: const [45, 55, 65, 72, 88, 124.5],
-                            maxValue: 180,
-                          ),
-                          child: Container(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 6),
-                const Padding(
-                  padding: EdgeInsets.only(left: 34),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Ene', style: TextStyle(fontSize: 10, color: Colors.grey)),
-                      Text('Feb', style: TextStyle(fontSize: 10, color: Colors.grey)),
-                      Text('Mar', style: TextStyle(fontSize: 10, color: Colors.grey)),
-                      Text('Abr', style: TextStyle(fontSize: 10, color: Colors.grey)),
-                      Text('May', style: TextStyle(fontSize: 10, color: Colors.grey)),
-                      Text('Jun', style: TextStyle(fontSize: 10, color: Colors.grey)),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: ReportRankingCard(
-                  headerIcon: Icons.inventory_2_outlined,
-                  title: 'Productos más vendidos',
-                  items: const [
-                    RankingItem(number: 1, title: 'Cuaderno Espiral', subtitle: '320 unid.', trailingText: '22%', trailingColor: Color(0xFF16233F)),
-                    RankingItem(number: 2, title: 'Lápiz Grafito HB', subtitle: '280 unid.', trailingText: '19%', trailingColor: Color(0xFF16233F)),
-                    RankingItem(number: 3, title: 'Goma de borrar', subtitle: '215 unid.', trailingText: '15%', trailingColor: Color(0xFF16233F)),
-                    RankingItem(number: 4, title: 'Marcador Perm.', subtitle: '180 unid.', trailingText: '12%', trailingColor: Color(0xFF16233F)),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: ReportRankingCard(
-                  headerIcon: Icons.sell_outlined,
-                  title: 'Categorías con mayor crecimiento',
-                  items: const [
-                    RankingItem(icon: Icons.description_outlined, iconColor: Color(0xFF3B82F6), title: 'Papelería', trailingText: '+18.4%', trailingColor: Color(0xFF16A34A)),
-                    RankingItem(icon: Icons.edit_outlined, iconColor: Color(0xFFF59E0B), title: 'Útiles escolares', trailingText: '+12.7%', trailingColor: Color(0xFF16A34A)),
-                    RankingItem(icon: Icons.menu_book_outlined, iconColor: Color(0xFF16233F), title: 'Libros', trailingText: '+9.3%', trailingColor: Color(0xFF16A34A)),
-                    RankingItem(icon: Icons.grid_view_rounded, iconColor: Color(0xFFA855F7), title: 'Otros', trailingText: '+6.8%', trailingColor: Color(0xFF16A34A)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-        ],
-      ),
-    );
-  }
-
-  Widget _periodChip(String label, {required bool selected}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: selected ? const Color(0xFF1B2A5C) : Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: selected ? const Color(0xFF1B2A5C) : const Color(0xFFD9D9D9),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.calendar_today_outlined,
-            size: 12,
-            color: selected ? Colors.white : Colors.grey[600],
-          ),
-          const SizedBox(width: 5),
-          Text(
-            label,
-            style: TextStyle(
-              color: selected ? Colors.white : Colors.grey[700],
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _categoryRow(String label, double percent, Color color) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 84,
-          child: Text(label, style: const TextStyle(fontSize: 12)),
-        ),
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: percent,
-              minHeight: 7,
-              backgroundColor: const Color(0xFFF2F2F2),
-              valueColor: AlwaysStoppedAnimation<Color>(color),
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        SizedBox(
-          width: 32,
-          child: Text(
-            '${(percent * 100).toInt()}%',
-            textAlign: TextAlign.right,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-          ),
-        ),
-      ],
-    );
-  }
+  State<ReportScreen> createState() => _ReportScreenState();
 }
 
-class _MonthlyChartPainter extends CustomPainter {
-  final List<double> data;
-  final double maxValue;
+class _ReportScreenState extends State<ReportScreen> {
+  int _selectedPeriodIndex = 1; // "Semana" seleccionado por defecto
+  final List<String> _periods = ['Hoy', 'Semana', 'Mes', 'Trimestre', 'Año'];
 
-  _MonthlyChartPainter({required this.data, required this.maxValue});
+ 
+  final List<String> _dayLabels = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+  final List<double> _dayValues = [3600, 4200, 3800, 5100, 6200, 7400, 3900];
+
+ 
+  final List<CategorySlice> _categorySlices = const [
+    CategorySlice(label: 'Papelería', percent: 42, amount: '11,970', color: Color(0xFF3B82F6)),
+    CategorySlice(label: 'Útiles escolares', percent: 28, amount: '7,980', color: Color(0xFFF59E0B)),
+    CategorySlice(label: 'Arte y manual.', percent: 18, amount: '5,130', color: Color(0xFF8B5CF6)),
+    CategorySlice(label: 'Libros', percent: 8, amount: '2,280', color: Color(0xFF10B981)),
+    CategorySlice(label: 'Otros', percent: 4, amount: '1,140', color: Color(0xFF93C5FD)),
+  ];
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final linePaint = Paint()
-      ..color = const Color(0xFF3B82F6)
-      ..strokeWidth = 2.5
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-
-    final areaPaint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          const Color(0xFF3B82F6).withOpacity(0.25),
-          const Color(0xFF3B82F6).withOpacity(0.0),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF7F8FA),
+      drawer: const AppDrawer(currentRoute: AppRoutes.report),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF16233F),
+        elevation: 0,
+        title: Row(
+          children: const [
+            Icon(Icons.menu_book, color: Colors.white, size: 20),
+            SizedBox(width: 8),
+            Text('Librería Don César', style: TextStyle(color: Colors.white, fontSize: 16)),
+          ],
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 12),
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 16,
+              child: Icon(Icons.person, color: Color(0xFF16233F), size: 18),
+            ),
+          ),
         ],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+      ),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            const Text(
+              'Reportes',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF16233F)),
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              'Analiza el comportamiento y toma mejores decisiones.',
+              style: TextStyle(color: Colors.grey, fontSize: 13),
+            ),
+            const SizedBox(height: 16),
 
-    final points = <Offset>[];
-    for (int i = 0; i < data.length; i++) {
-      final x = size.width * i / (data.length - 1);
-      final y = size.height - (data[i] / maxValue) * size.height;
-      points.add(Offset(x, y));
-    }
+            
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 1.3,
+              children: const [
+                ReportMetricCard(
+                  icon: Icons.trending_up,
+                  iconColor: Color(0xFF16A34A),
+                  iconBgColor: Color(0x1A16A34A),
+                  label: 'Ventas totales',
+                  value: 'C\$28,500.00',
+                ),
+                ReportMetricCard(
+                  icon: Icons.inventory_2_outlined,
+                  iconColor: Color(0xFFF59E0B),
+                  iconBgColor: Color(0x1AF59E0B),
+                  label: 'Unidades vendidas',
+                  value: '842',
+                ),
+                ReportMetricCard(
+                  icon: Icons.groups_outlined,
+                  iconColor: Color(0xFF8B5CF6),
+                  iconBgColor: Color(0x1A8B5CF6),
+                  label: 'Productos top',
+                  value: '12',
+                ),
+                ReportMetricCard(
+                  icon: Icons.description_outlined,
+                  iconColor: Color(0xFF3B82F6),
+                  iconBgColor: Color(0x1A3B82F6),
+                  label: 'Prom. u/venta',
+                  value: '3.5',
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
 
-    final linePath = Path()..moveTo(points.first.dx, points.first.dy);
-    for (final p in points.skip(1)) {
-      linePath.lineTo(p.dx, p.dy);
-    }
+            
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_today_outlined, size: 16, color: Colors.grey[600]),
+                      const SizedBox(width: 6),
+                      const Text('Período', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(_periods.length, (i) {
+                        final isSelected = i == _selectedPeriodIndex;
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: GestureDetector(
+                            onTap: () => setState(() => _selectedPeriodIndex = i),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                              decoration: BoxDecoration(
+                                color: isSelected ? const Color(0xFF16233F) : Colors.transparent,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                _periods[i],
+                                style: TextStyle(
+                                  color: isSelected ? Colors.white : Colors.grey[600],
+                                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
 
-    final areaPath = Path.from(linePath)
-      ..lineTo(points.last.dx, size.height)
-      ..lineTo(points.first.dx, size.height)
-      ..close();
+           
+            Row(
+              children: [
+                Expanded(child: _buildFilterDropdown(Icons.category_outlined, 'Categoría', 'Todas')),
+                const SizedBox(width: 12),
+                Expanded(child: _buildFilterDropdown(Icons.inventory_2_outlined, 'Producto', 'Todos')),
+              ],
+            ),
+            const SizedBox(height: 16),
 
-    canvas.drawPath(areaPath, areaPaint);
-    canvas.drawPath(linePath, linePaint);
+            
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.show_chart, size: 18, color: Color(0xFF3B82F6)),
+                      const SizedBox(width: 6),
+                      const Text('Ventas en el período',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  ReportBarChart(
+                    labels: _dayLabels,
+                    values: _dayValues,
+                    maxAxisValue: 8000,
+                    highlightedIndex: 5, // Sáb
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
 
-    for (int i = 0; i < points.length; i++) {
-      final isLast = i == points.length - 1;
-      canvas.drawCircle(
-        points[i],
-        isLast ? 5 : 3.5,
-        Paint()..color = const Color(0xFF3B82F6),
-      );
-    }
+            
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.pie_chart_outline, size: 18, color: Color(0xFF3B82F6)),
+                      const SizedBox(width: 6),
+                      const Text('Participación por categoría',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  ReportCategoryDonut(
+                    slices: _categorySlices,
+                    centerValue: 'C\$28,500',
+                    centerLabel: 'Total ventas',
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.local_offer_outlined, size: 18, color: Color(0xFF3B82F6)),
+                      const SizedBox(width: 6),
+                      const Text('Productos más vendidos',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  const ReportRankingCard(
+                    rank: 1,
+                    icon: Icons.menu_book_outlined,
+                    iconColor: Color(0xFF3B82F6),
+                    iconBgColor: Color(0x1A3B82F6),
+                    productName: 'Cuaderno Espiral A4',
+                    value: 'C\$6,270',
+                    percentLabel: '22%',
+                    progress: 0.22,
+                  ),
+                  const ReportRankingCard(
+                    rank: 2,
+                    icon: Icons.edit_outlined,
+                    iconColor: Color(0xFFF59E0B),
+                    iconBgColor: Color(0x1AF59E0B),
+                    productName: 'Lápiz Grafito HB',
+                    value: 'C\$5,415',
+                    percentLabel: '19%',
+                    progress: 0.19,
+                  ),
+                  const ReportRankingCard(
+                    rank: 3,
+                    icon: Icons.auto_fix_normal_outlined,
+                    iconColor: Color(0xFF8B5CF6),
+                    iconBgColor: Color(0x1A8B5CF6),
+                    productName: 'Goma de borrar',
+                    value: 'C\$4,275',
+                    percentLabel: '15%',
+                    progress: 0.15,
+                  ),
+                  const ReportRankingCard(
+                    rank: 4,
+                    icon: Icons.border_color_outlined,
+                    iconColor: Color(0xFF10B981),
+                    iconBgColor: Color(0x1A10B981),
+                    productName: 'Marcador Permanente',
+                    value: 'C\$3,420',
+                    percentLabel: '12%',
+                    progress: 0.12,
+                  ),
+                  const ReportRankingCard(
+                    rank: 5,
+                    icon: Icons.straighten_outlined,
+                    iconColor: Color(0xFFEC4899),
+                    iconBgColor: Color(0x1AEC4899),
+                    productName: 'Regla 30 cm',
+                    value: 'C\$2,565',
+                    percentLabel: '9%',
+                    progress: 0.09,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  @override
-  bool shouldRepaint(covariant _MonthlyChartPainter oldDelegate) => false;
+  Widget _buildFilterDropdown(IconData icon, String label, String value) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 16, color: const Color(0xFF3B82F6)),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(label, style: TextStyle(fontSize: 11, color: Colors.grey[500])),
+                Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Color(0xFF16233F)),
+                ),
+              ],
+            ),
+          ),
+          Icon(Icons.keyboard_arrow_down, size: 18, color: Colors.grey[500]),
+        ],
+      ),
+    );
+  }
 }
