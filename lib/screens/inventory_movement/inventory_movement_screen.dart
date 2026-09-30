@@ -21,7 +21,8 @@ class InventoryMovementScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text( 'Movimiento de Inventario',
+            const Text(
+              'Movimiento de Inventario',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -29,29 +30,21 @@ class InventoryMovementScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            const Text( 'Consulta el historial de entradas, salidas y bajas de inventario.',
+            const Text(
+              'Consulta el historial de entradas, salidas y bajas de inventario.',
               style: TextStyle(
                 color: textSecondary,
                 fontSize: 13,
               ),
             ),
-
             const SizedBox(height: 16),
-
             const MovementFilters(),
-
             const SizedBox(height: 16),
-
             const MovementSummary(total: 42),
-
             const SizedBox(height: 12),
-
             const MovementList(),
-
             const SizedBox(height: 16),
-
-            const MovementPagination(paginaActual: 1, totalPaginas: 5,
-            ),
+            const MovementPagination(paginaActual: 1, totalPaginas: 5),
           ],
         ),
       ),
