@@ -97,7 +97,7 @@ class MovementFilters extends StatelessWidget {
     bool arrow = false,
   }) {
     return Container(
-      height: 48,
+      height: subtitulo != null ? 56 : 48,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: Colors.white,
