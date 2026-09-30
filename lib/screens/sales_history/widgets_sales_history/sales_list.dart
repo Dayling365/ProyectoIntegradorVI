@@ -193,13 +193,15 @@ class SalesList extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     const Text(
-                      'Ver detalle →',
+                      'Ver detalle',
                       style: TextStyle(
-                        color: primary,
+                        color: Color(0xFF2563EB),
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+                    const SizedBox(width: 4),
+                    const Icon(Icons.arrow_forward, size: 12, color: Color(0xFF2563EB)),
                   ],
                 ),
               ],

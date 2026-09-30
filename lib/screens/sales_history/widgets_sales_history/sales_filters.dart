@@ -3,92 +3,152 @@ import 'package:flutter/material.dart';
 class SalesFilters extends StatelessWidget {
   const SalesFilters({super.key});
 
+  static const Color primary = Color(0xFF1B2A5C);
+  static const Color textSecondary = Color(0xFF8A94A6);
+  static const Color info = Color(0xFF2563EB);
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 42,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: 'Buscar',
-              hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13),
-              prefixIcon: const Icon(Icons.search, size: 18),
-              filled: true,
-              fillColor: Colors.white,
-              contentPadding: const EdgeInsets.symmetric(vertical: 0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+        // Buscador (mismo estilo que compra)
+        Container(
+          height: 48,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.grey.shade200),
+          ),
+          child: const Row(
+            children: [
+              Icon(Icons.search, size: 17, color: primary),
+              SizedBox(width: 8),
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Buscar',
+                    hintStyle: TextStyle(color: textSecondary, fontSize: 12),
+                    border: InputBorder.none,
+                    isDense: true,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
+
+        // Fechas: SIN flecha de dropdown
         Row(
-          children: const [
-            Expanded(child: _FilterField(icon: Icons.calendar_today_outlined, label: 'Desde', value: '01/10/2026')),
-            SizedBox(width: 10),
-            Expanded(child: _FilterField(icon: Icons.calendar_today_outlined, label: 'Hasta', value: '31/10/2026')),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: const [
-            Expanded(child: _FilterField(icon: Icons.person_outline, label: 'Cliente', value: 'Todos')),
-            SizedBox(width: 10),
-            Expanded(child: _FilterField(icon: Icons.swap_vert, label: 'Ordenar por', value: 'Más recientes')),
+          children: [
+            Expanded(child: _filtro(Icons.calendar_today_outlined, '01/10/2026')),
+            const SizedBox(width: 8),
+            Expanded(child: _filtro(Icons.calendar_today_outlined, '31/10/2026')),
           ],
         ),
         const SizedBox(height: 8),
+
+        // Cliente y Ordenar por (con flecha)
+        Row(
+          children: [
+            Expanded(
+              child: _filtro(Icons.person_outline, 'Cliente',
+                  subtitulo: 'Todos', arrow: true),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: _filtro(Icons.swap_vert, 'Ordenar por',
+                  subtitulo: 'Más recientes', arrow: true),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+
+        // Limpiar filtros: mismo color/estilo que compra
         Align(
           alignment: Alignment.centerRight,
-          child: TextButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.close, size: 14, color: Color(0xFF8A94A6)),
-            label: const Text('Limpiar filtros', style: TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+          child: InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(6),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.close, size: 16, color: info),
+                  SizedBox(width: 4),
+                  Text(
+                    'Limpiar filtros',
+                    style: TextStyle(
+                      color: info,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ],
     );
   }
-}
 
-class _FilterField extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  const _FilterField({required this.icon, required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _filtro(
+    IconData icon,
+    String texto, {
+    String? subtitulo,
+    bool arrow = false,
+  }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      height: 48,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: Colors.grey.shade200),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 16, color: const Color(0xFF1B2A5C)),
+          Icon(icon, size: 17, color: primary),
           const SizedBox(width: 8),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF1A1F36))),
-                Text(
-                  value,
-                  style: const TextStyle(fontSize: 11, color: Color(0xFF8A94A6)),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+            child: subtitulo == null
+                ? Text(
+                    texto,
+                    style: const TextStyle(
+                      color: primary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        texto,
+                        style: const TextStyle(
+                          color: primary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        subtitulo,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: textSecondary,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                  ),
           ),
-          const Icon(Icons.keyboard_arrow_down, size: 16, color: Color(0xFF8A94A6)),
+          if (arrow)
+            const Icon(Icons.keyboard_arrow_down, size: 16, color: textSecondary),
         ],
       ),
     );
