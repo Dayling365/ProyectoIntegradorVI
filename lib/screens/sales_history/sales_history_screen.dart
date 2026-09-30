@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sistema_libreria_app/app_state.dart';
 import '../../app_routes.dart';
 import '../../widgets/app_scaffold.dart';
 import 'widgets_sales_history/sales_filters.dart';
@@ -20,6 +22,7 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
   Widget build(BuildContext context) {
     const Color textPrimary = Color(0xFF1A1F36);
     const Color textSecondary = Color(0xFF8A94A6);
+    final isAdmin = context.watch<AppState>().isAdmin;
 
     return AppScaffold(
       currentRoute: AppRoutes.salesHistory,
@@ -28,13 +31,13 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Historial de Ventas',
+            Text(
+              isAdmin ? 'Historial de Ventas': 'Mis Ventas Realizadas',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: textPrimary),
             ),
             const SizedBox(height: 4),
-            const Text(
-              'Registro cronológico de facturas y ventas realizadas.',
+             Text(      
+              isAdmin ? 'Registro cronológico de facturas y ventas realizadas.' : 'Registro de facturas y cobros emitidos por ti.',
               style: TextStyle(color: textSecondary, fontSize: 13),
             ),
             const SizedBox(height: 16),
