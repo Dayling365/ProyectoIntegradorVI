@@ -12,7 +12,7 @@ class SaleDetail {
   final String totalAmount;
   final String date;
   final String clientName;
-  final String cashier;
+  final String seller;
   final List<SaleLineItem> items;
   final double subtotal;
   final double total;
@@ -24,7 +24,7 @@ class SaleDetail {
     required this.totalAmount,
     required this.date,
     required this.clientName,
-    required this.cashier,
+    required this.seller,
     required this.items,
     required this.subtotal,
     required this.total,
@@ -80,7 +80,7 @@ class SalesDetailsScreen extends StatelessWidget {
                   SalesMeta(
                     date: sale.date,
                     clientName: sale.clientName,
-                    cashier: sale.cashier,
+                    seller: sale.seller,  
                   ),
                 ],
               ),

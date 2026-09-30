@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../app_state.dart';
 import '../../../app_routes.dart';
 import '../sales_details_screen.dart';
 import '../widgets_sales_details/sales_items_list.dart';
@@ -9,6 +11,7 @@ class Sale {
   final String date;
   final String amount;
   final String productsSummary;
+  final String sellerName;
 
   const Sale(
     this.invoiceNumber,
@@ -16,6 +19,7 @@ class Sale {
     this.date,
     this.amount,
     this.productsSummary,
+    this.sellerName,
   );
 }
 
@@ -29,6 +33,7 @@ class SalesList extends StatelessWidget {
       '24 Oct 2026 • 11:45 AM',
       'C\$450.00',
       '2x Cuaderno Espiral A4, 1x Bolígrafo azul...',
+      'Don César Admin',
     ),
     Sale(
       'Factura #F-001247',
@@ -36,6 +41,7 @@ class SalesList extends StatelessWidget {
       '24 Oct 2026 • 09:15 AM',
       'C\$1,850.00',
       '4x Resma de Papel Bond, 2x Marcador...',
+      'Carlos Martínez',
     ),
     Sale(
       'Factura #F-001245',
@@ -43,6 +49,7 @@ class SalesList extends StatelessWidget {
       '23 Oct 2026 • 02:10 PM',
       'C\$2,100.00',
       '3x Resma Papel Bond, 1x Caja Bolígrafos...',
+      'Carlos Martínez',
     ),
     Sale(
       'Factura #F-001244',
@@ -50,6 +57,7 @@ class SalesList extends StatelessWidget {
       '22 Oct 2026 • 11:20 AM',
       'C\$3,400.00',
       '4x Cuaderno Univ. Docena, 2x Marcadores...',
+      'Don César Admin',
     ),
   ];
 
@@ -61,9 +69,16 @@ class SalesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appState = context.watch<AppState>();
+    final isAdmin = appState.isAdmin;
+
+    final sales = isAdmin
+        ? _sales
+        : _sales.where((s) => s.sellerName == appState.userName).toList();
+
     return Column(
-      children: _sales.map((sale) {
-        final isLast = sale == _sales.last;
+      children: sales.map((sale) {
+        final isLast = sale == sales.last;
 
         return GestureDetector(
           onTap: () {
@@ -75,7 +90,7 @@ class SalesList extends StatelessWidget {
                 totalAmount: sale.amount,
                 date: sale.date,
                 clientName: sale.clientName,
-                cashier: 'Don César Admin',
+                seller: sale.sellerName,
                 items: const [
                   SaleLineItem('Cuaderno Espiral A4 (100 hojas)', 'Papelería', 2, 125.00, 250.00),
                   SaleLineItem('Bolígrafo azul Bic Cristal', 'Papelería', 1, 35.00, 35.00),
@@ -137,6 +152,24 @@ class SalesList extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (isAdmin) ...[
+                  const SizedBox(height: 4),
+                  Text.rich(
+                    TextSpan(
+                      style: const TextStyle(color: textSecondary, fontSize: 13),
+                      children: [
+                        const TextSpan(text: 'Vendedor: '),
+                        TextSpan(
+                          text: sale.sellerName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 4),
                 Row(
                   children: [

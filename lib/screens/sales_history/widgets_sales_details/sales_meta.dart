@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class SalesMeta extends StatelessWidget {
   final String date;
   final String clientName;
-  final String cashier;
+  final String seller;
 
   const SalesMeta({
     super.key,
     required this.date,
     required this.clientName,
-    required this.cashier,
+    required this.seller,
   });
 
   @override
@@ -21,7 +21,7 @@ class SalesMeta extends StatelessWidget {
         const SizedBox(height: 10),
         _row(Icons.person_outline, 'Cliente', clientName),
         const SizedBox(height: 10),
-        _row(Icons.badge_outlined, 'Cajero', cashier, valueColor: const Color(0xFF475569)),
+        _row(Icons.badge_outlined, 'Vendedor', seller, valueColor: const Color(0xFF475569)),
       ],
     );
   }
