@@ -62,6 +62,13 @@ class AppDrawer extends StatelessWidget {
       AppRoutes.inventory,
       [UserRole.admin, UserRole.vendedor],
     ),
+    _MenuEntry(
+      Icons.swap_vert,
+      'Movimientos de inventario',
+      'Consulta entradas y salidas ',
+      AppRoutes.inventoryMovement,
+      [UserRole.admin, UserRole.vendedor],
+    ),
 
     _MenuEntry(
       Icons.bar_chart_rounded,
