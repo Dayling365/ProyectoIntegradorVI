@@ -1,7 +1,57 @@
 import 'package:flutter/material.dart';
 
-class PurchaseFilters extends StatelessWidget {
-  const PurchaseFilters({super.key});
+class PurchaseFilters extends StatefulWidget {
+  final ValueChanged<String> onProveedorChanged;
+
+  const PurchaseFilters({super.key, required this.onProveedorChanged});
+
+  @override
+  State<PurchaseFilters> createState() => _PurchaseFiltersState();
+}
+
+class _PurchaseFiltersState extends State<PurchaseFilters> {
+  DateTime? fechaInicio;
+  DateTime? fechaFin;
+    String proveedorSeleccionado = 'Todos';
+
+  final List<String> proveedores = [
+    'Todos',
+    'Distribuidora Faber S.A.',
+    'Útiles y Tintas del Pacífico',
+    'Editorial Cervantes',
+  ];
+
+  String _formatearFecha(DateTime? fecha, String textoDefault) {
+    if (fecha == null) return textoDefault;
+    return '${fecha.day.toString().padLeft(2, '0')}/${fecha.month.toString().padLeft(2, '0')}/${fecha.year}';
+  }
+
+  Future<void> _seleccionarFecha(bool esInicio) async {
+    final DateTime? seleccionada = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
+    );
+
+    if (seleccionada != null) {
+      setState(() {
+        if (esInicio) {
+          fechaInicio = seleccionada;
+        } else {
+          fechaFin = seleccionada;
+        }
+      });
+    }
+  }
+
+    void _seleccionarProveedor(String proveedor) {
+    setState(() {
+      proveedorSeleccionado = proveedor;
+    });
+    widget.onProveedorChanged(proveedor);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,16 +105,22 @@ class PurchaseFilters extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _filtro(
-                    Icons.calendar_today_outlined,
-                    '01/10/2026',
+                  child: GestureDetector(
+                    onTap: () => _seleccionarFecha(true),
+                    child: _filtro(
+                      Icons.calendar_today_outlined,
+                      _formatearFecha(fechaInicio, '01/10/2026'),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: _filtro(
-                    Icons.calendar_today_outlined,
-                    '31/10/2026',
+                  child: GestureDetector(
+                    onTap: () => _seleccionarFecha(false),
+                    child: _filtro(
+                      Icons.calendar_today_outlined,
+                      _formatearFecha(fechaFin, '31/10/2026'),
+                    ),
                   ),
                 ),
               ],
@@ -75,11 +131,24 @@ class PurchaseFilters extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _filtro(
-                    Icons.local_shipping_outlined,
-                    'Proveedor',
-                    subtitulo: 'Todos',
-                    arrow: true,
+                  child: PopupMenuButton<String>(
+                    onSelected: _seleccionarProveedor,
+                    itemBuilder: (context) => proveedores
+                        .map(
+                          (proveedor) => PopupMenuItem<String>(
+                            value: proveedor,
+                            child: Text(
+                              proveedor,
+                              style: const TextStyle(fontSize: 13),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    child: _filtro(
+                      Icons.local_shipping_outlined,
+                      'Proveedor',
+                      subtitulo: proveedorSeleccionado,
+                      arrow: true,)
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -166,4 +235,3 @@ class PurchaseFilters extends StatelessWidget {
     );
   }
 }
-
