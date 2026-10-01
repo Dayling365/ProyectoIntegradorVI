@@ -1,85 +1,58 @@
 import 'package:flutter/material.dart';
 
 class PurchasePagination extends StatelessWidget {
-  final int paginaActual;
-  final int totalPaginas;
+  final int currentPage;
+  final int totalPages;
+  final ValueChanged<int> onPageChanged;
 
   const PurchasePagination({
     super.key,
-    required this.paginaActual,
-    required this.totalPaginas,
+    required this.currentPage,
+    required this.totalPages,
+    required this.onPageChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    const Color textSecondary = Color(0xFF8A94A6);
-
     return Column(
       children: [
-
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.chevron_left, size: 20),
+              onPressed: currentPage > 1 ? () => onPageChanged(currentPage - 1) : null,
+              icon: const Icon(Icons.chevron_left),
             ),
-
-            _paginaBoton('1', activa: true),
-
-            const SizedBox(width: 6),
-
-            _paginaBoton('2', activa: false),
-
-            const SizedBox(width: 6),
-
-            _paginaBoton('3', activa: false),
-
-            const SizedBox(width: 6),
-
-            const Text('...', style: TextStyle(color: textSecondary)),
-
-            const SizedBox(width: 6),
-
-            _paginaBoton('40', activa: false),
-
+            for (final p in [1, 2, 3]) _pageButton(p),
+            const Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: Text('...')),
+            _pageButton(totalPages),
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.chevron_right, size: 20),
+              onPressed: currentPage < totalPages ? () => onPageChanged(currentPage + 1) : null,
+              icon: const Icon(Icons.chevron_right),
             ),
           ],
         ),
-
-        const SizedBox(height: 4),
-
-        Text(
-          'Página $paginaActual de $totalPaginas',
-          style: const TextStyle(fontSize: 12, color: textSecondary),
-        ),
+        Text('Página $currentPage de $totalPages', style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
       ],
     );
   }
 
-  Widget _paginaBoton(String texto, {required bool activa}) {
-    const Color primary = Color(0xFF1B2A5C);
-    const Color textPrimary = Color(0xFF1A1F36);
-
-    return Container(
-      width: 32,
-      height: 32,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: activa ? primary : Colors.transparent,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        texto,
-        style: TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w600,
-          color: activa ? Colors.white : textPrimary,
+  Widget _pageButton(int page) {
+    final selected = page == currentPage;
+    return GestureDetector(
+      onTap: () => onPageChanged(page),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 3),
+        width: 32,
+        height: 32,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: selected ? const Color(0xFF1B2A5C) : Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: const Color(0xFFE2E8F0)),
         ),
+        child: Text('$page',
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: selected ? Colors.white : const Color(0xFF1A1F36))),
       ),
     );
   }
