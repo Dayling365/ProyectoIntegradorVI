@@ -33,6 +33,11 @@ class ProductHeader extends StatelessWidget {
           '${product.category} • ${product.subcategory}',
           style: const TextStyle(fontSize: 13, color: Color(0xFF8A94A6)),
         ),
+        const SizedBox(height: 2),
+        Text(
+          'Marca: ${product.brand}',
+          style: const TextStyle(fontSize: 13, color: Color(0xFF8A94A6)),
+        ),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
