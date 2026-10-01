@@ -46,44 +46,6 @@ class PurchaseDetailScreen extends StatelessWidget {
 
                 const SizedBox(height: 16), 
 
-                const SizedBox(height: 16), 
-
-                Container( 
-                  width: double.infinity, 
-                  padding: const EdgeInsets.symmetric( 
-                    horizontal: 16, 
-                    vertical: 14, 
-                  ), 
-                  decoration: BoxDecoration( 
-                    color: const Color(0xFFF1F5F9), 
-                    borderRadius: BorderRadius.circular(12), 
-                  ), 
-                  child: Column( 
-                    crossAxisAlignment: CrossAxisAlignment.center, 
-                    children: [ 
-                      const Text('MONTO TOTAL DE LA COMPRA', 
-                        textAlign: TextAlign.center, 
-                        style: TextStyle( 
-                          fontSize: 10, 
-                          fontWeight: FontWeight.w600, 
-                          color: textSecondary, 
-                        ), 
-                      ), 
-                      const SizedBox(height: 4), 
-                      const Text('C\$6,450.00', 
-                        textAlign: TextAlign.center, 
-                        style: TextStyle( 
-                          fontSize: 25, 
-                          fontWeight: FontWeight.bold, 
-                          color: Color(0xFF17365D), 
-                        ), 
-                      ), 
-                    ], 
-                  ), 
-                ), 
-
-                const SizedBox(height: 16), 
-
                 PurchaseDetailInfo( 
                   codigo: codigo, 
                 ), 
@@ -96,10 +58,8 @@ class PurchaseDetailScreen extends StatelessWidget {
 
                 const SizedBox(height: 16), 
 
-                const PurchaseDetailSummary( 
-                  subtotal: 'C\$5,608.70', 
-                  totalNeto: 'C\$6,450.00', 
-                  montoPagado: 'C\$6,450.00', 
+                PurchaseDetailSummary(
+                  codigo: codigo, 
                 ), 
 
                 const SizedBox(height: 20), 
