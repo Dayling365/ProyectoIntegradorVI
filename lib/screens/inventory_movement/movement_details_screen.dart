@@ -1,25 +1,84 @@
 import 'package:flutter/material.dart';
-import '../models_movement/movement.dart';
+import '../../widgets/app_drawer.dart';
+import '../../app_routes.dart';
 
 class MovementDetailsScreen extends StatelessWidget {
-  const MovementDetailsScreen({super.key});
+  final String registroId;
+  final String movementLabel;
+  final Color movementColor;
+  final Color movementBgColor;
+  final IconData movementIcon;
+  final int cantidadInvolucrada;
+  final int stockPrevio;
+  final int stockFinal;
+  final String fechaHora;
+  final String motivo;
+  final String codigoProducto;
+  final String productName;
+  final String sku;
+  final String category;
+  final int cantidadIngresada;
+  final double costoUnitario;
+  final double valorTotalLote;
+
+  const MovementDetailsScreen({
+    super.key,
+    this.registroId = '0000',
+    this.movementLabel = 'Entrada',
+    this.movementColor = const Color(0xFF16A34A),
+    this.movementBgColor = const Color(0x1A16A34A),
+    this.movementIcon = Icons.swap_vert,
+    this.cantidadInvolucrada = 0,
+    this.stockPrevio = 0,
+    this.stockFinal = 0,
+    this.fechaHora = '',
+    this.motivo = '',
+    this.codigoProducto = '',
+    this.productName = '',
+    this.sku = '',
+    this.category = '',
+    this.cantidadIngresada = 0,
+    this.costoUnitario = 0,
+    this.valorTotalLote = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final movement = ModalRoute.of(context)!.settings.arguments as Movement;
-
     return Scaffold(
       backgroundColor: const Color(0xFFF7F8FA),
+      drawer: const AppDrawer(currentRoute: AppRoutes.inventoryMovementDetails),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF1B2A5C),
+        elevation: 0,
+        title: Row(
+          children: const [
+            Icon(Icons.menu_book, color: Colors.white, size: 20),
+            SizedBox(width: 8),
+            Text('Librería Don César', style: TextStyle(color: Colors.white, fontSize: 16)),
+          ],
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 12),
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 16,
+              child: Icon(Icons.person, color: Color(0xFF16233F), size: 18),
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            // Encabezado
             const Text(
               'Detalle de Movimiento',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1E3A5F),
+                color: Color(0xFF16233F),
               ),
             ),
             const SizedBox(height: 4),
@@ -29,7 +88,7 @@ class MovementDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // ---- Tarjeta: Registro + cantidad involucrada + motivo ----
+            // Tarjeta principal: registro, cantidad involucrada, fecha, tipo, motivo
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -46,6 +105,7 @@ class MovementDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // N° de registro + badge de tipo
                   Row(
                     children: [
                       Expanded(
@@ -62,13 +122,13 @@ class MovementDetailsScreen extends StatelessWidget {
                             ),
                             Flexible(
                               child: Text(
-                                '#${movement.registroId}',
+                                '#$registroId',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13,
-                                  color: Color(0xFF1E3A5F),
+                                  color: Color(0xFF16233F),
                                 ),
                               ),
                             ),
@@ -83,18 +143,18 @@ class MovementDetailsScreen extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              color: movement.movementBgColor,
+                              color: movementBgColor,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(movement.movementIcon, size: 13, color: movement.movementColor),
+                                Icon(movementIcon, size: 13, color: movementColor),
                                 const SizedBox(width: 4),
                                 Text(
-                                  movement.movementLabel,
+                                  movementLabel,
                                   style: TextStyle(
-                                    color: movement.movementColor,
+                                    color: movementColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -110,6 +170,7 @@ class MovementDetailsScreen extends StatelessWidget {
                   const Divider(height: 1, color: Color(0xFFEDEDED)),
                   const SizedBox(height: 16),
 
+                  // Cantidad involucrada
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
@@ -136,7 +197,7 @@ class MovementDetailsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                '${movement.cantidadInvolucrada >= 0 ? '+' : ''}${movement.cantidadInvolucrada}',
+                                '${cantidadInvolucrada >= 0 ? '+' : ''}$cantidadInvolucrada',
                                 style: const TextStyle(
                                   fontSize: 34,
                                   fontWeight: FontWeight.bold,
@@ -171,11 +232,11 @@ class MovementDetailsScreen extends StatelessWidget {
                                   style: TextStyle(color: Colors.grey[600], fontSize: 12),
                                 ),
                                 Text(
-                                  '${movement.stockPrevio} unid.',
+                                  '$stockPrevio unid.',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12,
-                                    color: Color(0xFF1E3A5F),
+                                    color: Color(0xFF16233F),
                                   ),
                                 ),
                                 const SizedBox(width: 6),
@@ -186,11 +247,11 @@ class MovementDetailsScreen extends StatelessWidget {
                                   style: TextStyle(color: Colors.grey[600], fontSize: 12),
                                 ),
                                 Text(
-                                  '${movement.stockFinal} unid.',
+                                  '$stockFinal unid.',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12,
-                                    color: Color(0xFF1E3A5F),
+                                    color: Color(0xFF16233F),
                                   ),
                                 ),
                               ],
@@ -202,9 +263,11 @@ class MovementDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  _infoRow(Icons.calendar_today_outlined, 'Fecha y hora', movement.fechaHora),
+                  // Fecha y hora
+                  _infoRow(Icons.calendar_today_outlined, 'Fecha y hora', fechaHora),
                   const SizedBox(height: 12),
 
+                  // Tipo de movimiento
                   Row(
                     children: [
                       Icon(Icons.swap_vert, size: 18, color: Colors.grey[600]),
@@ -218,7 +281,7 @@ class MovementDetailsScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: movement.movementBgColor,
+                          color: movementBgColor,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Row(
@@ -227,13 +290,13 @@ class MovementDetailsScreen extends StatelessWidget {
                             Container(
                               width: 6,
                               height: 6,
-                              decoration: BoxDecoration(color: movement.movementColor, shape: BoxShape.circle),
+                              decoration: BoxDecoration(color: movementColor, shape: BoxShape.circle),
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              movement.movementLabel,
+                              movementLabel,
                               style: TextStyle(
-                                color: movement.movementColor,
+                                color: movementColor,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -247,6 +310,7 @@ class MovementDetailsScreen extends StatelessWidget {
                   const Divider(height: 1, color: Color(0xFFEDEDED)),
                   const SizedBox(height: 12),
 
+                  // Motivo
                   Row(
                     children: [
                       Icon(Icons.local_offer_outlined, size: 16, color: Colors.grey[600]),
@@ -270,11 +334,11 @@ class MovementDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      '"${movement.motivo}"',
+                      '"$motivo"',
                       style: const TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 13,
-                        color: Color(0xFF1E3A5F),
+                        color: Color(0xFF16233F),
                         height: 1.4,
                       ),
                     ),
@@ -284,7 +348,7 @@ class MovementDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // ---- Tarjeta: Producto afectado ----
+            // Tarjeta: producto afectado
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -303,7 +367,7 @@ class MovementDetailsScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.inventory_2_outlined, size: 18, color: Color(0xFF1E3A5F)),
+                      const Icon(Icons.inventory_2_outlined, size: 18, color: Color(0xFF16233F)),
                       const SizedBox(width: 6),
                       const Expanded(
                         child: Text(
@@ -321,7 +385,7 @@ class MovementDetailsScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
-                              'Cód. Producto: #${movement.codigoProducto}',
+                              'Cód. Producto: #$codigoProducto',
                               style: const TextStyle(
                                 color: Color(0xFF3B82F6),
                                 fontSize: 11,
@@ -345,13 +409,13 @@ class MovementDetailsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              movement.productName,
+                              productName,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
-                                color: Color(0xFF1E3A5F),
+                                color: Color(0xFF16233F),
                               ),
                             ),
                             const SizedBox(height: 6),
@@ -367,12 +431,12 @@ class MovementDetailsScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
-                                    'SKU: ${movement.sku}',
+                                    'SKU: $sku',
                                     style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
                                   ),
                                 ),
                                 Text(
-                                  '•  ${movement.category}',
+                                  '•  $category',
                                   style: TextStyle(color: Colors.grey[600], fontSize: 12),
                                 ),
                               ],
@@ -385,11 +449,11 @@ class MovementDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            'C\$${movement.valorTotalLote.toStringAsFixed(2)}',
+                            'C\$${valorTotalLote.toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
-                              color: Color(0xFF1E3A5F),
+                              color: Color(0xFF16233F),
                             ),
                           ),
                           Text(
@@ -409,7 +473,6 @@ class MovementDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           child: Column(
@@ -417,47 +480,40 @@ class MovementDetailsScreen extends StatelessWidget {
                             children: [
                               Text(
                                 'CANTIDAD INGRESADA',
-                                maxLines: 2,
                                 style: TextStyle(color: Colors.grey[500], fontSize: 10, fontWeight: FontWeight.w600),
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                '+${movement.cantidadIngresada} unidades',
+                                '+$cantidadIngresada unidades',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
-                                  color: Color(0xFF1E3A5F),
+                                  color: Color(0xFF16233F),
                                 ),
                               ),
                             ],
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                'COSTO UNITARIO COMPRA',
-                                maxLines: 2,
-                                textAlign: TextAlign.right,
-                                style: TextStyle(color: Colors.grey[500], fontSize: 10, fontWeight: FontWeight.w600),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'COSTO UNITARIO COMPRA',
+                              style: TextStyle(color: Colors.grey[500], fontSize: 10, fontWeight: FontWeight.w600),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'C\$${costoUnitario.toStringAsFixed(2)} / un.',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Color(0xFF16233F),
                               ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'C\$${movement.costoUnitario.toStringAsFixed(2)} / un.',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: Color(0xFF1E3A5F),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -467,18 +523,19 @@ class MovementDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
+            // Botón volver
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
                 onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back, size: 18, color: Color(0xFF1E3A5F)),
+                icon: const Icon(Icons.arrow_back, size: 18, color: Color(0xFF16233F)),
                 label: const Text(
                   'Volver al Historial de Movimientos',
-                  style: TextStyle(color: Color(0xFF1E3A5F), fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Color(0xFF16233F), fontWeight: FontWeight.bold),
                 ),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  side: const BorderSide(color: Color(0xFF1E3A5F)),
+                  side: const BorderSide(color: Color(0xFF16233F)),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
               ),
@@ -517,7 +574,7 @@ class MovementDetailsScreen extends StatelessWidget {
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1E3A5F),
+              color: Color(0xFF16233F),
             ),
           ),
         ),
