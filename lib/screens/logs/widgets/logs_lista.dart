@@ -1,114 +1,141 @@
-import 'package:flutter/material.dart';
-import 'logs_item.dart';
+import 'package:flutter/material.dart'; 
+import 'logs_item.dart'; 
+import '../../../theme/app_colors.dart'; 
+import '../../../theme/app_icons.dart'; 
 
-class LogsLista extends StatelessWidget {
-  const LogsLista({super.key});
+class LogsLista extends StatelessWidget { 
+  const LogsLista({super.key}); 
 
-  @override
-  Widget build(BuildContext context) {
-    const Color textSecondary = Color(0xFF8A94A6);
-    const Color info = Color(0xFF2563EB);
-    const Color warning = Color(0xFFF59E0B);
-    const Color alert = Color(0xFFDC2626);
-    const Color success = Color(0xFF16A34A);
+  @override 
+  Widget build(BuildContext context) { 
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+    return Column( 
+      crossAxisAlignment: CrossAxisAlignment.start, 
+      children: [ 
 
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: Text(
-            'Hoy, 16 septiembre',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: textSecondary,
-            ),
-          ),
-        ),
+        LogItem( 
+          icon: AppIcons.edit, 
+          iconColor: AppColors.link, 
+          iconBg: AppColors.link.withOpacity(0.12), 
+          titulo: 'Don César Admin', 
+          hora: '10:45 AM', 
+          subtitulo: 'Inicio de sesión exitoso', 
+          etiqueta: 'Seguridad', 
+          etiquetaColor: AppColors.link, 
+          etiquetaBg: AppColors.link.withOpacity(0.1), 
+        ), 
 
-        LogItem(
-          icon: Icons.login,
-          iconColor: info,
-          iconBg: info.withOpacity(0.12),
-          titulo: 'Don César Admin',
-          hora: '10:45 AM',
-          subtitulo: 'Inicio de sesión exitoso',
-          etiqueta: 'Seguridad',
-          etiquetaColor: info,
-          etiquetaBg: info.withOpacity(0.1),
-        ),
+        LogItem( 
+          icon: AppIcons.warning, 
+          iconColor: AppColors.error, 
+          iconBg: AppColors.error.withOpacity(0.12), 
+          titulo: 'Ana García', 
+          hora: '09:12 AM', 
+          subtitulo: 'Producto desactivado: El Quijote (Ed. Especial)', 
+          etiqueta: 'Inventario', 
+          etiquetaColor: AppColors.error, 
+          etiquetaBg: AppColors.error.withOpacity(0.1), 
+        ), 
 
-        LogItem(
-          icon: Icons.warning_amber_rounded,
-          iconColor: alert,
-          iconBg: alert.withOpacity(0.12),
-          titulo: 'Ana García',
-          hora: '09:12 AM',
-          subtitulo: 'Producto desactivado: El Quijote (Ed. Especial)',
-          etiqueta: 'Inventario',
-          etiquetaColor: alert,
-          etiquetaBg: alert.withOpacity(0.1),
-        ),
+        LogItem( 
+          icon: AppIcons.edit, 
+          iconColor: AppColors.warning, 
+          iconBg: AppColors.warning.withOpacity(0.12), 
+          titulo: 'Don César Admin', 
+          hora: '08:30 AM', 
+          subtitulo: 'Cambio de estado: Miguel Vargas', 
+          etiqueta: 'Usuarios', 
+          etiquetaColor: AppColors.success, 
+          etiquetaBg: AppColors.success.withOpacity(0.1), 
+        ), 
 
-        LogItem(
-          icon: Icons.edit,
-          iconColor: warning,
-          iconBg: warning.withOpacity(0.12),
-          titulo: 'Don César Admin',
-          hora: '08:30 AM',
-          subtitulo: 'Cambio de estado: Miguel Vargas',
-          etiqueta: 'Usuarios',
-          etiquetaColor: success,
-          etiquetaBg: success.withOpacity(0.1),
-        ),
+        LogItem( 
+          icon: AppIcons.edit, 
+          iconColor: AppColors.link, 
+          iconBg: AppColors.link.withOpacity(0.12), 
+          titulo: 'Don César Admin', 
+          hora: '10:45 AM', 
+          subtitulo: 'Inicio de sesión exitoso', 
+          etiqueta: 'Seguridad', 
+          etiquetaColor: AppColors.link, 
+          etiquetaBg: AppColors.link.withOpacity(0.1), 
+        ), 
 
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: Text(
-            'Ayer, 15 septiembre',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: textSecondary,
-            ),
-          ),
-        ),
+        LogItem( 
+          icon: AppIcons.edit, 
+          iconColor: AppColors.success, 
+          iconBg: AppColors.success.withOpacity(0.12), 
+          titulo: 'Ana García', 
+          hora: '08:15 AM', 
+          subtitulo: 'Producto actualizado: Cuaderno Universitario', 
+          etiqueta: 'Inventario', 
+          etiquetaColor: AppColors.success, 
+          etiquetaBg: AppColors.success.withOpacity(0.1), 
+        ), 
 
-        LogItem(
-          icon: Icons.login,
-          iconColor: info,
-          iconBg: info.withOpacity(0.12),
-          titulo: 'Don César Admin',
-          hora: '10:45 AM',
-          subtitulo: 'Inicio de sesión exitoso',
-          etiqueta: 'Seguridad',
-          etiquetaColor: info,
-          etiquetaBg: info.withOpacity(0.1),
-        ),
+        LogItem( 
+          icon: AppIcons.edit, 
+          iconColor: AppColors.link, 
+          iconBg: AppColors.link.withOpacity(0.12), 
+          titulo: 'Don César Admin', 
+          hora: '07:50 AM', 
+          subtitulo: 'Nuevo proveedor registrado: Distribuidora Escolar', 
+          etiqueta: 'Proveedores', 
+          etiquetaColor: AppColors.link, 
+          etiquetaBg: AppColors.link.withOpacity(0.1), 
+        ), 
 
-        const SizedBox(height: 10),
+        LogItem( 
+          icon: AppIcons.warning, 
+          iconColor: AppColors.warning, 
+          iconBg: AppColors.warning.withOpacity(0.12), 
+          titulo: 'Ana García', 
+          hora: '07:25 AM', 
+          subtitulo: 'Stock actualizado: Lápiz Grafito HB', 
+          etiqueta: 'Inventario', 
+          etiquetaColor: AppColors.warning, 
+          etiquetaBg: AppColors.warning.withOpacity(0.1), 
+        ), 
 
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton.icon(
-            onPressed: () {},
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              side: BorderSide(color: Colors.grey.shade300),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            icon: const Icon(Icons.refresh, size: 18, color: info),
-            label: const Text(
-              'Cargar más eventos',
-              style: TextStyle(color: info, fontWeight: FontWeight.w600),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+        LogItem( 
+          icon: AppIcons.edit, 
+          iconColor: AppColors.success, 
+          iconBg: AppColors.success.withOpacity(0.12), 
+          titulo: 'Don César Admin', 
+          hora: '06:40 AM', 
+          subtitulo: 'Nueva categoría registrada: Material Escolar', 
+          etiqueta: 'Catálogos', 
+          etiquetaColor: AppColors.success, 
+          etiquetaBg: AppColors.success.withOpacity(0.1), 
+        ), 
+
+        LogItem( 
+          icon: AppIcons.warning, 
+          iconColor: AppColors.error, 
+          iconBg: AppColors.error.withOpacity(0.12), 
+          titulo: 'Ana García', 
+          hora: '06:15 AM', 
+          subtitulo: 'Intento de inicio de sesión fallido', 
+          etiqueta: 'Seguridad', 
+          etiquetaColor: AppColors.error, 
+          etiquetaBg: AppColors.error.withOpacity(0.1), 
+        ), 
+
+        LogItem( 
+          icon: AppIcons.edit, 
+          iconColor: AppColors.link, 
+          iconBg: AppColors.link.withOpacity(0.12), 
+          titulo: 'Don César Admin', 
+          hora: '05:50 AM', 
+          subtitulo: 'Compra registrada: CP-2026-088', 
+          etiqueta: 'Compras', 
+          etiquetaColor: AppColors.link, 
+          etiquetaBg: AppColors.link.withOpacity(0.1), 
+        ), 
+
+        const SizedBox(height: 10), 
+      ], 
+    ); 
+  } 
 }
+

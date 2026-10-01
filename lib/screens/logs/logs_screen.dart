@@ -4,9 +4,18 @@ import '../../widgets/app_scaffold.dart';
 import 'widgets/logs_filtros.dart';
 import 'widgets/logs_stats.dart';
 import 'widgets/logs_lista.dart';
+import 'widgets/logs_pagination.dart';
 
-class LogsScreen extends StatelessWidget {
+class LogsScreen extends StatefulWidget {
   const LogsScreen({super.key});
+
+  @override
+  State<LogsScreen> createState() => _LogsScreenState();
+}
+
+class _LogsScreenState extends State<LogsScreen> {
+  int _currentPage = 1;
+  final int _totalPages = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +52,14 @@ class LogsScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             const LogsLista(),
+
+            const SizedBox(height: 20),
+
+            LogsPagination(
+              currentPage: _currentPage,
+              totalPages: _totalPages,
+              onPageChanged: (p) => setState(() => _currentPage = p),
+            ),
           ],
         ),
       ),
