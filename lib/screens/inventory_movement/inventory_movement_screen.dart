@@ -6,8 +6,17 @@ import 'widgets_inventory_movements/movement_summary.dart';
 import 'widgets_inventory_movements/movement_list.dart';
 import 'widgets_inventory_movements/movement_pagination.dart';
 
-class InventoryMovementScreen extends StatelessWidget {
+class InventoryMovementScreen extends StatefulWidget {
   const InventoryMovementScreen({super.key});
+
+  @override
+  State<InventoryMovementScreen> createState() =>
+      _InventoryMovementScreenState();
+}
+
+class _InventoryMovementScreenState extends State<InventoryMovementScreen> {
+  int _currentPage = 1;
+  final int _totalPages = 13;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +53,12 @@ class InventoryMovementScreen extends StatelessWidget {
             const SizedBox(height: 12),
             const MovementList(),
             const SizedBox(height: 16),
-            const MovementPagination(paginaActual: 1, totalPaginas: 5),
+            
+            MovementPagination(
+              currentPage: _currentPage,
+              totalPages: _totalPages,
+              onPageChanged: (p) => setState(() => _currentPage = p),
+            ),
           ],
         ),
       ),
