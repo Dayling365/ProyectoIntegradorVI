@@ -109,7 +109,6 @@ class LowStockSection extends StatelessWidget {
                   ),
                 ),
 
-                const Icon(Icons.chevron_right, color: danger, size: 20),
               ],
             ),
           ),
