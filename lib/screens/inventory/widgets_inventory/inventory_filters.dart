@@ -1,27 +1,91 @@
 import 'package:flutter/material.dart';
 
 class InventoryFilters extends StatelessWidget {
+  final List<String> categories;
+  final List<String> brands;
+  final List<String> statuses;
+  final List<String> sortOptions;
+
+  final String category;
+  final String brand;
+  final String status;
+  final String sortBy;
+
+  final ValueChanged<String> onCategoryChanged;
+  final ValueChanged<String> onBrandChanged;
+  final ValueChanged<String> onStatusChanged;
+  final ValueChanged<String> onSortChanged;
   final VoidCallback onClear;
-  const InventoryFilters({super.key, required this.onClear});
+
+  const InventoryFilters({
+    super.key,
+    required this.categories,
+    required this.brands,
+    required this.statuses,
+    required this.sortOptions,
+    required this.category,
+    required this.brand,
+    required this.status,
+    required this.sortBy,
+    required this.onCategoryChanged,
+    required this.onBrandChanged,
+    required this.onStatusChanged,
+    required this.onSortChanged,
+    required this.onClear,
+  });
 
   @override
   Widget build(BuildContext context) {
+    const Color info = Color(0xFF2563EB);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          children: const [
-            Expanded(child: _FilterField(icon: Icons.category_outlined, label: 'Categoría', value: 'Todos')),
-            SizedBox(width: 10),
-            Expanded(child: _FilterField(icon: Icons.sell_outlined, label: 'Marca', value: 'Todos')),
+          children: [
+            Expanded(
+              child: _FilterDropdown(
+                icon: Icons.category_outlined,
+                label: 'Categoría',
+                value: category,
+                options: categories,
+                onSelected: onCategoryChanged,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _FilterDropdown(
+                icon: Icons.sell_outlined,
+                label: 'Marca',
+                value: brand,
+                options: brands,
+                onSelected: onBrandChanged,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 10),
         Row(
-          children: const [
-            Expanded(child: _FilterField(icon: Icons.toggle_on_outlined, label: 'Estado', value: 'Todos')),
-            SizedBox(width: 10),
-            Expanded(child: _FilterField(icon: Icons.calendar_today_outlined, label: 'Ordenar por', value: 'Más recientes')),
+          children: [
+            Expanded(
+              child: _FilterDropdown(
+                icon: Icons.toggle_on_outlined,
+                label: 'Estado',
+                value: status,
+                options: statuses,
+                onSelected: onStatusChanged,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _FilterDropdown(
+                icon: Icons.swap_vert, 
+                label: 'Ordenar por',
+                value: sortBy,
+                options: sortOptions,
+                onSelected: onSortChanged,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 8),
@@ -29,8 +93,11 @@ class InventoryFilters extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: TextButton.icon(
             onPressed: onClear,
-            icon: const Icon(Icons.close, size: 14, color: Color(0xFF8A94A6)),
-            label: const Text('Limpiar filtros', style: TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+            icon: const Icon(Icons.close, size: 16, color: info),
+            label: const Text(
+              'Limpiar filtros',
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: info),
+            ),
           ),
         ),
       ],
@@ -38,37 +105,80 @@ class InventoryFilters extends StatelessWidget {
   }
 }
 
-class _FilterField extends StatelessWidget {
+class _FilterDropdown extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
-  const _FilterField({required this.icon, required this.label, required this.value});
+  final List<String> options;
+  final ValueChanged<String> onSelected;
+
+  const _FilterDropdown({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.options,
+    required this.onSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 16, color: const Color(0xFF1B2A5C)),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF1A1F36))),
-                Text(value, style: const TextStyle(fontSize: 11, color: Color(0xFF8A94A6))),
-              ],
-            ),
+    return PopupMenuButton<String>(
+      tooltip: '',
+      position: PopupMenuPosition.under,
+      offset: const Offset(0, 4),
+      color: Colors.white,
+      surfaceTintColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      onSelected: onSelected,
+      itemBuilder: (context) => options.map((o) {
+        final selected = o == value;
+        return PopupMenuItem<String>(
+          value: o,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  o,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                    color: selected ? const Color(0xFF1B2A5C) : const Color(0xFF1A1F36),
+                  ),
+                ),
+              ),
+              if (selected) const Icon(Icons.check, size: 16, color: Color(0xFF1B2A5C)),
+            ],
           ),
-          const Icon(Icons.keyboard_arrow_down, size: 16, color: Color(0xFF8A94A6)),
-        ],
+        );
+      }).toList(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: const Color(0xFFE2E8F0)),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 16, color: const Color(0xFF1B2A5C)),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(label,
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF1A1F36))),
+                  Text(value,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 11, color: Color(0xFF8A94A6))),
+                ],
+              ),
+            ),
+            const Icon(Icons.keyboard_arrow_down, size: 16, color: Color(0xFF8A94A6)),
+          ],
+        ),
       ),
     );
   }
