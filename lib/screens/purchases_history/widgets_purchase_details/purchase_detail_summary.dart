@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
 class PurchaseDetailSummary extends StatelessWidget {
-  final String subtotal;
-  final String totalNeto;
-  final String montoPagado;
+  final String codigo;
 
   const PurchaseDetailSummary({
     super.key,
-    required this.subtotal,
-    required this.totalNeto,
-    required this.montoPagado,
+    required this.codigo,
   });
 
   @override
@@ -17,6 +13,30 @@ class PurchaseDetailSummary extends StatelessWidget {
     const Color textPrimary = Color(0xFF1A1F36);
     const Color textSecondary = Color(0xFF8A94A6);
     const Color success = Color(0xFF16A34A);
+
+    String subtotal = '';
+    String totalNeto = '';
+    String montoPagado = '';
+
+    switch (codigo) {
+      case 'Compra #CP-2026-088':
+        subtotal = 'C\$5,608.70';
+        totalNeto = 'C\$6,450.00';
+        montoPagado = 'C\$6,450.00';
+        break;
+
+      case 'Compra #CP-2026-087':
+        subtotal = 'C\$3,780.00';
+        totalNeto = 'C\$4,120.00';
+        montoPagado = 'C\$4,120.00';
+        break;
+
+      case 'Compra #CP-2026-086':
+        subtotal = 'C\$8,900.00';
+        totalNeto = 'C\$8,900.00';
+        montoPagado = 'C\$8,900.00';
+        break;
+    }
 
     return Container(
       width: double.infinity,

@@ -6,8 +6,17 @@ import 'widgets_purchase_history/purchase_summary.dart';
 import 'widgets_purchase_history/purchase_list.dart';
 import 'widgets_purchase_history/purchase_pagination.dart';
 
-class PurchasesHistoryScreen extends StatelessWidget {
+class PurchasesHistoryScreen extends StatefulWidget {
   const PurchasesHistoryScreen({super.key});
+
+  @override
+  State<PurchasesHistoryScreen> createState() => _PurchasesHistoryScreenState();
+}
+
+class _PurchasesHistoryScreenState extends State<PurchasesHistoryScreen> {
+  int _currentPage = 1;
+  final int _totalPages = 5;
+  String _proveedorFiltro = 'Todos';
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +40,36 @@ class PurchasesHistoryScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             const Text(
-              'Registro cronológico de compras y suministros de proveedores.',
+              'Registro cronológico de compras y suministros a proveedores.',
               style: TextStyle(
                 color: textSecondary,
                 fontSize: 13,
               ),
             ),
 
-            const PurchaseFilters(),
+            PurchaseFilters(
+              onProveedorChanged: (proveedor) {
+                setState(() => _proveedorFiltro = proveedor);
+              },
+            ),
 
             const SizedBox(height: 16),
 
-            const PurchaseSummary(total: 386),
+            const PurchaseSummary(total: 50),
 
             const SizedBox(height: 20),
 
-            const PurchaseList(),
+            PurchaseList(
+              proveedorFiltro: _proveedorFiltro,
+              currentPage: _currentPage,
+            ),
 
             const SizedBox(height: 20),
-            const PurchasePagination(paginaActual: 1, totalPaginas: 20),
+            PurchasePagination(
+              currentPage: _currentPage,
+              totalPages: _totalPages,
+              onPageChanged: (p) => setState(() => _currentPage = p),
+            ),
           ],
         ),
       ),
