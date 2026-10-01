@@ -19,6 +19,7 @@ class PurchaseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     const Color textPrimary = Color(0xFF17365D);
     const Color textSecondary = Color(0xFF7F8CA3);
+    const Color info = Color(0xFF2563EB);
 
     return GestureDetector(
       onTap: () => Navigator.pushNamed(
@@ -98,14 +99,14 @@ class PurchaseItem extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: textPrimary,
+                      color: info,
                     ),
                   ),
                   SizedBox(width: 4),
                   Icon(
                     Icons.arrow_forward,
                     size: 14,
-                    color: textPrimary,
+                    color: info,
                   ),
                 ],
               ),
