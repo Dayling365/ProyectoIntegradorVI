@@ -33,7 +33,7 @@ class MovementSummary extends StatelessWidget {
 
         const SizedBox(height: 4),
 
-        Text('$total movimientos registrados',
+        Text('130 movimientos registrados',
           style: const TextStyle(
             fontSize: 13,
             color: textSecondary,
