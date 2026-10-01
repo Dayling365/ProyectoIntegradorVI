@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/app_drawer.dart';
+import '../../theme/app_colors.dart';
 import 'widgets/report_metric_card.dart';
 import 'widgets/report_bar_chart.dart';
 import 'widgets/report_category_donut.dart';
@@ -14,14 +15,15 @@ class ReportScreen extends StatefulWidget {
 }
 
 class _ReportScreenState extends State<ReportScreen> {
-  int _selectedPeriodIndex = 1; // "Semana" seleccionado por defecto
+  int _selectedPeriodIndex = 1;
   final List<String> _periods = ['Hoy', 'Semana', 'Mes', 'Trimestre', 'Año'];
 
- 
+  int _selectedReportType = 0;
+  final List<String> _reportTypes = ['Ventas', 'Compra', 'Inventario'];
+
   final List<String> _dayLabels = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
   final List<double> _dayValues = [3600, 4200, 3800, 5100, 6200, 7400, 3900];
 
- 
   final List<CategorySlice> _categorySlices = const [
     CategorySlice(label: 'Papelería', percent: 42, amount: '11,970', color: Color(0xFF3B82F6)),
     CategorySlice(label: 'Útiles escolares', percent: 28, amount: '7,980', color: Color(0xFFF59E0B)),
@@ -33,10 +35,10 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F8FA),
+      backgroundColor: AppColors.background,
       drawer: const AppDrawer(currentRoute: AppRoutes.report),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF16233F),
+        backgroundColor: AppColors.primary,
         elevation: 0,
         title: Row(
           children: const [
@@ -51,7 +53,7 @@ class _ReportScreenState extends State<ReportScreen> {
             child: CircleAvatar(
               backgroundColor: Colors.white,
               radius: 16,
-              child: Icon(Icons.person, color: Color(0xFF16233F), size: 18),
+              child: Icon(Icons.person, color: AppColors.primary, size: 18),
             ),
           ),
         ],
@@ -62,7 +64,7 @@ class _ReportScreenState extends State<ReportScreen> {
           children: [
             const Text(
               'Reportes',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF16233F)),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.primary),
             ),
             const SizedBox(height: 4),
             const Text(
@@ -71,7 +73,9 @@ class _ReportScreenState extends State<ReportScreen> {
             ),
             const SizedBox(height: 16),
 
-            
+            _buildReportTypeMenu(),
+            const SizedBox(height: 16),
+
             GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
@@ -112,7 +116,6 @@ class _ReportScreenState extends State<ReportScreen> {
             ),
             const SizedBox(height: 16),
 
-            
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -145,7 +148,7 @@ class _ReportScreenState extends State<ReportScreen> {
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                               decoration: BoxDecoration(
-                                color: isSelected ? const Color(0xFF16233F) : Colors.transparent,
+                                color: isSelected ? AppColors.primary : Colors.transparent,
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -167,7 +170,6 @@ class _ReportScreenState extends State<ReportScreen> {
             ),
             const SizedBox(height: 12),
 
-           
             Row(
               children: [
                 Expanded(child: _buildFilterDropdown(Icons.category_outlined, 'Categoría', 'Todas')),
@@ -177,7 +179,6 @@ class _ReportScreenState extends State<ReportScreen> {
             ),
             const SizedBox(height: 16),
 
-            
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -204,14 +205,13 @@ class _ReportScreenState extends State<ReportScreen> {
                     labels: _dayLabels,
                     values: _dayValues,
                     maxAxisValue: 8000,
-                    highlightedIndex: 5, // Sáb
+                    highlightedIndex: 5,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
 
-            
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -244,7 +244,6 @@ class _ReportScreenState extends State<ReportScreen> {
             ),
             const SizedBox(height: 16),
 
-            
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -326,6 +325,45 @@ class _ReportScreenState extends State<ReportScreen> {
     );
   }
 
+  Widget _buildReportTypeMenu() {
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+        ],
+      ),
+      child: Row(
+        children: List.generate(_reportTypes.length, (i) {
+          final isSelected = i == _selectedReportType;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() => _selectedReportType = i),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.primary : Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  _reportTypes[i],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : AppColors.textSecondary,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
   Widget _buildFilterDropdown(IconData icon, String label, String value) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -349,7 +387,7 @@ class _ReportScreenState extends State<ReportScreen> {
                   value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Color(0xFF16233F)),
+                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: AppColors.primary),
                 ),
               ],
             ),
