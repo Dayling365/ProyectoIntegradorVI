@@ -14,6 +14,8 @@ class SalesPagination extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final firstPages = totalPages < 3 ? totalPages : 3;
+
     return Column(
       children: [
         Row(
@@ -23,16 +25,24 @@ class SalesPagination extends StatelessWidget {
               onPressed: currentPage > 1 ? () => onPageChanged(currentPage - 1) : null,
               icon: const Icon(Icons.chevron_left),
             ),
-            for (final p in [1, 2, 3]) _pageButton(p),
-            const Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: Text('...')),
-            _pageButton(totalPages),
+            for (int p = 1; p <= firstPages; p++) _pageButton(p),
+            if (totalPages > 3) ...[
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4),
+                child: Text('...'),
+              ),
+              _pageButton(totalPages),
+            ],
             IconButton(
               onPressed: currentPage < totalPages ? () => onPageChanged(currentPage + 1) : null,
               icon: const Icon(Icons.chevron_right),
             ),
           ],
         ),
-        Text('Página $currentPage de $totalPages', style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+        Text(
+          'Página $currentPage de $totalPages',
+          style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6)),
+        ),
       ],
     );
   }
@@ -51,8 +61,14 @@ class SalesPagination extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: const Color(0xFFE2E8F0)),
         ),
-        child: Text('$page',
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: selected ? Colors.white : const Color(0xFF1A1F36))),
+        child: Text(
+          '$page',
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: selected ? Colors.white : const Color(0xFF1A1F36),
+          ),
+        ),
       ),
     );
   }
