@@ -17,30 +17,82 @@ class PurchaseDetailInfo extends StatelessWidget {
     String fecha = ''; 
     String proveedor = ''; 
     String registradoPor = ''; 
+    String totalAmount = ''; 
 
     switch (codigo) { 
       case 'Compra #CP-2026-088': 
         fecha = '23 Oct 2026 • 11:45 AM'; 
         proveedor = 'Distribuidora Faber S.A.'; 
         registradoPor = 'Don César Admin'; 
+        totalAmount = 'C\$6,450.00'; 
         break; 
 
       case 'Compra #CP-2026-087': 
         fecha = '21 Oct 2026 • 09:15 AM'; 
         proveedor = 'Útiles y Tintas del Pacífico'; 
         registradoPor = 'María López'; 
+        totalAmount = 'C\$4,120.00'; 
         break; 
 
       case 'Compra #CP-2026-086': 
         fecha = '18 Oct 2026 • 04:30 PM'; 
         proveedor = 'Editorial Cervantes'; 
         registradoPor = 'Don César Admin'; 
+        totalAmount = 'C\$8,900.00'; 
         break; 
     } 
 
-    return Column( 
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: Column( 
       crossAxisAlignment: CrossAxisAlignment.start, 
       children: [ 
+
+        Text('FOLIO: $codigo',
+          style: const TextStyle(
+            fontSize: 11, fontWeight: FontWeight.w600,
+            color: Color(0xFF8A94A6),
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF5F7FA),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0xFFE2E8F0)),
+          ),
+          child: Column(
+            children: [
+              const Text('MONTO TOTAL FACTURADO',
+                style: TextStyle(
+                  fontSize: 11, fontWeight: FontWeight.w600,
+                  color: Color(0xFF8A94A6),
+                  letterSpacing: 0.5,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                totalAmount,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1B2A5C),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 16), 
 
         _fila( 
           icon: Icons.calendar_today_outlined, 
@@ -95,6 +147,7 @@ class PurchaseDetailInfo extends StatelessWidget {
           ], 
         ), 
       ], 
+      ), 
     ); 
   } 
 
