@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../../app_routes.dart';
 import '../../app_state.dart';
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -12,11 +11,46 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  static const Map<String, String> _credenciales = {
+    'admin': 'admin123',
+    'vendedor': 'vendedor123',
+    'carlos': 'carlos123',
+  };
+
   final _usuarioController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _obscure = true;
+  String? _userError;
+  String? _passError;
+  String? _loginError;
+
   @override
   void dispose() {
     _usuarioController.dispose();
+    _passwordController.dispose();
     super.dispose();
+  }
+
+  void _submit() {
+    final username = _usuarioController.text.trim();
+    final password = _passwordController.text;
+
+    setState(() {
+      _userError = username.isEmpty ? 'Campo obligatorio' : null;
+      _passError = password.isEmpty ? 'Campo obligatorio' : null;
+      _loginError = null;
+    });
+
+    if (username.isEmpty || password.isEmpty) return;
+
+    final esperada = _credenciales[username.toLowerCase()];
+
+    if (esperada != null && esperada == password) {
+      context.read<AppState>().login(username);
+      Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
+    } else {
+      setState(() => _loginError = 'Credenciales incorrectas');
+    }
   }
 
   @override
@@ -84,6 +118,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     circleColor: paleAmber,
                     navy: navy,
                     controller: _usuarioController,
+                    errorText: _userError,
+                    highlight: _loginError != null,
+                    textInputAction: TextInputAction.next,
+                    onChanged: (_) {
+                      if (_userError != null || _loginError != null) {
+                        setState(() {
+                          _userError = null;
+                          _loginError = null;
+                        });
+                      }
+                    },
                   ),
                   const SizedBox(height: 16),
                   _campo(
@@ -92,49 +137,75 @@ class _LoginScreenState extends State<LoginScreen> {
                     hint: "Ingresa tu contraseña...",
                     circleColor: paleAmber,
                     navy: navy,
-                    obscureText: true,
-                    trailingIcon: Icons.visibility_outlined,
+                    controller: _passwordController,
+                    obscureText: _obscure,
+                    errorText: _passError,
+                    highlight: _loginError != null,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_) => _submit(),
+                    onChanged: (_) {
+                      if (_passError != null || _loginError != null) {
+                        setState(() {
+                          _passError = null;
+                          _loginError = null;
+                        });
+                      }
+                    },
+                    trailing: GestureDetector(
+                      onTap: () => setState(() => _obscure = !_obscure),
+                      child: Icon(
+                        _obscure
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: Colors.grey,
+                        size: 20,
+                      ),
+                    ),
                   ),
+
+                  if (_loginError != null) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 12,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFEF2F2),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: const Color(0xFFFECACA)),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.error_outline,
+                            size: 18,
+                            color: Colors.redAccent,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              _loginError!,
+                              style: const TextStyle(
+                                color: Colors.redAccent,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+
                   const SizedBox(height: 28),
 
                   SizedBox(
                     width: double.infinity,
                     height: 54,
                     child: ElevatedButton(
-                      onPressed: () {
-                        final username = _usuarioController.text.trim();
-
-                        if (username.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Por favor, ingresa un nombre de usuario.',
-                              ),
-                              backgroundColor: Colors.redAccent,
-                            ),
-                          );
-                          return;
-                        }
-
-                        if (username == 'admin' ||username == 'vendedor' ||username == 'carlos') {
-                          context.read<AppState>().login(username);
-
-                          Navigator.pushReplacementNamed(
-                            context,
-                            AppRoutes.dashboard,
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                "Usuario incorrector.",
-                              ),
-                              backgroundColor: Colors.redAccent,
-                              duration: Duration(seconds: 3),
-                            ),
-                          );
-                        }
-                      },
+                      onPressed: _submit,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: navy,
                         elevation: 0,
@@ -181,57 +252,81 @@ class _LoginScreenState extends State<LoginScreen> {
     required Color navy,
     TextEditingController? controller,
     bool obscureText = false,
-    IconData? trailingIcon,
+    bool highlight = false,
+    Widget? trailing,
+    String? errorText,
+    ValueChanged<String>? onChanged,
+    ValueChanged<String>? onSubmitted,
+    TextInputAction? textInputAction,
   }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: Colors.grey.shade300, width: 1.2),
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: circleColor,
-            radius: 17,
-            child: Icon(icon, color: navy, size: 17),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13,
-                    color: navy,
-                  ),
-                ),
-                TextField(
-                  controller: controller,
-                  obscureText: obscureText,
-                  style: const TextStyle(fontSize: 13),
-                  decoration: InputDecoration(
-                    hintText: hint,
-                    hintStyle: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
-                    border: InputBorder.none,
-                    isDense: true,
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                ),
-              ],
+    final hasError = errorText != null || highlight;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(22),
+            border: Border.all(
+              color: hasError ? Colors.redAccent : Colors.grey.shade300,
+              width: 1.2,
             ),
           ),
-          if (trailingIcon != null)
-            Icon(trailingIcon, color: Colors.grey, size: 20),
-        ],
-      ),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: circleColor,
+                radius: 17,
+                child: Icon(icon, color: navy, size: 17),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13,
+                        color: navy,
+                      ),
+                    ),
+                    TextField(
+                      controller: controller,
+                      obscureText: obscureText,
+                      onChanged: onChanged,
+                      onSubmitted: onSubmitted,
+                      textInputAction: textInputAction,
+                      style: const TextStyle(fontSize: 13),
+                      decoration: InputDecoration(
+                        hintText: hint,
+                        hintStyle: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                        border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (trailing != null) trailing,
+            ],
+          ),
+        ),
+        if (errorText != null)
+          Padding(
+            padding: const EdgeInsets.only(left: 16, top: 6),
+            child: Text(
+              errorText,
+              style: const TextStyle(color: Colors.redAccent, fontSize: 12),
+            ),
+          ),
+      ],
     );
   }
 }
