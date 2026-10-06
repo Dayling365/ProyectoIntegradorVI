@@ -6,6 +6,8 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
 
+    fontFamily: AppTextTheme.fontFamily,
+
     scaffoldBackgroundColor: AppColors.background,
 
     colorScheme: ColorScheme.fromSeed(
@@ -22,6 +24,17 @@ class AppTheme {
       foregroundColor: AppColors.white,
       elevation: 0,
       centerTitle: false,
+      titleTextStyle: TextStyle(
+        fontFamily: AppTextTheme.fontFamily,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.white,
+      ),
+    ),
+
+    dividerTheme: const DividerThemeData(
+      color: AppColors.borderLight,
+      thickness: 1,
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
