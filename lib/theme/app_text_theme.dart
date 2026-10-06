@@ -2,75 +2,183 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 class AppTextTheme {
-  static TextTheme textTheme = TextTheme(
-    displayLarge: const TextStyle(
-      fontFamily: 'Inter',
+  AppTextTheme._();
+
+  static const String fontFamily = 'Inter';
+
+  static const TextTheme textTheme = TextTheme(
+    displayLarge: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 28,
       fontWeight: FontWeight.w700,
       color: AppColors.textPrimary,
     ),
-    displayMedium: const TextStyle(
-      fontFamily: 'Inter',
+    displayMedium: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 24,
       fontWeight: FontWeight.w700,
       color: AppColors.textPrimary,
     ),
-    headlineLarge: const TextStyle(
-      fontFamily: 'Inter',
+    headlineLarge: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 22,
       fontWeight: FontWeight.w700,
       color: AppColors.textPrimary,
     ),
-    headlineMedium: const TextStyle(
-      fontFamily: 'Inter',
+    headlineMedium: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 18,
       fontWeight: FontWeight.w700,
       color: AppColors.textPrimary,
     ),
-    titleLarge: const TextStyle(
-      fontFamily: 'Inter',
+    titleLarge: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 16,
       fontWeight: FontWeight.w700,
       color: AppColors.textPrimary,
     ),
-    titleMedium: const TextStyle(
-      fontFamily: 'Inter',
+    titleMedium: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 15,
       fontWeight: FontWeight.w600,
       color: AppColors.textPrimary,
     ),
-    bodyLarge: const TextStyle(
-      fontFamily: 'Inter',
+    bodyLarge: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 16,
       color: AppColors.textPrimary,
     ),
-    bodyMedium: const TextStyle(
-      fontFamily: 'Inter',
+    bodyMedium: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 14,
       color: AppColors.textPrimary,
     ),
-    bodySmall: const TextStyle(
-      fontFamily: 'Inter',
+    bodySmall: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 12,
       color: AppColors.textSecondary,
     ),
-    labelLarge: const TextStyle(
-      fontFamily: 'Inter',
+    labelLarge: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 14,
       fontWeight: FontWeight.w600,
       color: AppColors.primary,
     ),
-    labelMedium: const TextStyle(
-      fontFamily: 'Inter',
+    labelMedium: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 13,
       fontWeight: FontWeight.w600,
       color: AppColors.textPrimary,
     ),
-    labelSmall: const TextStyle(
-      fontFamily: 'Inter',
+    labelSmall: TextStyle(
+      fontFamily: fontFamily,
       fontSize: 11,
       fontWeight: FontWeight.w600,
       color: AppColors.textSecondary,
     ),
   );
 }
+
+
+class AppText {
+  AppText._();
+
+  static const String _f = AppTextTheme.fontFamily;
+
+  static const TextStyle heading = TextStyle(
+    fontFamily: _f,
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+  );
+  static const TextStyle headingPrimary = TextStyle(
+    fontFamily: _f,
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primary,
+  );
+  static const TextStyle title = TextStyle(
+    fontFamily: _f,
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+  );
+  static const TextStyle titlePrimary = TextStyle(
+    fontFamily: _f,
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primary,
+  );
+  static const TextStyle subtitle = TextStyle(
+    fontFamily: _f,
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+  );
+  static const TextStyle subtitlePrimary = TextStyle(
+    fontFamily: _f,
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primary,
+  );
+
+  
+  static const TextStyle bodyLarge = TextStyle(
+    fontFamily: _f,
+    fontSize: 14,
+    color: AppColors.textPrimary,
+  );
+  static const TextStyle body = TextStyle(
+    fontFamily: _f,
+    fontSize: 13,
+    color: AppColors.textPrimary,
+  );
+  static const TextStyle bodyStrong = TextStyle(
+    fontFamily: _f,
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+  );
+  static const TextStyle bodySecondary = TextStyle(
+    fontFamily: _f,
+    fontSize: 13,
+    color: AppColors.textSecondary,
+  );
+
+  
+  static const TextStyle caption = TextStyle(
+    fontFamily: _f,
+    fontSize: 12,
+    color: AppColors.textSecondary,
+  );
+  static const TextStyle captionStrong = TextStyle(
+    fontFamily: _f,
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+  );
+  static const TextStyle captionPrimary = TextStyle(
+    fontFamily: _f,
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primary,
+  );
+  static const TextStyle captionInfo = TextStyle(
+    fontFamily: _f,
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: AppColors.info,
+  );
+  static const TextStyle overline = TextStyle(
+    fontFamily: _f,
+    fontSize: 11,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textSecondary,
+  );
+  static const TextStyle micro = TextStyle(
+    fontFamily: _f,
+    fontSize: 11,
+    color: AppColors.textSecondary,
+  );
+}
+

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class SettingDropdownTile extends StatelessWidget {
   final Widget leading;
@@ -29,9 +31,9 @@ class SettingDropdownTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF1A1F36))),
+              Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
               const SizedBox(height: 2),
-              Text(subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+              Text(subtitle, style: AppText.caption),
             ],
           ),
         ),
@@ -40,13 +42,13 @@ class SettingDropdownTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: value,
-              icon: const Icon(Icons.keyboard_arrow_down, size: 18, color: Color(0xFF8A94A6)),
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF1A1F36)),
+              icon: const Icon(Icons.keyboard_arrow_down, size: 18, color: AppColors.textSecondary),
+              style: AppText.bodyStrong,
               items: options.map((o) => DropdownMenuItem(value: o, child: Text(o))).toList(),
               onChanged: onChanged,
             ),
