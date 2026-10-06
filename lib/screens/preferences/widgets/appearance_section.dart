@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'setting_switch_tile.dart';
 import 'setting_dropdown_tile.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class AppearanceSection extends StatelessWidget {
   final bool darkMode;
@@ -26,18 +28,18 @@ class AppearanceSection extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Row(
             children: [
-              Icon(Icons.palette_outlined, size: 18, color: Color(0xFF1B2A5C)),
+              Icon(Icons.palette_outlined, size: 18, color: AppColors.primary),
               SizedBox(width: 8),
-              Text('Apariencia', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF1A1F36))),
+              Text('Apariencia', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
             ],
           ),
           const SizedBox(height: 16),
@@ -50,10 +52,10 @@ class AppearanceSection extends StatelessWidget {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 14),
-            child: Divider(height: 1, color: Color(0xFFE2E8F0)),
+            child: Divider(height: 1, color: AppColors.border),
           ),
           SettingDropdownTile(
-            leading: const Text('Aa', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF1B2A5C))),
+            leading: const Text('Aa', style: AppText.subtitlePrimary),
             title: 'Tamaño de texto',
             subtitle: 'Selecciona el tamaño de la letra en la aplicación',
             value: textSize,
@@ -62,10 +64,10 @@ class AppearanceSection extends StatelessWidget {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 14),
-            child: Divider(height: 1, color: Color(0xFFE2E8F0)),
+            child: Divider(height: 1, color: AppColors.border),
           ),
           SettingDropdownTile(
-            leading: const Icon(Icons.language, size: 20, color: Color(0xFF1B2A5C)),
+            leading: const Icon(Icons.language, size: 20, color: AppColors.primary),
             title: 'Idioma',
             subtitle: 'Selecciona el idioma de la aplicación',
             value: language,
