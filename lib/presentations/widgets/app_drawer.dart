@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../app_routes.dart';
+import '../../core/constant/app_routes.dart';
 import '../app_state.dart';
 
 class _MenuEntry {
