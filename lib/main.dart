@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'app_routes.dart';
-import "app_state.dart";
-import 'screens/dashboard/dashboard_screen.dart';
-import 'screens/login/login_screen.dart';
-import 'screens/inventory/inventory_screen.dart';
-import 'screens/logs/logs_screen.dart';
-import 'screens/preferences/preferences_screen.dart';
-import 'screens/inventory/product_details_screen.dart';
-import 'screens/purchases_history/purchase_history_screen.dart';
-import 'screens/purchases_history/purchases_details_screen.dart';
-import 'screens/sales_history/sales_history_screen.dart';
-import 'screens/sales_history/sales_details_screen.dart';
-import 'screens/alert_stock/alert_stock_screen.dart';
-import 'screens/inventory_movement/inventory_movement_screen.dart';
-import 'screens/inventory_movement/movement_details_screen.dart';
-import 'screens/users/users_screen.dart';
-import 'screens/report/report_screen.dart';
+import 'core/constant/app_routes.dart';
+import "presentations/app_state.dart";
+import 'presentations/screens/dashboard/dashboard_screen.dart';
+import 'presentations/screens/login/login_screen.dart';
+import 'presentations/screens/inventory/inventory_screen.dart';
+import 'presentations/screens/logs/logs_screen.dart';
+import 'presentations/screens/preferences/preferences_screen.dart';
+import 'presentations/screens/inventory/product_details_screen.dart';
+import 'presentations/screens/purchases_history/purchase_history_screen.dart';
+import 'presentations/screens/purchases_history/purchases_details_screen.dart';
+import 'presentations/screens/sales_history/sales_history_screen.dart';
+import 'presentations/screens/sales_history/sales_details_screen.dart';
+import 'presentations/screens/alert_stock/alert_stock_screen.dart';
+import 'presentations/screens/inventory_movement/inventory_movement_screen.dart';
+import 'presentations/screens/inventory_movement/movement_details_screen.dart';
+import 'presentations/screens/users/users_screen.dart';
+import 'presentations/screens/report/report_screen.dart';
 
 void main() {
   runApp(
