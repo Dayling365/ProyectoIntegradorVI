@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class CategorySalesSection extends StatelessWidget {
   const CategorySalesSection({super.key});
 
-  static const Color primary = Color(0xFF1B2A5C);
-  static const Color warning = Color(0xFFF59E0B);
-  static const Color info = Color(0xFF2563EB);
-  static const Color textSecondary = Color(0xFF8A94A6);
-  static const Color card = Colors.white;
-  static const Color border = Color(0xFFE5E7EB);
-  static const Color greyLight = Color(0xFFE5E7EB);
-  static const Color iconBg = Color(0xFFDCEBFB); 
 
   static const List<(String, double, Color)> _data = [
-    ('Libros', 0.42, primary),
-    ('Útiles escolares', 0.26, warning),
-    ('Papelería', 0.18, info),
-    ('Otros', 0.14, textSecondary),
+    ('Libros', 0.42, AppColors.primary),
+    ('Útiles escolares', 0.26, AppColors.warning),
+    ('Papelería', 0.18, AppColors.info),
+    ('Otros', 0.14, AppColors.textSecondary),
   ];
 
   @override
@@ -24,10 +18,10 @@ class CategorySalesSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: card,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: border,
+          color: AppColors.borderLight,
         ),
       ),
       child: Column(
@@ -39,13 +33,13 @@ class CategorySalesSection extends StatelessWidget {
                 width: 36,
                 height: 36,
                 decoration: const BoxDecoration(
-                  color: iconBg,
+                  color: AppColors.infoBackground,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.bar_chart,
                   size: 20,
-                  color: primary,
+                  color: AppColors.primary,
                 ),
               ),
 
@@ -54,7 +48,7 @@ class CategorySalesSection extends StatelessWidget {
               const Text(
                 'Ventas por categoría',
                 style: TextStyle(
-                  color: Color(0xFF1A1F36),
+                  color: AppColors.textPrimary,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
@@ -75,10 +69,7 @@ class CategorySalesSection extends StatelessWidget {
                     width: 100,
                     child: Text(
                       label,
-                      style: const TextStyle(
-                        color: Color(0xFF1A1F36),
-                        fontSize: 13,
-                      ),
+                      style: AppText.body,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -89,7 +80,7 @@ class CategorySalesSection extends StatelessWidget {
                       child: LinearProgressIndicator(
                         value: value,
                         minHeight: 8,
-                        backgroundColor: greyLight,
+                        backgroundColor: AppColors.borderLight,
                         valueColor:
                             AlwaysStoppedAnimation<Color>(color),
                       ),
@@ -101,10 +92,7 @@ class CategorySalesSection extends StatelessWidget {
                     child: Text(
                       '${(value * 100).toStringAsFixed(0)}%',
                       textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        color: textSecondary,
-                        fontSize: 12,
-                      ),
+                      style: AppText.caption,
                     ),
                   ),
                 ],
