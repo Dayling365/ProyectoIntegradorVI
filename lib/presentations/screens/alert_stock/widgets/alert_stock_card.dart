@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'alert_stock_item.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class AlertStockCard extends StatelessWidget {
   final AlertStockItem item;
@@ -9,48 +11,48 @@ class AlertStockCard extends StatelessWidget {
   Color get _iconBg {
     switch (item.category) {
       case 'Papelería':
-        return const Color(0xFFDCEBFB);
+        return AppColors.infoBackground;
       case 'Escritura':
-        return const Color(0xFFFEF3D7);
+        return AppColors.warningBackground;
       case 'Útiles':
-        return const Color(0xFFFCE7F3);
+        return AppColors.chartPinkBackground;
       default:
-        return const Color(0xFFEDE9FE);
+        return AppColors.chartPurpleBackground;
     }
   }
 
   Color get _iconColor {
     switch (item.category) {
       case 'Papelería':
-        return const Color(0xFF1B4B91);
+        return AppColors.primary;
       case 'Escritura':
-        return const Color(0xFFD97706);
+        return AppColors.warningDark;
       case 'Útiles':
-        return const Color(0xFFDB2777);
+        return AppColors.chartPink;
       default:
-        return const Color(0xFF7C3AED);
+        return AppColors.chartPurple;
     }
   }
 
   Color get _chipBg {
     switch (item.severity) {
       case AlertSeverity.critical:
-        return const Color(0xFFFEE2E2);
+        return AppColors.errorBackground;
       case AlertSeverity.warning:
-        return const Color(0xFFFEF3D7);
+        return AppColors.warningBackground;
       case AlertSeverity.info:
-        return const Color(0xFFDBEAFE);
+        return AppColors.infoBackground;
     }
   }
 
   Color get _chipColor {
     switch (item.severity) {
       case AlertSeverity.critical:
-        return const Color(0xFFDC2626);
+        return AppColors.error;
       case AlertSeverity.warning:
-        return const Color(0xFFD97706);
+        return AppColors.warningDark;
       case AlertSeverity.info:
-        return const Color(0xFF2563EB);
+        return AppColors.info;
     }
   }
 
@@ -60,9 +62,9 @@ class AlertStockCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Row(
         children: [
@@ -77,10 +79,10 @@ class AlertStockCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(item.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF1A1F36))),
+                Text(item.name, style: AppText.subtitle),
                 const SizedBox(height: 2),
                 Text('${item.category} • Min: ${item.minStock} unid.',
-                    style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+                    style: AppText.caption),
               ],
             ),
           ),
@@ -91,7 +93,7 @@ class AlertStockCard extends StatelessWidget {
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: _chipColor)),
           ),
           const SizedBox(width: 4),
-          const Icon(Icons.chevron_right, size: 18, color: Color(0xFFC5CAD6)),
+          const Icon(Icons.chevron_right, size: 18, color: AppColors.textMuted),
         ],
       ),
     );
