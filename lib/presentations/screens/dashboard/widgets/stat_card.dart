@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class StatCard extends StatelessWidget {
   final IconData icon;
@@ -18,25 +20,16 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color danger = Color(0xFFDC2626);
-    const Color success = Color(0xFF16A34A);
-    const Color dangerSoft = Color(0xFFFEE2E2);
-    const Color card = Colors.white;
-    const Color border = Color(0xFFE5E7EB);
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
-
-    final Color trendColor = isAlert ? danger : success;
 
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: isAlert ? dangerSoft : card,
+        color: isAlert ? AppColors.errorBackground : AppColors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: isAlert
-              ? danger.withValues(alpha: 0.3)
-              : border,
+              ? AppColors.error.withValues(alpha: 0.3)
+              : AppColors.borderLight,
         ),
       ),
       child: Column(
@@ -61,10 +54,7 @@ class StatCard extends StatelessWidget {
 
           Text(
             label,
-            style: const TextStyle(
-              color: textSecondary,
-              fontSize: 12,
-            ),
+            style: AppText.caption,
           ),
 
           const SizedBox(height: 2),
@@ -72,36 +62,11 @@ class StatCard extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(
-              color: textPrimary,
-              fontSize: 19,
-              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
             ),
           ),
-
-          const SizedBox(height: 6),
-
-         /* Row(
-            children: [
-              Icon(
-                isAlert
-                    ? Icons.trending_down
-                    : Icons.trending_up,
-                size: 14,
-                color: trendColor,
-              ),
-
-              const SizedBox(width: 4),
-
-              Text(
-                trend,
-                style: TextStyle(
-                  color: trendColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),*/
 
           const SizedBox(height: 6),
 

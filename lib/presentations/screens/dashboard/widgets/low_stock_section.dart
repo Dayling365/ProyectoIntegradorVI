@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../models_product/product.dart';
 import '../../../../core/constant/app_routes.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class LowStockItem {
   final String name;
@@ -23,35 +25,26 @@ class LowStockSection extends StatelessWidget {
 
   static const int criticalThreshold = 8;
 
-  static const Color card = Colors.white;
-  static const Color border = Color(0xFFE5E7EB);
-  static const Color danger = Color(0xFFDC2626);
-  static const Color dangerSoft = Color(0xFFFEE2E2);
-  static const Color warning = Color(0xFFD97706);
-  static const Color warningSoft = Color(0xFFFEF3D7);
-  static const Color textPrimary = Color(0xFF1A1F36);
-  static const Color textSecondary = Color(0xFF8A94A6);
-  static const Color chevron = Color(0xFFC5CAD6);
 
   Color _iconBgFor(String category) {
     switch (category.toLowerCase()) {
       case 'papelería':
-        return const Color(0xFFDCEBFB);
+        return AppColors.infoBackground;
       case 'útiles':
-        return dangerSoft;
+        return AppColors.errorBackground;
       default:
-        return warningSoft;
+        return AppColors.warningBackground;
     }
   }
 
   Color _iconColorFor(String category) {
     switch (category.toLowerCase()) {
       case 'papelería':
-        return const Color(0xFF1B4B91);
+        return AppColors.primary;
       case 'útiles':
-        return danger;
+        return AppColors.error;
       default:
-        return warning;
+        return AppColors.warningDark;
     }
   }
 
@@ -66,9 +59,9 @@ class LowStockSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: card,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: border),
+        border: Border.all(color: AppColors.borderLight),
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -77,7 +70,7 @@ class LowStockSection extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: const BoxDecoration(
-              color: dangerSoft,
+              color: AppColors.errorBackground,
               borderRadius: BorderRadius.vertical(top: Radius.circular(13)),
             ),
             child: Row(
@@ -86,12 +79,12 @@ class LowStockSection extends StatelessWidget {
                   width: 32,
                   height: 32,
                   decoration: BoxDecoration(
-                    color: danger.withOpacity(0.15),
+                    color: AppColors.error.withValues(alpha: 0.15),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.notifications,
-                    color: danger,
+                    color: AppColors.error,
                     size: 16,
                   ),
                 ),
@@ -102,7 +95,7 @@ class LowStockSection extends StatelessWidget {
                   child: Text(
                     'Alertas de bajo stock',
                     style: TextStyle(
-                      color: danger,
+                      color: AppColors.error,
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
                     ),
@@ -114,8 +107,8 @@ class LowStockSection extends StatelessWidget {
 
           ..._items.map((item) {
             final isCritical = item.quantity <= criticalThreshold;
-            final badgeBg = isCritical ? dangerSoft : warningSoft;
-            final badgeColor = isCritical ? danger : warning;
+            final badgeBg = isCritical ? AppColors.errorBackground : AppColors.warningBackground;
+            final badgeColor = isCritical ? AppColors.error : AppColors.warningDark;
             final isLast = item == _items.last;
 
             return Container(
@@ -123,7 +116,7 @@ class LowStockSection extends StatelessWidget {
                 border: isLast
                     ? null
                     : const Border(
-                        bottom: BorderSide(color: Color(0xFFF0F1F4)),
+                        bottom: BorderSide(color: AppColors.surfaceMuted),
                       ),
               ),
               child: ListTile(
@@ -143,16 +136,12 @@ class LowStockSection extends StatelessWidget {
 
                 title: Text(
                   item.name,
-                  style: const TextStyle(
-                    color: textPrimary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: AppText.subtitle,
                 ),
 
                 subtitle: Text(
                   item.category,
-                  style: const TextStyle(color: textSecondary, fontSize: 12.5),
+                  style: AppText.caption,
                 ),
 
                 trailing: Row(
@@ -171,13 +160,13 @@ class LowStockSection extends StatelessWidget {
                         '${item.quantity} und.',
                         style: TextStyle(
                           color: badgeColor,
-                          fontSize: 12.5,
+                          fontSize: 12,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
                     const SizedBox(width: 4),
-                    const Icon(Icons.chevron_right, size: 18, color: chevron),
+                    const Icon(Icons.chevron_right, size: 18, color: AppColors.textMuted),
                   ],
                 ),
 

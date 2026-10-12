@@ -6,18 +6,14 @@ import '../../widgets/app_scaffold.dart';
 import 'widgets/category_sales_section.dart';
 import 'widgets/low_stock_section.dart';
 import 'widgets/stat_card.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_theme.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
-    const Color primary = Color(0xFF1B2A5C);
-    const Color info = Color(0xFF2563EB);
-    const Color warning = Color(0xFFF59E0B);
-    const Color success = Color(0xFF16A34A);
     final isAdmin = context.watch<AppState>().isAdmin;
 
     return AppScaffold(
@@ -30,16 +26,12 @@ class DashboardScreen extends StatelessWidget {
           children: [
             Text(
               isAdmin ? '¡Hola, Administrador!' : '¡Hola, Vendedor!',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: textPrimary,
-              ),
+              style: AppText.heading,
             ),
             const SizedBox(height: 4),
              Text(
               isAdmin ? 'Aquí tienes un resumen de tu negocio hoy.' : 'Aquí tienes un resumen del negocio hoy.',
-              style: TextStyle(color: textSecondary, fontSize: 13),
+              style: AppText.bodySecondary,
             ),
             const SizedBox(height: 16),
 
@@ -48,20 +40,20 @@ class DashboardScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: primary,
+                  color: AppColors.primary,
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: const Row(
                   children: [
-                    Icon(Icons.inventory_2_outlined, color: Colors.white),
+                    Icon(Icons.inventory_2_outlined, color: AppColors.white),
                     SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         'Inventario General',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                        style: TextStyle(color: AppColors.white, fontSize: 16),
                       ),
                     ),
-                    Icon(Icons.chevron_right, color: Colors.white),
+                    Icon(Icons.chevron_right, color: AppColors.white),
                   ],
                 ),
               ),
@@ -79,28 +71,28 @@ class DashboardScreen extends StatelessWidget {
               children: const [
                 StatCard(
                   icon: Icons.point_of_sale,
-                  iconColor: info,
+                  iconColor: AppColors.info,
                   label: 'Ventas del día',
                   value: 'C\$124,500.00',
                 ),
 
                 StatCard(
                   icon: Icons.inventory_2,
-                  iconColor: warning,
+                  iconColor: AppColors.warning,
                   label: 'Productos en inventario',
                   value: '1,245',
                 ),
 
                 StatCard(
                   icon: Icons.local_offer,
-                  iconColor: success,
+                  iconColor: AppColors.success,
                   label: 'Compras del mes',
                   value: '18',
                 ),
 
                 StatCard(
                   icon: Icons.people_outline,
-                  iconColor: info,
+                  iconColor: AppColors.info,
                   label: 'Clientes activos',
                   value: '156',
                 ),
