@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart'; 
 import '../../../theme/app_colors.dart'; 
 import '../../../theme/app_icons.dart'; 
+import '../../../theme/app_text_theme.dart';
 
 class LogsFiltros extends StatelessWidget { 
   const LogsFiltros({super.key}); 
@@ -139,11 +140,7 @@ class LogsFiltros extends StatelessWidget {
             child: subtitulo == null 
                 ? Text( 
                     texto, 
-                    style: TextStyle( 
-                      color: AppColors.primary, 
-                      fontSize: 12, 
-                      fontWeight: FontWeight.w600, 
-                    ), 
+                    style: AppText.captionPrimary, 
                   ) 
                 : Column( 
                     mainAxisAlignment: MainAxisAlignment.center, 
@@ -151,18 +148,11 @@ class LogsFiltros extends StatelessWidget {
                     children: [ 
                       Text( 
                         texto, 
-                        style: TextStyle( 
-                          color: AppColors.primary, 
-                          fontSize: 12, 
-                          fontWeight: FontWeight.w600, 
-                        ), 
+                        style: AppText.captionPrimary, 
                       ), 
                       Text( 
                         subtitulo, 
-                        style: TextStyle( 
-                          color: AppColors.textSecondary, 
-                          fontSize: 10, 
-                        ), 
+                        style: AppText.micro, 
                       ), 
                     ], 
                   ), 

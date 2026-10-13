@@ -5,6 +5,7 @@ import 'widgets/logs_filtros.dart';
 import 'widgets/logs_stats.dart';
 import 'widgets/logs_lista.dart';
 import 'widgets/logs_pagination.dart';
+import '../../theme/app_text_theme.dart';
 
 class LogsScreen extends StatefulWidget {
   const LogsScreen({super.key});
@@ -19,8 +20,6 @@ class _LogsScreenState extends State<LogsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
 
     return AppScaffold(
       currentRoute: AppRoutes.logs,
@@ -31,16 +30,12 @@ class _LogsScreenState extends State<LogsScreen> {
           children: [
             const Text(
               'Logs del Sistema',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: textPrimary,
-              ),
+              style: AppText.heading,
             ),
             const SizedBox(height: 4),
             const Text(
               'Auditoría y registro cronológico de eventos.',
-              style: TextStyle(color: textSecondary, fontSize: 13),
+              style: AppText.bodySecondary,
             ),
 
             const LogsFiltros(),

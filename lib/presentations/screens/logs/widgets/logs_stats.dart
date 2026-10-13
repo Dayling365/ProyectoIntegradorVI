@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class LogsStats extends StatelessWidget {
   const LogsStats({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
-    const Color info = Color(0xFF2563EB);
-    const Color alert = Color(0xFFDC2626);
 
     return Row(
       children: [
@@ -17,7 +15,7 @@ class LogsStats extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade300),
+              border: Border.all(color: AppColors.border),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
@@ -26,12 +24,12 @@ class LogsStats extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: info.withOpacity(0.1),
+                    color: AppColors.accentLight,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
                     Icons.description_outlined,
-                    color: info,
+                    color: AppColors.primary,
                     size: 20,
                   ),
                 ),
@@ -44,20 +42,12 @@ class LogsStats extends StatelessWidget {
                     children: const [
                       Text(
                         'EVENTOS HOY',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: textSecondary,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: AppText.overline,
                       ),
                       SizedBox(height: 4),
                       Text(
                         '1,248',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: textPrimary,
-                        ),
+                        style: AppText.headingPrimary,
                       ),
                     ],
                   ),
@@ -73,7 +63,7 @@ class LogsStats extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: alert.withOpacity(0.06),
+              color: AppColors.error.withValues(alpha: 0.06),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
@@ -82,12 +72,12 @@ class LogsStats extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: alert.withOpacity(0.12),
+                    color: AppColors.error.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
                     Icons.warning_amber_rounded,
-                    color: alert,
+                    color: AppColors.error,
                     size: 20,
                   ),
                 ),
@@ -102,7 +92,7 @@ class LogsStats extends StatelessWidget {
                         'AVISOS / ALERTAS',
                         style: TextStyle(
                           fontSize: 11,
-                          color: alert,
+                          color: AppColors.error,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -111,8 +101,8 @@ class LogsStats extends StatelessWidget {
                         '12',
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: alert,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.error,
                         ),
                       ),
                     ],

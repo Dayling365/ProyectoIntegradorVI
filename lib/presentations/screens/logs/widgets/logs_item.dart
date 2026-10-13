@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart'; 
+import '../../../theme/app_text_theme.dart';
 
 class LogItem extends StatelessWidget {
   final IconData icon;
@@ -26,15 +28,13 @@ class LogItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
 
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -62,19 +62,12 @@ class LogItem extends StatelessWidget {
                     Expanded(
                       child: Text(
                         titulo,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: textPrimary,
-                        ),
+                        style: AppText.captionPrimary,
                       ),
                     ),
                     Text(
                       hora,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: textSecondary,
-                      ),
+                      style: AppText.caption,
                     ),
                   ],
                 ),
@@ -83,10 +76,7 @@ class LogItem extends StatelessWidget {
 
                 Text(
                   subtitulo,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: textSecondary,
-                  ),
+                  style: AppText.bodySecondary,
                 ),
 
                 const SizedBox(height: 8),
