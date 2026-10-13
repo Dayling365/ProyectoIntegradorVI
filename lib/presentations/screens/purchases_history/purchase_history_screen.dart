@@ -5,6 +5,7 @@ import 'widgets_purchase_history/purchase_filters.dart';
 import 'widgets_purchase_history/purchase_summary.dart';
 import 'widgets_purchase_history/purchase_list.dart';
 import 'widgets_purchase_history/purchase_pagination.dart';
+import '../../theme/app_text_theme.dart';
 
 class PurchasesHistoryScreen extends StatefulWidget {
   const PurchasesHistoryScreen({super.key});
@@ -20,8 +21,6 @@ class _PurchasesHistoryScreenState extends State<PurchasesHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
 
     return AppScaffold(
       currentRoute: AppRoutes.purchasesHistory,
@@ -32,19 +31,12 @@ class _PurchasesHistoryScreenState extends State<PurchasesHistoryScreen> {
           children: [
             const Text(
               'Historial de Compras',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: textPrimary,
-              ),
+              style: AppText.heading,
             ),
             const SizedBox(height: 4),
             const Text(
               'Registro cronológico de compras y suministros a proveedores.',
-              style: TextStyle(
-                color: textSecondary,
-                fontSize: 13,
-              ),
+              style: AppText.bodySecondary,
             ),
 
             PurchaseFilters(
