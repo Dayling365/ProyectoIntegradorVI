@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
 
-/// Gráfica de barras con eje Y a la izquierda (C$8K, C$6K, ...) y una
-/// barra resaltada (ej. el día actual/seleccionado) en naranja.
+
 class ReportBarChart extends StatelessWidget {
   final List<String> labels;
   final List<double> values;
@@ -51,7 +51,7 @@ class ReportBarChart extends StatelessWidget {
               children: axisSteps
                   .map((v) => Text(
                         formatAxis(v),
-                        style: TextStyle(fontSize: 9, color: Colors.grey[400]),
+                        style: TextStyle(fontSize: 11, color: AppColors.textMuted),
                       ))
                   .toList(),
             ),
@@ -79,12 +79,12 @@ class ReportBarChart extends StatelessWidget {
                                 child: Text(
                                   formatValue(values[i]),
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     fontWeight:
-                                        isHighlighted ? FontWeight.bold : FontWeight.normal,
+                                        isHighlighted ? FontWeight.w700 : FontWeight.normal,
                                     color: isHighlighted
-                                        ? const Color(0xFF16233F)
-                                        : Colors.grey[500],
+                                        ? AppColors.primary
+                                        : AppColors.textSecondary,
                                   ),
                                 ),
                               ),
@@ -93,8 +93,8 @@ class ReportBarChart extends StatelessWidget {
                                 height: (chartHeight - 20) * heightFactor,
                                 decoration: BoxDecoration(
                                   color: isHighlighted
-                                      ? const Color(0xFFF59E0B)
-                                      : const Color(0xFF3B82F6),
+                                      ? AppColors.accent
+                                      : AppColors.primary,
                                   borderRadius:
                                       const BorderRadius.vertical(top: Radius.circular(4)),
                                 ),
@@ -110,10 +110,10 @@ class ReportBarChart extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight:
-                                  isHighlighted ? FontWeight.bold : FontWeight.normal,
+                                  isHighlighted ? FontWeight.w700 : FontWeight.normal,
                               color: isHighlighted
-                                  ? const Color(0xFF16233F)
-                                  : Colors.grey[600],
+                                  ? AppColors.primary
+                                  : AppColors.textSecondary,
                             ),
                           ),
                         ),
