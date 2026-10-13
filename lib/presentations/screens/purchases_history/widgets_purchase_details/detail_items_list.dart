@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'detail_item.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class DetailItemsList extends StatelessWidget {
   final String codigo;
@@ -726,8 +728,6 @@ class DetailItemsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
 
     final items = detalles;
 
@@ -735,7 +735,7 @@ class DetailItemsList extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(12),),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -745,15 +745,11 @@ class DetailItemsList extends StatelessWidget {
               const Icon(Icons.inventory_2_outlined, size: 16),
               const SizedBox(width: 8),
               const Text( 'Ítems recibidos / comprados',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: textPrimary,
-                ),
+                style: AppText.bodyStrong,
               ),
               const Spacer(),
               Text( '${items.length} líneas',
-                style: const TextStyle(fontSize: 11, color: textSecondary),
+                style: AppText.micro,
               ),
             ],
           ),
