@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class DetailItem extends StatelessWidget {
   final String nombre;
@@ -16,8 +18,6 @@ class DetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
 
     return Container(
       width: double.infinity,
@@ -30,10 +30,7 @@ class DetailItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(nombre,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: textPrimary,),
+                  style: AppText.bodyStrong,
                     ),
                 const SizedBox(height: 4),
                 Row(
@@ -42,22 +39,18 @@ class DetailItem extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 2,),
-                      decoration: BoxDecoration(color: Colors.grey.shade100,
+                      decoration: BoxDecoration(color: AppColors.surfaceMuted,
                         borderRadius: BorderRadius.circular(20),
                         ),
                       child: Text(
                         categoria,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: textSecondary,),
+                        style: AppText.micro,
                       ),
                     ),
                     const SizedBox(width: 6),
                     Text(
                       desglose,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: textSecondary,),
+                      style: AppText.micro,
                     ),
                   ],
                 ),
@@ -66,10 +59,7 @@ class DetailItem extends StatelessWidget {
           ),
           Text(
             precioTotal,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: textPrimary,),
+            style: AppText.bodyStrong,
           ),
         ],
       ),

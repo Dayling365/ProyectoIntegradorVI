@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class PurchaseSummary extends StatelessWidget {
   final int total;
@@ -7,8 +9,6 @@ class PurchaseSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color textSecondary = Color(0xFF8A94A6);
-    const Color info = Color(0xFF2563EB);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,16 +19,12 @@ class PurchaseSummary extends StatelessWidget {
             Icon(
               Icons.close,
               size: 16,
-              color: info,
+              color: AppColors.primary,
             ),
             SizedBox(width: 4),
             Text(
               'Limpiar filtros',
-              style: TextStyle(
-                color: info,
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-              ),
+              style: AppText.bodyStrongPrimary,
             ),
           ],
         ),
@@ -37,13 +33,11 @@ class PurchaseSummary extends StatelessWidget {
 
         Text(
           '$total compras registradas',
-          style: const TextStyle(
-            fontSize: 13,
-            color: textSecondary,
-          ),
+          style: AppText.bodySecondary,
         ),
       ],
     );
   }
 }
+
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constant/app_routes.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class PurchaseItem extends StatelessWidget {
   final String codigo;
@@ -17,9 +19,6 @@ class PurchaseItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF17365D);
-    const Color textSecondary = Color(0xFF7F8CA3);
-    const Color info = Color(0xFF2563EB);
 
     return GestureDetector(
       onTap: () => Navigator.pushNamed(
@@ -32,10 +31,10 @@ class PurchaseItem extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.fromLTRB(15, 14, 15, 14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: const Color(0xFFE1E7EF),
+            color: AppColors.border,
           ),
         ),
         child: Column(
@@ -43,18 +42,11 @@ class PurchaseItem extends StatelessWidget {
           children: [
             Text(
               codigo,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                color: textPrimary,
-              ),
+              style: AppText.subtitle,
             ),
             const SizedBox(height: 3),
             Text('Proveedor: $proveedor',
-              style: const TextStyle(
-                fontSize: 12.5,
-                color: textSecondary,
-              ),
+              style: AppText.caption,
             ),
             const SizedBox(height: 17),
             Row(
@@ -66,7 +58,7 @@ class PurchaseItem extends StatelessWidget {
                     vertical: 5,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF1F4F8),
+                    color: AppColors.surfaceMuted,
                     borderRadius: BorderRadius.circular(7),
                   ),
                   child: Text(
@@ -74,18 +66,14 @@ class PurchaseItem extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w500,
-                      color: textSecondary,
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ),
                 const Spacer(),
                 Text(
                   monto,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: textPrimary,
-                  ),
+                  style: AppText.title,
                 ),
               ],
             ),
@@ -96,17 +84,13 @@ class PurchaseItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: const [
                   Text('Ver detalle',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: info,
-                    ),
+                    style: AppText.captionInfo,
                   ),
                   SizedBox(width: 4),
                   Icon(
                     Icons.arrow_forward,
                     size: 14,
-                    color: info,
+                    color: AppColors.accent,
                   ),
                 ],
               ),

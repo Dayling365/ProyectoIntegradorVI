@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart'; 
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class PurchaseDetailInfo extends StatelessWidget { 
   final String codigo; 
@@ -10,9 +12,6 @@ class PurchaseDetailInfo extends StatelessWidget {
 
   @override 
   Widget build(BuildContext context) { 
-    const Color textPrimary = Color(0xFF1A1F36); 
-    const Color textSecondary = Color(0xFF8A94A6); 
-    const Color success = Color(0xFF16A34A); 
 
     String fecha = ''; 
     String proveedor = ''; 
@@ -46,9 +45,9 @@ class PurchaseDetailInfo extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column( 
       crossAxisAlignment: CrossAxisAlignment.start, 
@@ -57,7 +56,7 @@ class PurchaseDetailInfo extends StatelessWidget {
         Text('FOLIO: $codigo',
           style: const TextStyle(
             fontSize: 11, fontWeight: FontWeight.w600,
-            color: Color(0xFF8A94A6),
+            color: AppColors.textSecondary,
             letterSpacing: 0.5,
           ),
         ),
@@ -66,27 +65,23 @@ class PurchaseDetailInfo extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: const Color(0xFFF5F7FA),
+            color: AppColors.background,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
           ),
           child: Column(
             children: [
               const Text('MONTO TOTAL FACTURADO',
                 style: TextStyle(
                   fontSize: 11, fontWeight: FontWeight.w600,
-                  color: Color(0xFF8A94A6),
+                  color: AppColors.textSecondary,
                   letterSpacing: 0.5,
                 ),
               ),
               const SizedBox(height: 6),
               Text(
                 totalAmount,
-                style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1B2A5C),
-                ),
+                style: AppTextTheme.textTheme.displayLarge,
               ),
             ],
           ),
@@ -98,8 +93,6 @@ class PurchaseDetailInfo extends StatelessWidget {
           icon: Icons.calendar_today_outlined, 
           etiqueta: 'Fecha y hora', 
           valor: fecha, 
-          textPrimary: textPrimary, 
-          textSecondary: textSecondary, 
         ), 
 
         const SizedBox(height: 10), 
@@ -108,8 +101,6 @@ class PurchaseDetailInfo extends StatelessWidget {
           icon: Icons.local_shipping_outlined, 
           etiqueta: 'Proveedor', 
           valor: proveedor, 
-          textPrimary: textPrimary, 
-          textSecondary: textSecondary, 
         ), 
 
         const SizedBox(height: 10), 
@@ -119,11 +110,11 @@ class PurchaseDetailInfo extends StatelessWidget {
             const Icon( 
               Icons.person_outline, 
               size: 16, 
-              color: textSecondary, 
+              color: AppColors.textSecondary, 
             ), 
             const SizedBox(width: 8), 
             const Text('Registrado por', 
-              style: TextStyle(fontSize: 13, color: textSecondary), 
+              style: AppText.bodySecondary, 
             ), 
             const Spacer(), 
             Container( 
@@ -132,14 +123,14 @@ class PurchaseDetailInfo extends StatelessWidget {
                 vertical: 4, 
               ), 
               decoration: BoxDecoration( 
-                color: success.withOpacity(0.1), 
+                color: AppColors.success.withValues(alpha: 0.1), 
                 borderRadius: BorderRadius.circular(20), 
               ), 
               child: Text( 
                 registradoPor, 
                 style: const TextStyle( 
                   fontSize: 12, 
-                  color: success, 
+                  color: AppColors.success, 
                   fontWeight: FontWeight.w600, 
                 ), 
               ), 
@@ -155,25 +146,19 @@ class PurchaseDetailInfo extends StatelessWidget {
     required IconData icon, 
     required String etiqueta, 
     required String valor, 
-    required Color textPrimary, 
-    required Color textSecondary, 
   }) { 
     return Row( 
       children: [ 
-        Icon(icon, size: 16, color: textSecondary), 
+        Icon(icon, size: 16, color: AppColors.textSecondary), 
         const SizedBox(width: 8), 
         Text( 
           etiqueta, 
-          style: TextStyle(fontSize: 13, color: textSecondary), 
+          style: AppText.bodySecondary, 
         ), 
         const Spacer(), 
         Text( 
           valor, 
-          style: TextStyle( 
-            fontSize: 13, 
-            fontWeight: FontWeight.w600, 
-            color: textPrimary, 
-          ), 
+          style: AppText.bodyStrong, 
         ), 
       ], 
     ); 
