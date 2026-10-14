@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_text_theme.dart';
 
 class CategorySlice {
   final String label;
@@ -49,14 +50,10 @@ class ReportCategoryDonut extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                     child: Text(
                       centerValue,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color(0xFF16233F),
-                      ),
+                      style: AppText.titlePrimary,
                     ),
                   ),
-                  Text(centerLabel, style: TextStyle(fontSize: 10, color: Colors.grey[500])),
+                  Text(centerLabel, style: AppText.micro),
                 ],
               ),
             ],
@@ -88,7 +85,7 @@ class ReportCategoryDonut extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             '${s.percent.toStringAsFixed(0)}%',
-                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(width: 6),
                           Flexible(
@@ -96,7 +93,7 @@ class ReportCategoryDonut extends StatelessWidget {
                               fit: BoxFit.scaleDown,
                               child: Text(
                                 'C\$${s.amount}',
-                                style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+                                style: AppText.micro,
                               ),
                             ),
                           ),
@@ -118,7 +115,7 @@ class _DonutPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Rect.fromLTWH(0, 0, size.width, size.height);
-    double startAngle = -1.5708; // -90 grados, empieza arriba
+    double startAngle = -1.5708; 
     final strokeWidth = size.width * 0.22;
     for (final s in slices) {
       final sweep = (s.percent / 100) * 6.28319;

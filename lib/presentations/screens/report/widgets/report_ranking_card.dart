@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 
 class ReportRankingCard extends StatelessWidget {
@@ -34,7 +36,7 @@ class ReportRankingCard extends StatelessWidget {
             width: 20,
             child: Text(
               '$rank',
-              style: TextStyle(color: Colors.grey[400], fontWeight: FontWeight.bold),
+              style: TextStyle(color: AppColors.textMuted, fontWeight: FontWeight.w700),
             ),
           ),
           const SizedBox(width: 6),
@@ -56,21 +58,13 @@ class ReportRankingCard extends StatelessWidget {
                         productName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
-                          color: Color(0xFF16233F),
-                        ),
+                        style: AppText.bodyStrong,
                       ),
                     ),
                     const SizedBox(width: 6),
                     Text(
                       value,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        color: Color(0xFF16233F),
-                      ),
+                      style: AppText.bodyStrong,
                     ),
                   ],
                 ),
@@ -83,13 +77,13 @@ class ReportRankingCard extends StatelessWidget {
                         child: LinearProgressIndicator(
                           value: progress,
                           minHeight: 6,
-                          backgroundColor: const Color(0xFFEDEDED),
-                          valueColor: const AlwaysStoppedAnimation(Color(0xFF3B82F6)),
+                          backgroundColor: AppColors.borderLight,
+                          valueColor: const AlwaysStoppedAnimation(AppColors.accent),
                         ),
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Text(percentLabel, style: TextStyle(fontSize: 11, color: Colors.grey[500])),
+                    Text(percentLabel, style: AppText.micro),
                   ],
                 ),
               ],
