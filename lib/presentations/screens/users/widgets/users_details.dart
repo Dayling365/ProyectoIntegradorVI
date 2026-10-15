@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class UsersDetails extends StatelessWidget {
   final String initials;
@@ -33,7 +35,7 @@ class UsersDetails extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
@@ -50,7 +52,7 @@ class UsersDetails extends StatelessWidget {
               height: 4,
               margin: const EdgeInsets.only(bottom: 14),
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: AppColors.border,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -62,17 +64,13 @@ class UsersDetails extends StatelessWidget {
               const Expanded(
                 child: Text(
                   'Detalle de Usuario',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF16233F),
-                  ),
+                  style: AppText.headingPrimary,
                 ),
               ),
               IconButton(
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
-                icon: const Icon(Icons.close, color: Colors.grey),
+                icon: const Icon(Icons.close, color: AppColors.textSecondary),
                 onPressed: () => Navigator.pop(context),
               ),
             ],
@@ -85,14 +83,10 @@ class UsersDetails extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 26,
-                backgroundColor: const Color(0xFFCFE0F5),
+                backgroundColor: AppColors.accentLight,
                 child: Text(
                   initials,
-                  style: const TextStyle(
-                    color: Color(0xFF1B4B7A),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  style: AppText.titlePrimary,
                 ),
               ),
               const SizedBox(width: 12),
@@ -104,18 +98,14 @@ class UsersDetails extends StatelessWidget {
                       name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color(0xFF16233F),
-                      ),
+                      style: AppText.titlePrimary,
                     ),
                     const SizedBox(height: 2),
                     Text(
                       email,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: Colors.grey, fontSize: 13),
+                      style: AppText.bodySecondary,
                     ),
                     const SizedBox(height: 6),
                     Align(
@@ -186,7 +176,7 @@ class UsersDetails extends StatelessWidget {
           
           Container(
             decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xFFE5E5E5)),
+              border: Border.all(color: AppColors.borderLight),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -208,17 +198,17 @@ class UsersDetails extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton.icon(
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back, size: 18, color: Color(0xFF16233F)),
+              icon: const Icon(Icons.arrow_back, size: 18, color: AppColors.primary),
               label: const Text(
                 'Cerrar',
                 style: TextStyle(
-                  color: Color(0xFF16233F),
-                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),
-                side: const BorderSide(color: Color(0xFFCFD8E3)),
+                side: const BorderSide(color: AppColors.border),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -230,21 +220,21 @@ class UsersDetails extends StatelessWidget {
     );
   }
 
-  Widget _divider() => const Divider(height: 1, color: Color(0xFFEDEDED));
+  Widget _divider() => const Divider(height: 1, color: AppColors.borderLight);
 
   Widget _infoRow(IconData icon, String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: Colors.grey[600]),
+          Icon(icon, size: 18, color: AppColors.textSecondary),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 14, color: Colors.black87),
+              style: AppText.bodyLarge,
             ),
           ),
           const SizedBox(width: 8),
@@ -254,11 +244,7 @@ class UsersDetails extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF16233F),
-              ),
+              style: AppText.subtitlePrimary,
             ),
           ),
         ],
@@ -277,14 +263,14 @@ class UsersDetails extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: Colors.grey[600]),
+          Icon(icon, size: 18, color: AppColors.textSecondary),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 14, color: Colors.black87),
+              style: AppText.bodyLarge,
             ),
           ),
           const SizedBox(width: 8),
@@ -299,7 +285,7 @@ class UsersDetails extends StatelessWidget {
               style: TextStyle(
                 color: badgeColor,
                 fontSize: 12,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -308,4 +294,3 @@ class UsersDetails extends StatelessWidget {
     );
   }
 }
-
