@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class UsersCard extends StatelessWidget {
   final String initials;
@@ -31,9 +33,9 @@ class UsersCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFEDEDED)),
+        border: Border.all(color: AppColors.borderLight),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,14 +43,10 @@ class UsersCard extends StatelessWidget {
           
           CircleAvatar(
             radius: 18,
-            backgroundColor: const Color(0xFFCFE0F5),
+            backgroundColor: AppColors.accentLight,
             child: Text(
               initials,
-              style: const TextStyle(
-                color: Color(0xFF1B4B7A),
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-              ),
+              style: AppText.captionPrimary,
             ),
           ),
           const SizedBox(width: 10),
@@ -62,18 +60,14 @@ class UsersCard extends StatelessWidget {
                   name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Color(0xFF16233F),
-                  ),
+                  style: AppText.subtitlePrimary,
                 ),
                 const SizedBox(height: 2),
                 Text(
                   email,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  style: AppText.caption,
                 ),
                 const SizedBox(height: 8),
                 
@@ -147,7 +141,7 @@ class UsersCard extends StatelessWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
-                icon: const Icon(Icons.more_vert, size: 18, color: Colors.grey),
+                icon: const Icon(Icons.more_vert, size: 18, color: AppColors.textSecondary),
                 onPressed: onMenuTap,
               ),
             ],

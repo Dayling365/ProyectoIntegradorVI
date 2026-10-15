@@ -4,6 +4,8 @@ import '../../../core/constant/app_routes.dart';
 import '../../widgets/app_scaffold.dart';
 import 'widgets/users_card.dart';
 import 'widgets/users_details.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_theme.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({super.key});
@@ -18,16 +20,12 @@ class UsersScreen extends StatelessWidget {
           // Encabezado
           const Text(
             'Usuarios',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF16233F),
-            ),
+            style: AppText.heading,
           ),
           const SizedBox(height: 3),
           const Text(
             'Gestiona los usuarios del sistema y sus permisos.',
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: AppText.bodySecondary,
           ),
           const SizedBox(height: 16),
 
@@ -35,19 +33,19 @@ class UsersScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFE0E0E0)),
+              border: Border.all(color: AppColors.borderLight),
             ),
             child: Row(
               children: [
-                Icon(Icons.search, color: Colors.grey[400], size: 20),
+                Icon(Icons.search, color: AppColors.textMuted, size: 20),
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'Buscar por nombre, usuario o correo...',
-                      hintStyle: TextStyle(color: Colors.grey[400], fontSize: 13),
+                      hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 13),
                       border: InputBorder.none,
                       isDense: true,
                       contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -87,7 +85,7 @@ class UsersScreen extends StatelessWidget {
           // Contador
           const Text(
             '4 usuarios',
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: AppText.caption,
           ),
           const SizedBox(height: 12),
 
@@ -97,11 +95,11 @@ class UsersScreen extends StatelessWidget {
             name: 'Ana Morales',
             email: 'ana.morales@gmail.com',
             roleLabel: 'Administrador',
-            roleColor: const Color(0xFF3B82F6),
-            roleBgColor: const Color(0xFFDCEEFB),
+            roleColor: AppColors.primary,
+            roleBgColor: AppColors.primaryLight,
             statusLabel: 'Activo',
-            statusColor: const Color(0xFF16A34A),
-            statusBgColor: const Color(0xFFDCFCE7),
+            statusColor: AppColors.success,
+            statusBgColor: AppColors.successBackground,
             onMenuTap: () {
               showModalBottomSheet(
                 context: context,
@@ -117,11 +115,11 @@ class UsersScreen extends StatelessWidget {
                   name: 'Ana Morales',
                   email: 'ana.morales@gmail.com',
                   roleLabel: 'Administrador',
-                  roleColor: Color(0xFF3B82F6),
-                  roleBgColor: Color(0xFFDCEEFB),
+                  roleColor: AppColors.primary,
+                  roleBgColor: AppColors.primaryLight,
                   statusLabel: 'Activo',
-                  statusColor: Color(0xFF16A34A),
-                  statusBgColor: Color(0xFFDCFCE7),
+                  statusColor: AppColors.success,
+                  statusBgColor: AppColors.successBackground,
                   fechaRegistro: '15 Mar 2023',
                   ultimoAcceso: 'Hace 2 horas',
                 ),
@@ -134,11 +132,11 @@ class UsersScreen extends StatelessWidget {
             name: 'Carlos Rojas',
             email: 'crojas@gmail.com',
             roleLabel: 'Vendedor',
-            roleColor: const Color(0xFFF59E0B),
-            roleBgColor: const Color(0xFFFEF3C7),
+            roleColor: AppColors.warning,
+            roleBgColor: AppColors.warningBackground,
             statusLabel: 'Activo',
-            statusColor: const Color(0xFF16A34A),
-            statusBgColor: const Color(0xFFDCFCE7),
+            statusColor: AppColors.success,
+            statusBgColor: AppColors.successBackground,
             onMenuTap: () {
               showModalBottomSheet(
                 context: context,
@@ -154,11 +152,11 @@ class UsersScreen extends StatelessWidget {
                   name: 'Carlos Rojas',
                   email: 'crojas@gmail.com',
                   roleLabel: 'Vendedor',
-                  roleColor: Color(0xFFF59E0B),
-                  roleBgColor: Color(0xFFFEF3C7),
+                  roleColor: AppColors.warning,
+                  roleBgColor: AppColors.warningBackground,
                   statusLabel: 'Activo',
-                  statusColor: Color(0xFF16A34A),
-                  statusBgColor: Color(0xFFDCFCE7),
+                  statusColor: AppColors.success,
+                  statusBgColor: AppColors.successBackground,
                   fechaRegistro: '02 Jun 2023',
                   ultimoAcceso: 'Hace 1 día',
                 ),
@@ -171,11 +169,11 @@ class UsersScreen extends StatelessWidget {
             name: 'Miguel Vargas',
             email: 'mvargas@gmail.com',
             roleLabel: 'Administrador',
-            roleColor: const Color(0xFF3B82F6),
-            roleBgColor: const Color(0xFFDCEEFB),
+            roleColor: AppColors.primary,
+            roleBgColor: AppColors.primaryLight,
             statusLabel: 'Inactivo',
-            statusColor: Colors.grey[600]!,
-            statusBgColor: const Color(0xFFF0F0F0),
+            statusColor: AppColors.textSecondary!,
+            statusBgColor: AppColors.surfaceMuted,
             onMenuTap: () {
               showModalBottomSheet(
                 context: context,
@@ -191,11 +189,11 @@ class UsersScreen extends StatelessWidget {
                   name: 'Miguel Vargas',
                   email: 'mvargas@gmail.com',
                   roleLabel: 'Administrador',
-                  roleColor: const Color(0xFF3B82F6),
-                  roleBgColor: const Color(0xFFDCEEFB),
+                  roleColor: AppColors.primary,
+                  roleBgColor: AppColors.primaryLight,
                   statusLabel: 'Inactivo',
-                  statusColor: Colors.grey[600]!,
-                  statusBgColor: const Color(0xFFF0F0F0),
+                  statusColor: AppColors.textSecondary!,
+                  statusBgColor: AppColors.surfaceMuted,
                   fechaRegistro: '20 Ene 2023',
                   ultimoAcceso: 'Hace 3 semanas',
                 ),
@@ -208,11 +206,11 @@ class UsersScreen extends StatelessWidget {
             name: 'Laura Gómez',
             email: 'lgomez@gmail.com',
             roleLabel: 'Vendedor',
-            roleColor: const Color(0xFFF59E0B),
-            roleBgColor: const Color(0xFFFEF3C7),
+            roleColor: AppColors.warning,
+            roleBgColor: AppColors.warningBackground,
             statusLabel: 'Activo',
-            statusColor: const Color(0xFF16A34A),
-            statusBgColor: const Color(0xFFDCFCE7),
+            statusColor: AppColors.success,
+            statusBgColor: AppColors.successBackground,
             onMenuTap: () {
               showModalBottomSheet(
                 context: context,
@@ -228,11 +226,11 @@ class UsersScreen extends StatelessWidget {
                   name: 'Laura Gómez',
                   email: 'lgomez@gmail.com',
                   roleLabel: 'Vendedor',
-                  roleColor: Color(0xFFF59E0B),
-                  roleBgColor: Color(0xFFFEF3C7),
+                  roleColor: AppColors.warning,
+                  roleBgColor: AppColors.warningBackground,
                   statusLabel: 'Activo',
-                  statusColor: Color(0xFF16A34A),
-                  statusBgColor: Color(0xFFDCFCE7),
+                  statusColor: AppColors.success,
+                  statusBgColor: AppColors.successBackground,
                   fechaRegistro: '10 Ago 2023',
                   ultimoAcceso: 'Hace 5 horas',
                 ),
@@ -248,22 +246,22 @@ class UsersScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFE0E0E0)),
+        border: Border.all(color: AppColors.borderLight),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 16, color: Colors.grey[600]),
+          Icon(icon, size: 16, color: AppColors.textSecondary),
           const SizedBox(width: 6),
           Expanded(
             child: Text(
               label,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 13),
+              style: AppText.body,
             ),
           ),
-          Icon(Icons.keyboard_arrow_down, size: 18, color: Colors.grey[600]),
+          Icon(Icons.keyboard_arrow_down, size: 18, color: AppColors.textSecondary),
         ],
       ),
     );
@@ -273,16 +271,16 @@ class UsersScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
       decoration: BoxDecoration(
-        color: selected ? const Color(0xFF16233F) : Colors.white,
+        color: selected ? AppColors.accent : AppColors.white,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: selected ? const Color(0xFF16233F) : const Color(0xFFE0E0E0),
+          color: selected ? AppColors.accent : AppColors.borderLight,
         ),
       ),
       child: Text(
         label,
         style: TextStyle(
-          color: selected ? Colors.white : Colors.grey[700],
+          color: selected ? AppColors.primary : AppColors.textSecondary,
           fontWeight: FontWeight.w500,
           fontSize: 13,
         ),
