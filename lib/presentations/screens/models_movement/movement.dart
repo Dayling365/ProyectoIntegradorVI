@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme/app_colors.dart';
 
 class Movement {
   final String registroId;
@@ -42,16 +43,13 @@ class Movement {
   });
 }
 
-const Color _success = Color(0xFF16A34A);
-const Color _danger = Color(0xFFDC2626);
-const Color _warning = Color(0xFFF59E0B);
 
 const List<Movement> demoMovements = [
   Movement(
     registroId: '1042',
     movementLabel: 'Entrada',
-    movementColor: _success,
-    movementBgColor: Color(0x1A16A34A),
+    movementColor: AppColors.success,
+    movementBgColor: AppColors.successTint,
     movementIcon: Icons.shopping_bag_outlined,
     cantidadInvolucrada: 30,
     stockPrevio: 20,
@@ -69,8 +67,8 @@ const List<Movement> demoMovements = [
   Movement(
     registroId: '1041',
     movementLabel: 'Salida',
-    movementColor: _danger,
-    movementBgColor: Color(0x1ADC2626),
+    movementColor: AppColors.error,
+    movementBgColor: AppColors.errorTint,
     movementIcon: Icons.point_of_sale_outlined,
     cantidadInvolucrada: -40,
     stockPrevio: 100,
@@ -88,8 +86,8 @@ const List<Movement> demoMovements = [
   Movement(
     registroId: '1040',
     movementLabel: 'Baja de inventario',
-    movementColor: _warning,
-    movementBgColor: Color(0x1AF59E0B),
+    movementColor: AppColors.warning,
+    movementBgColor: AppColors.warningTint,
     movementIcon: Icons.warning_amber_rounded,
     cantidadInvolucrada: -3,
     stockPrevio: 15,
@@ -108,8 +106,8 @@ const List<Movement> demoMovements = [
   Movement(
     registroId: '1039',
     movementLabel: 'Entrada',
-    movementColor: _success,
-    movementBgColor: Color(0x1A16A34A),
+    movementColor: AppColors.success,
+    movementBgColor: AppColors.successTint,
     movementIcon: Icons.shopping_bag_outlined,
     cantidadInvolucrada: 50,
     stockPrevio: 30,
@@ -127,8 +125,8 @@ const List<Movement> demoMovements = [
   Movement(
     registroId: '1038',
     movementLabel: 'Entrada',
-    movementColor: _success,
-    movementBgColor: Color(0x1A16A34A),
+    movementColor: AppColors.success,
+    movementBgColor: AppColors.successTint,
     movementIcon: Icons.replay_outlined,
     cantidadInvolucrada: 7,
     stockPrevio: 8,
