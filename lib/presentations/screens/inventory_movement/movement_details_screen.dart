@@ -48,7 +48,7 @@ class MovementDetailsScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF7F8FA),
       drawer: const AppDrawer(currentRoute: AppRoutes.inventoryMovementDetails),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1B2A5C),
+        backgroundColor: Colors.indigo.shade400,
         elevation: 0,
         title: Row(
           children: const [
@@ -88,7 +88,7 @@ class MovementDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Tarjeta principal: registro, cantidad involucrada, fecha, tipo, motivo
+            
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -170,7 +170,7 @@ class MovementDetailsScreen extends StatelessWidget {
                   const Divider(height: 1, color: Color(0xFFEDEDED)),
                   const SizedBox(height: 16),
 
-                  // Cantidad involucrada
+                  
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
@@ -263,11 +263,11 @@ class MovementDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  // Fecha y hora
+                  
                   _infoRow(Icons.calendar_today_outlined, 'Fecha y hora', fechaHora),
                   const SizedBox(height: 12),
 
-                  // Tipo de movimiento
+                  
                   Row(
                     children: [
                       Icon(Icons.swap_vert, size: 18, color: Colors.grey[600]),
@@ -310,7 +310,7 @@ class MovementDetailsScreen extends StatelessWidget {
                   const Divider(height: 1, color: Color(0xFFEDEDED)),
                   const SizedBox(height: 12),
 
-                  // Motivo
+                  
                   Row(
                     children: [
                       Icon(Icons.local_offer_outlined, size: 16, color: Colors.grey[600]),
@@ -472,48 +472,35 @@ class MovementDetailsScreen extends StatelessWidget {
                       color: const Color(0xFFF7F8FA),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'CANTIDAD INGRESADA',
-                                style: TextStyle(color: Colors.grey[500], fontSize: 10, fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '+$cantidadIngresada unidades',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: Color(0xFF16233F),
-                                ),
-                              ),
-                            ],
+                        Text(
+                          'CANTIDAD INGRESADA',
+                          style: TextStyle(color: Colors.grey[500], fontSize: 10, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '+$cantidadIngresada unidades',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Color(0xFF16233F),
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              'COSTO UNITARIO COMPRA',
-                              style: TextStyle(color: Colors.grey[500], fontSize: 10, fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'C\$${costoUnitario.toStringAsFixed(2)} / un.',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                                color: Color(0xFF16233F),
-                              ),
-                            ),
-                          ],
+                        const SizedBox(height: 12),
+                        Text(
+                          'COSTO UNITARIO COMPRA',
+                          style: TextStyle(color: Colors.grey[500], fontSize: 10, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'C\$${costoUnitario.toStringAsFixed(2)} / un.',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Color(0xFF16233F),
+                          ),
                         ),
                       ],
                     ),
@@ -523,7 +510,7 @@ class MovementDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Botón volver
+            
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
