@@ -12,7 +12,7 @@ import '../../theme/app_text_theme.dart';
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
-  @override
+   @override
   Widget build(BuildContext context) {
     final isAdmin = context.watch<AppState>().isAdmin;
 
@@ -71,28 +71,28 @@ class DashboardScreen extends StatelessWidget {
               children: const [
                 StatCard(
                   icon: Icons.point_of_sale,
-                  iconColor: AppColors.info,
+                  iconColor: AppColors.primary,
                   label: 'Ventas del día',
                   value: 'C\$124,500.00',
                 ),
 
                 StatCard(
                   icon: Icons.inventory_2,
-                  iconColor: AppColors.warning,
+                  iconColor: AppColors.primary,
                   label: 'Productos en inventario',
                   value: '1,245',
                 ),
 
                 StatCard(
                   icon: Icons.local_offer,
-                  iconColor: AppColors.success,
+                  iconColor: AppColors.primary,
                   label: 'Compras del mes',
                   value: '18',
                 ),
 
                 StatCard(
                   icon: Icons.people_outline,
-                  iconColor: AppColors.info,
+                  iconColor: AppColors.primary,
                   label: 'Clientes activos',
                   value: '156',
                 ),

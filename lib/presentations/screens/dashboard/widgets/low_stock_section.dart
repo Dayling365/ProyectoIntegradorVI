@@ -12,7 +12,6 @@ class LowStockItem {
 
   const LowStockItem(this.name, this.category, this.quantity, this.icon);
 }
-
 class LowStockSection extends StatelessWidget {
   const LowStockSection({super.key});
 
@@ -29,7 +28,7 @@ class LowStockSection extends StatelessWidget {
   Color _iconBgFor(String category) {
     switch (category.toLowerCase()) {
       case 'papelería':
-        return AppColors.infoBackground;
+        return AppColors.primaryLight;
       case 'útiles':
         return AppColors.errorBackground;
       default:
@@ -96,7 +95,7 @@ class LowStockSection extends StatelessWidget {
                     'Alertas de bajo stock',
                     style: TextStyle(
                       color: AppColors.error,
-                      fontSize: 15,
+                      fontSize: 16,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

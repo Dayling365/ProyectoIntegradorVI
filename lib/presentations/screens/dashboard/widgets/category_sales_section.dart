@@ -6,9 +6,9 @@ class CategorySalesSection extends StatelessWidget {
   const CategorySalesSection({super.key});
 
 
-  static const List<(String, double, Color)> _data = [
+   static const List<(String, double, Color)> _data = [
     ('Libros', 0.42, AppColors.primary),
-    ('Útiles escolares', 0.26, AppColors.warning),
+    ('Útiles escolares', 0.26, AppColors.accent),
     ('Papelería', 0.18, AppColors.info),
     ('Otros', 0.14, AppColors.textSecondary),
   ];
@@ -33,7 +33,7 @@ class CategorySalesSection extends StatelessWidget {
                 width: 36,
                 height: 36,
                 decoration: const BoxDecoration(
-                  color: AppColors.infoBackground,
+                  color: AppColors.accentLight,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -47,11 +47,7 @@ class CategorySalesSection extends StatelessWidget {
 
               const Text(
                 'Ventas por categoría',
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: AppText.title,
               ),
             ],
           ),
