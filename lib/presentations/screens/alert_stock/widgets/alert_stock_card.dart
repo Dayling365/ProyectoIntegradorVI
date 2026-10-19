@@ -8,16 +8,17 @@ class AlertStockCard extends StatelessWidget {
 
   const AlertStockCard({super.key, required this.item});
 
+ 
   Color get _iconBg {
     switch (item.category) {
       case 'Papelería':
-        return AppColors.infoBackground;
+        return AppColors.primaryLight;
       case 'Escritura':
         return AppColors.warningBackground;
       case 'Útiles':
-        return AppColors.chartPinkBackground;
+        return AppColors.surfaceMuted;
       default:
-        return AppColors.chartPurpleBackground;
+        return AppColors.primaryLight;
     }
   }
 
@@ -28,9 +29,9 @@ class AlertStockCard extends StatelessWidget {
       case 'Escritura':
         return AppColors.warningDark;
       case 'Útiles':
-        return AppColors.chartPink;
+        return AppColors.textSecondary;
       default:
-        return AppColors.chartPurple;
+        return AppColors.primary;
     }
   }
 
