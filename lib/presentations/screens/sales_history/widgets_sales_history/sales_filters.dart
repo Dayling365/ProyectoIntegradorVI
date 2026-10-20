@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../sales_data.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class SalesFilters extends StatelessWidget {
   final DateTime dateFrom;
@@ -23,9 +25,7 @@ class SalesFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color primary = Color(0xFF1B2A5C);
-    const Color textSecondary = Color(0xFF8A94A6);
-    const Color info = Color(0xFF2563EB);
+
 
     return Container(
       width: double.infinity,
@@ -40,17 +40,17 @@ class SalesFilters extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey.shade200),
+                border: Border.all(color: AppColors.borderLight),
               ),
               child: const Row(
                 children: [
-                  Icon(Icons.search, size: 17, color: primary),
+                  Icon(Icons.search, size: 17, color: AppColors.primary),
                   SizedBox(width: 8),
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: 'Buscar',
-                        hintStyle: TextStyle(color: textSecondary, fontSize: 12),
+                        hintStyle: AppText.caption,
                         border: InputBorder.none,
                         isDense: true,
                       ),
@@ -89,7 +89,7 @@ class SalesFilters extends StatelessWidget {
                             value: cliente,
                             child: Text(
                               cliente,
-                              style: const TextStyle(fontSize: 13),
+                              style: AppText.body,
                             ),
                           ),
                         )
@@ -124,15 +124,11 @@ class SalesFilters extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.close, size: 16, color: info),
+                      Icon(Icons.close, size: 16, color: AppColors.primary),
                       SizedBox(width: 4),
                       Text(
                         'Limpiar filtros',
-                        style: TextStyle(
-                          color: info,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: AppText.bodyStrongPrimary,
                       ),
                     ],
                   ),
@@ -157,21 +153,17 @@ class SalesFilters extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.borderLight),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 17, color: const Color(0xFF1B2A5C)),
+          Icon(icon, size: 17, color: AppColors.primary),
           const SizedBox(width: 8),
           Expanded(
             child: subtitulo == null
                 ? Text(
                     texto,
-                    style: const TextStyle(
-                      color: Color(0xFF1B2A5C),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: AppText.captionPrimary,
                   )
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -179,20 +171,13 @@ class SalesFilters extends StatelessWidget {
                     children: [
                       Text(
                         texto,
-                        style: const TextStyle(
-                          color: Color(0xFF1B2A5C),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: AppText.captionPrimary,
                       ),
                       Text(
                         subtitulo,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Color(0xFF8A94A6),
-                          fontSize: 10,
-                        ),
+                        style: AppText.micro,
                       ),
                     ],
                   ),
@@ -201,7 +186,7 @@ class SalesFilters extends StatelessWidget {
             const Icon(
               Icons.keyboard_arrow_down,
               size: 16,
-              color: Color(0xFF8A94A6),
+              color: AppColors.textSecondary,
             ),
         ],
       ),

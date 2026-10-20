@@ -31,7 +31,7 @@ class SettingDropdownTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+              Text(title, style: AppText.label),
               const SizedBox(height: 2),
               Text(subtitle, style: AppText.caption),
             ],

@@ -6,6 +6,8 @@ import 'widgets_sales_details/sales_meta.dart';
 import 'widgets_sales_details/sales_items_list.dart';
 import 'widgets_sales_details/sales_settlement.dart';
 import 'widgets_sales_details/back_to_sales_history_button.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_theme.dart';
 
 class SaleDetail {
   final String invoiceNumber;
@@ -38,9 +40,6 @@ class SalesDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
-
     final sale = ModalRoute.of(context)!.settings.arguments as SaleDetail;
 
     return AppScaffold(
@@ -53,21 +52,21 @@ class SalesDetailsScreen extends StatelessWidget {
           children: [
             const Text(
               'Detalle de Venta',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textPrimary),
+              style: AppText.value,
             ),
             const SizedBox(height: 4),
             const Text(
               'Comprobante y desglose de factura emitida.',
-              style: TextStyle(fontSize: 12, color: textSecondary),
+              style: AppText.caption,
             ),
             const SizedBox(height: 20),
 
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: AppColors.border),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,9 +92,9 @@ class SalesDetailsScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: AppColors.border),
               ),
               child: SalesSettlement(
                 subtotal: sale.subtotal,

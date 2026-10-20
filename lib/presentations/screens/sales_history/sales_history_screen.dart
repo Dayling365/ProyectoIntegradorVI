@@ -7,6 +7,8 @@ import 'sales_data.dart';
 import 'widgets_sales_history/sales_filters.dart';
 import 'widgets_sales_history/sales_list.dart';
 import 'widgets_sales_history/sales_pagination.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_theme.dart';
 
 class SalesHistoryScreen extends StatefulWidget {
   const SalesHistoryScreen({super.key});
@@ -65,7 +67,7 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
 
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.redAccent),
+      SnackBar(content: Text(message), backgroundColor: AppColors.error),
     );
   }
 
@@ -80,8 +82,6 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
 
     final appState = context.watch<AppState>();
     final isAdmin = appState.isAdmin;
@@ -100,18 +100,14 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
           children: [
             Text(
               isAdmin ? 'Historial de Ventas' : 'Mis Ventas Realizadas',
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: textPrimary,
-              ),
+              style: AppText.heading,
             ),
             const SizedBox(height: 4),
             Text(
               isAdmin
                   ? 'Registro cronológico de facturas y ventas realizadas.'
                   : 'Registro de facturas y cobros emitidos por ti.',
-              style: const TextStyle(color: textSecondary, fontSize: 13),
+              style: AppText.bodySecondary,
             ),
             const SizedBox(height: 16),
 
@@ -134,7 +130,7 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
               alignment: Alignment.centerLeft,
               child: Text(
                 '${filtered.length} ventas registradas',
-                style: const TextStyle(color: textSecondary, fontSize: 12.5),
+                style: AppText.caption,
               ),
             ),
 
@@ -145,18 +141,18 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                  border: Border.all(color: AppColors.borderLight),
                 ),
                 child: const Column(
                   children: [
-                    Icon(Icons.search_off, size: 36, color: textSecondary),
+                    Icon(Icons.search_off, size: 36, color: AppColors.textSecondary),
                     SizedBox(height: 8),
                     Text(
                       'No se encontraron ventas.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: textSecondary, fontSize: 13),
+                      style: AppText.bodySecondary,
                     ),
                   ],
                 ),

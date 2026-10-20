@@ -3,6 +3,7 @@ import '../../../core/constant/app_routes.dart';
 import '../../widgets/app_scaffold.dart';
 import 'widgets/account_card.dart';
 import 'widgets/appearance_section.dart';
+import '../../theme/app_text_theme.dart';
 
 class PreferencesScreen extends StatefulWidget {
   const PreferencesScreen({super.key});
@@ -26,10 +27,10 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text('Preferencias',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF1A1F36))),
+                style: AppText.heading),
             const SizedBox(height: 4),
             const Text('Configura las opciones y preferencias del sistema.',
-                style: TextStyle(fontSize: 13, color: Color(0xFF8A94A6))),
+                style: AppText.bodySecondary),
             const SizedBox(height: 18),
             const AccountCard(),
             const SizedBox(height: 16),

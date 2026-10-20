@@ -85,6 +85,13 @@ class AppText {
 
   static const String _f = AppTextTheme.fontFamily;
 
+  static const TextStyle display = TextStyle(
+    fontFamily: _f,
+    fontSize: 28,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primary,
+  );
+
   static const TextStyle heading = TextStyle(
     fontFamily: _f,
     fontSize: 22,
@@ -96,6 +103,12 @@ class AppText {
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: AppColors.primary,
+  );
+  static const TextStyle value = TextStyle(
+    fontFamily: _f,
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
   );
   static const TextStyle title = TextStyle(
     fontFamily: _f,
@@ -135,6 +148,20 @@ class AppText {
     fontSize: 14,
     color: AppColors.textPrimary,
   );
+
+  static const TextStyle label = TextStyle(
+    fontFamily: _f,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+  );
+  static const TextStyle labelPrimary = TextStyle(
+    fontFamily: _f,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primary,
+  );
+
   static const TextStyle body = TextStyle(
     fontFamily: _f,
     fontSize: 13,
