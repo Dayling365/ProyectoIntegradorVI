@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class SaleLineItem {
   final String name;
@@ -26,31 +28,31 @@ class SalesItemsList extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.receipt_long_outlined, size: 16, color: Color(0xFF1B2A5C)),
+              const Icon(Icons.receipt_long_outlined, size: 16, color: AppColors.primary),
               const SizedBox(width: 8),
               const Text(
                 'Ítems facturados',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF1A1F36)),
+                style: AppText.subtitle,
               ),
               const Spacer(),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF5F7FA),
+                  color: AppColors.background,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   '${items.length} líneas',
-                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF8A94A6)),
+                  style: AppText.overline,
                 ),
               ),
             ],
@@ -58,7 +60,7 @@ class SalesItemsList extends StatelessWidget {
           const SizedBox(height: 12),
           for (final item in items) ...[
             _itemRow(item),
-            if (item != items.last) const Divider(height: 20, color: Color(0xFFE2E8F0)),
+            if (item != items.last) const Divider(height: 20, color: AppColors.border),
           ],
         ],
       ),
@@ -75,24 +77,24 @@ class SalesItemsList extends StatelessWidget {
             children: [
               Text(
                 item.name,
-                style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: Color(0xFF1A1F36)),
+                style: AppText.subtitle,
               ),
               const SizedBox(height: 2),
               Text(
                 '• ${item.category}',
-                style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6)),
+                style: AppText.caption,
               ),
               const SizedBox(height: 2),
               Text(
                 '${item.quantity} un. × C\$${item.unitPrice.toStringAsFixed(2)}',
-                style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6)),
+                style: AppText.caption,
               ),
             ],
           ),
         ),
         Text(
           'C\$${item.subtotal.toStringAsFixed(2)}',
-          style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: Color(0xFF1A1F36)),
+          style: AppText.subtitle,
         ),
       ],
     );

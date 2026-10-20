@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class SalesSettlement extends StatelessWidget {
   final double subtotal;
@@ -24,7 +26,7 @@ class SalesSettlement extends StatelessWidget {
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF8A94A6),
+            color: AppColors.textSecondary,
             letterSpacing: 0.5,
           ),
         ),
@@ -35,7 +37,7 @@ class SalesSettlement extends StatelessWidget {
           'Total Neto',
           'C\$${total.toStringAsFixed(2)}',
           bold: true,
-          valueColor: const Color(0xFF1B2A5C),
+          valueColor: AppColors.primary,
           fontSize: 16,
         ),
         const SizedBox(height: 12),
@@ -43,9 +45,9 @@ class SalesSettlement extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: const Color(0xFFF5F7FA),
+            color: AppColors.background,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
           ),
           child: Column(
             children: [
@@ -55,7 +57,7 @@ class SalesSettlement extends StatelessWidget {
                 'Cambio devuelto:',
                 'C\$${changeGiven.toStringAsFixed(2)}',
                 bold: true,
-                valueColor: const Color(0xFF16A34A),
+                valueColor: AppColors.success,
               ),
             ],
           ),
@@ -69,7 +71,7 @@ class SalesSettlement extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 13, color: Color(0xFF8A94A6)),
+          style: AppText.bodySecondary,
         ),
         const Spacer(),
         Text(
@@ -77,7 +79,7 @@ class SalesSettlement extends StatelessWidget {
           style: TextStyle(
             fontSize: fontSize,
             fontWeight: bold ? FontWeight.w700 : FontWeight.w500,
-            color: valueColor ?? const Color(0xFF1A1F36),
+            color: valueColor ?? AppColors.textPrimary,
           ),
         ),
       ],

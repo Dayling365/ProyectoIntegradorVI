@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class SalesMeta extends StatelessWidget {
   final String date;
@@ -21,7 +23,7 @@ class SalesMeta extends StatelessWidget {
         const SizedBox(height: 10),
         _row(Icons.person_outline, 'Cliente', clientName),
         const SizedBox(height: 10),
-        _row(Icons.badge_outlined, 'Vendedor', seller, valueColor: const Color(0xFF475569)),
+        _row(Icons.badge_outlined, 'Vendedor', seller, valueColor: AppColors.textSecondary),
       ],
     );
   }
@@ -29,11 +31,11 @@ class SalesMeta extends StatelessWidget {
   Widget _row(IconData icon, String label, String value, {Color? valueColor}) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: const Color(0xFF8A94A6)),
+        Icon(icon, size: 16, color: AppColors.textSecondary),
         const SizedBox(width: 8),
         Text(
           label,
-          style: const TextStyle(fontSize: 13, color: Color(0xFF8A94A6)),
+          style: AppText.bodySecondary,
         ),
         const Spacer(),
         Text(
@@ -41,7 +43,7 @@ class SalesMeta extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w700,
-            color: valueColor ?? const Color(0xFF1A1F36),
+            color: valueColor ?? AppColors.textPrimary,
           ),
         ),
       ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class SalesSummary extends StatelessWidget {
   final String invoiceNumber;
@@ -20,7 +22,7 @@ class SalesSummary extends StatelessWidget {
           style: const TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF8A94A6),
+            color: AppColors.textSecondary,
             letterSpacing: 0.5,
           ),
         ),
@@ -29,9 +31,9 @@ class SalesSummary extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: const Color(0xFFF5F7FA),
+            color: AppColors.background,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
           ),
           child: Column(
             children: [
@@ -40,18 +42,14 @@ class SalesSummary extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF8A94A6),
+                  color: AppColors.textSecondary,
                   letterSpacing: 0.5,
                 ),
               ),
               const SizedBox(height: 6),
               Text(
                 totalAmount,
-                style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1B2A5C),
-                ),
+                style: AppText.display,
               ),
             ],
           ),
