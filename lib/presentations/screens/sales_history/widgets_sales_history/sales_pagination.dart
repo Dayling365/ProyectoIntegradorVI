@@ -41,10 +41,7 @@ class SalesPagination extends StatelessWidget {
             ),
           ],
         ),
-        Text(
-          'Página $currentPage de $totalPages',
-          style: AppText.caption,
-        ),
+        Text('Página $currentPage de $totalPages', style: AppText.caption),
       ],
     );
   }
@@ -59,16 +56,16 @@ class SalesPagination extends StatelessWidget {
         height: 32,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: selected ? AppColors.accent : AppColors.white,
+          color: selected ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: selected ? AppColors.accent : AppColors.border),
+          border: Border.all(color: selected ? AppColors.primary : AppColors.border),
         ),
         child: Text(
           '$page',
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: selected ? AppColors.primary : AppColors.textPrimary,
+            color: selected ? AppColors.white : AppColors.textPrimary,
           ),
         ),
       ),
