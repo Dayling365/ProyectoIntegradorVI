@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class ReportMetricCard extends StatelessWidget {
   final IconData icon;
@@ -21,11 +23,11 @@ class ReportMetricCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: AppColors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -48,7 +50,7 @@ class ReportMetricCard extends StatelessWidget {
                   label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                  style: AppText.caption,
                 ),
               ),
             ],
@@ -60,11 +62,7 @@ class ReportMetricCard extends StatelessWidget {
             child: Text(
               value,
               maxLines: 1,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF16233F),
-              ),
+              style: AppText.headingPrimary,
             ),
           ),
         ],

@@ -8,7 +8,7 @@ class AlertHeaderBanner extends StatelessWidget {
   const AlertHeaderBanner({super.key, required this.activeAlertsCount});
 
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -34,7 +34,7 @@ class AlertHeaderBanner extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(color: AppColors.error, borderRadius: BorderRadius.circular(20)),
-                    child: const Text('CRÍTICO', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.white)),
+                    child: const Text('CRÍTICO', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.white)),
                   ),
                 ],
               ),

@@ -4,15 +4,14 @@ import '../../widgets/app_scaffold.dart';
 import 'widgets_purchase_details/purchase_detail_info.dart'; 
 import 'widgets_purchase_details/detail_items_list.dart'; 
 import 'widgets_purchase_details/purchase_detail_summary.dart'; 
-import 'widgets_purchase_details/back_to_history_button.dart'; 
+import 'widgets_purchase_details/back_to_history_button.dart';
+import '../../theme/app_text_theme.dart'; 
 
 class PurchaseDetailScreen extends StatelessWidget { 
   const PurchaseDetailScreen({super.key}); 
 
   @override 
   Widget build(BuildContext context) { 
-    const Color textPrimary = Color(0xFF1A1F36); 
-    const Color textSecondary = Color(0xFF8A94A6); 
 
     final codigo = ModalRoute.of(context)?.settings.arguments as String? ?? ''; 
 
@@ -28,20 +27,13 @@ class PurchaseDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start, 
               children: [ 
                 const Text('Detalle de Compra', 
-                  style: TextStyle( 
-                    fontSize: 22, 
-                    fontWeight: FontWeight.bold, 
-                    color: textPrimary, 
-                  ), 
+                  style: AppText.heading, 
                 ), 
 
                 const SizedBox(height: 4), 
 
                 const Text('Comprobante y desglose de orden de compra recibida.', 
-                  style: TextStyle( 
-                    color: textSecondary, 
-                    fontSize: 13, 
-                  ), 
+                  style: AppText.bodySecondary, 
                 ), 
 
                 const SizedBox(height: 16), 

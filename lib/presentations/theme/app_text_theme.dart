@@ -115,6 +115,13 @@ class AppText {
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
   );
+
+  static const TextStyle bodyStrongPrimary = TextStyle(
+    fontFamily: _f, 
+    fontSize: 13, 
+    fontWeight: FontWeight.w600, 
+    color: AppColors.primary);
+    
   static const TextStyle subtitlePrimary = TextStyle(
     fontFamily: _f,
     fontSize: 14,
@@ -181,4 +188,3 @@ class AppText {
     color: AppColors.textSecondary,
   );
 }
-
