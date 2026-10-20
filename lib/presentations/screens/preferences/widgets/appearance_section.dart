@@ -39,7 +39,7 @@ class AppearanceSection extends StatelessWidget {
             children: [
               Icon(Icons.palette_outlined, size: 18, color: AppColors.primary),
               SizedBox(width: 8),
-              Text('Apariencia', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
+              Text('Apariencia', style: AppText.title),
             ],
           ),
           const SizedBox(height: 16),

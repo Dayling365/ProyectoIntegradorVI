@@ -38,7 +38,7 @@ class AccountCard extends StatelessWidget {
               children: [
                 const Text('Mi cuenta', style: AppText.micro),
                 const SizedBox(height: 2),
-                Text(appState.userName, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
+                Text(appState.userName, style: AppText.title),
                 const SizedBox(height: 2),
                 Text(roleLabel, style: AppText.caption),
               ],
