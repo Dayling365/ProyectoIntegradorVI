@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constant/app_routes.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 import '../../models_movement/movement.dart';
 
 class MovementItem extends StatelessWidget {
@@ -12,17 +14,13 @@ class MovementItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
-    const Color info = Color(0xFF2563EB);
-    const Color warning = Color(0xFFF59E0B);
 
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -37,15 +35,12 @@ class MovementItem extends StatelessWidget {
                   children: [
                     Text(
                       movement.productName,
-                      style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w700,
-                        color: textPrimary,
-                      ),
+                      style: AppText.subtitle,
                     ),
                     const SizedBox(height: 2),
                     Text(
                       movement.category,
-                      style: const TextStyle(fontSize: 12, color: textSecondary),
+                      style: AppText.caption,
                     ),
                   ],
                 ),
@@ -72,11 +67,11 @@ class MovementItem extends StatelessWidget {
 
           Row(
             children: [
-              const Icon(Icons.access_time, size: 12, color: textSecondary),
+              const Icon(Icons.access_time, size: 12, color: AppColors.textSecondary),
               const SizedBox(width: 4),
               Text(
                 movement.fechaHora,
-                style: const TextStyle(fontSize: 11, color: textSecondary),
+                style: AppText.micro,
               ),
             ],
           ),
@@ -88,11 +83,7 @@ class MovementItem extends StatelessWidget {
               children: [
                 RichText(
                   text: TextSpan(
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: textPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: AppText.bodyStrong,
                     children: [
                       const TextSpan(text: 'Stock: '),
                       TextSpan(text: '${movement.stockPrevio}'),
@@ -102,7 +93,7 @@ class MovementItem extends StatelessWidget {
                         text: ' unid.',
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
-                          color: textSecondary,
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ],
@@ -114,19 +105,19 @@ class MovementItem extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: warning.withOpacity(0.1),
+                        color: AppColors.warning.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(Icons.circle, size: 6, color: warning),
+                          const Icon(Icons.circle, size: 6, color: AppColors.warning),
                           const SizedBox(width: 4),
                           Text(
                             movement.motivo,
                             style: const TextStyle(
                               fontSize: 11,
-                              color: warning,
+                              color: AppColors.warning,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -145,13 +136,10 @@ class MovementItem extends StatelessWidget {
                         children: [
                           Text(
                             'Ver detalle',
-                            style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w600,
-                              color: info,
-                            ),
+                            style: AppText.captionInfo,
                           ),
                           SizedBox(width: 2),
-                          Icon(Icons.arrow_forward, size: 12, color: info),
+                          Icon(Icons.arrow_forward, size: 12, color: AppColors.accent),
                         ],
                       ),
                     ),
@@ -165,11 +153,7 @@ class MovementItem extends StatelessWidget {
                 Expanded(
                   child: RichText(
                     text: TextSpan(
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: textPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: AppText.bodyStrong,
                       children: [
                         const TextSpan(text: 'Stock: '),
                         TextSpan(text: '${movement.stockPrevio}'),
@@ -179,7 +163,7 @@ class MovementItem extends StatelessWidget {
                           text: ' unid.',
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
-                            color: textSecondary,
+                            color: AppColors.textSecondary,
                           ),
                         ),
                       ],
@@ -189,11 +173,11 @@ class MovementItem extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(movement.movementIcon, size: 14, color: textSecondary),
+                    Icon(movement.movementIcon, size: 14, color: AppColors.textSecondary),
                     const SizedBox(width: 4),
                     Text(
                       movement.motivo,
-                      style: const TextStyle(fontSize: 12, color: textSecondary),
+                      style: AppText.caption,
                     ),
                   ],
                 ),
@@ -209,13 +193,10 @@ class MovementItem extends StatelessWidget {
                     children: [
                       Text(
                         'Ver detalle',
-                        style: TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.w600,
-                          color: info,
-                        ),
+                        style: AppText.captionInfo,
                       ),
                       SizedBox(width: 2),
-                      Icon(Icons.arrow_forward, size: 12, color: info),
+                      Icon(Icons.arrow_forward, size: 12, color: AppColors.accent),
                     ],
                   ),
                 ),

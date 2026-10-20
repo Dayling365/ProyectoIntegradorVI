@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class MovementFilters extends StatelessWidget {
   const MovementFilters({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const Color primary = Color(0xFF1B2A5C);
-    const Color textSecondary = Color(0xFF8A94A6);
 
     return Container(
       width: double.infinity,
@@ -18,24 +18,21 @@ class MovementFilters extends StatelessWidget {
             Container(
               height: 48,
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration( color: Colors.white,
+              decoration: BoxDecoration( color: AppColors.white,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: Colors.grey.shade200,
+                  color: AppColors.borderLight,
                 ),
               ),
               child: Row(
                 children: [
-                  const Icon( Icons.search, size: 17, color: primary,),
+                  const Icon( Icons.search, size: 17, color: AppColors.primary,),
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextField(
                       decoration: const InputDecoration(
                         hintText: 'Buscar producto o movimiento...',
-                        hintStyle: TextStyle(
-                          color: textSecondary,
-                          fontSize: 12,
-                        ),
+                        hintStyle: AppText.caption,
                         border: InputBorder.none,
                         isDense: true,
                       ),
@@ -100,28 +97,24 @@ class MovementFilters extends StatelessWidget {
       height: subtitulo != null ? 56 : 48,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Colors.grey.shade200,
+          color: AppColors.borderLight,
         ),
       ),
       child: Row(
         children: [
           Icon(
             icon, size: 17,
-            color: const Color(0xFF1B2A5C),
+            color: AppColors.primary,
           ),
           const SizedBox(width: 8),
           Expanded(
             child: subtitulo == null
                 ? Text(
                     texto,
-                    style: const TextStyle(
-                      color: Color(0xFF1B2A5C),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: AppText.captionPrimary,
                   )
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -129,18 +122,11 @@ class MovementFilters extends StatelessWidget {
                     children: [
                       Text(
                         texto,
-                        style: const TextStyle(
-                          color: Color(0xFF1B2A5C),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: AppText.captionPrimary,
                       ),
                       Text(
                         subtitulo,
-                        style: const TextStyle(
-                          color: Color(0xFF8A94A6),
-                          fontSize: 10,
-                        ),
+                        style: AppText.micro,
                       ),
                     ],
                   ),
@@ -148,7 +134,7 @@ class MovementFilters extends StatelessWidget {
           if (arrow)
             const Icon(
               Icons.keyboard_arrow_down, size: 16,
-              color: Color(0xFF8A94A6),
+              color: AppColors.textSecondary,
             ),
         ],
       ),

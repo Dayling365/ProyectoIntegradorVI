@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_text_theme.dart';
 
 class MovementSummary extends StatelessWidget {
   final int total;
@@ -7,8 +9,6 @@ class MovementSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color textSecondary = Color(0xFF8A94A6);
-    const Color info = Color(0xFF2563EB);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,15 +18,11 @@ class MovementSummary extends StatelessWidget {
           children: const [
             Icon(Icons.close,
               size: 16,
-              color: info,
+              color: AppColors.primary,
             ),
             SizedBox(width: 4),
             Text('Limpiar filtros',
-              style: TextStyle(
-                color: info,
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-              ),
+              style: AppText.bodyStrongPrimary,
             ),
           ],
         ),
@@ -34,10 +30,7 @@ class MovementSummary extends StatelessWidget {
         const SizedBox(height: 4),
 
         Text('130 movimientos registrados',
-          style: const TextStyle(
-            fontSize: 13,
-            color: textSecondary,
-          ),
+          style: AppText.bodySecondary,
         ),
       ],
     );

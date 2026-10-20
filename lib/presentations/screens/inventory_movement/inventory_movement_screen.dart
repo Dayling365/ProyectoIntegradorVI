@@ -5,6 +5,7 @@ import 'widgets_inventory_movements/movement_filters.dart';
 import 'widgets_inventory_movements/movement_summary.dart';
 import 'widgets_inventory_movements/movement_list.dart';
 import 'widgets_inventory_movements/movement_pagination.dart';
+import '../../theme/app_text_theme.dart';
 
 class InventoryMovementScreen extends StatefulWidget {
   const InventoryMovementScreen({super.key});
@@ -20,8 +21,6 @@ class _InventoryMovementScreenState extends State<InventoryMovementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
 
     return AppScaffold(
       currentRoute: AppRoutes.inventoryMovement,
@@ -32,19 +31,12 @@ class _InventoryMovementScreenState extends State<InventoryMovementScreen> {
           children: [
             const Text(
               'Movimiento de Inventario',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: textPrimary,
-              ),
+              style: AppText.heading,
             ),
             const SizedBox(height: 4),
             const Text(
               'Consulta el historial de entradas, salidas y bajas de inventario.',
-              style: TextStyle(
-                color: textSecondary,
-                fontSize: 13,
-              ),
+              style: AppText.bodySecondary,
             ),
             const SizedBox(height: 16),
             const MovementFilters(),
