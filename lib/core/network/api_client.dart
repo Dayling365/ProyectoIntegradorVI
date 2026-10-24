@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sistema_libreria_app/core/constant/api_constants.dart';
+import 'package:sistema_libreria_app/core/errors/app_exception.dart';
 
 
 class ApiClient {
@@ -28,11 +30,32 @@ class ApiClient {
       response = await _client.send(request)
       .timeout(ApiConstants.timeoutDuration)
       .then(http.Response.fromStream);
-    } catch (e) {
-      throw Exception('Failed to send request: $e');
+    } on TimeoutException {
+      throw const NetworkException('Request timed out. Please try again later.');
+    } on http.ClientException {
+      throw const NetworkException();
     }
 
-    return response;
-    
+    if (response.statusCode == 401) {
+      throw const UnauthorizedException();
+    }
+
+    return _decode(response);
   }
+
+  dynamic _decode(http.Response response) {
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw ServerException('Request failed', statusCode: response.statusCode);
+    }
+    if(response.body.isEmpty) return null;
+
+    try {
+      return jsonDecode(response.body);
+    } on FormatException {
+      throw const ParsingException();
+    }
+
+  }
+
+  void dispose() => _client.close();
 }
