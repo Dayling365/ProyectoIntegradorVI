@@ -25,4 +25,6 @@ class ApiConstants {
   static const String inventoryMovements = 'inventorymovements';
   static const String inventory = 'inventory';
 
+  static const Duration timeoutDuration = Duration(seconds: 30);
+
 }
