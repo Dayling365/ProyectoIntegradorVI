@@ -11,6 +11,7 @@ class ApiConstants {
   static const String users = 'users';
   static const String byname = 'auth/byname';
   static const String login = 'auth/login';
+  static const String me = 'auth/me';
   static const String categories = 'categories';
   static const String brands = 'brands';
   static const String products = 'products';
