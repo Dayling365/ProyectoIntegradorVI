@@ -8,23 +8,24 @@ class ApiConstants {
   static final ApiConstants _instance = ApiConstants._privateConstructor();
   static ApiConstants get instance => _instance;
 
-  static const String users = 'users';
-  static const String byname = 'auth/byname';
-  static const String login = 'auth/login';
-  static const String me = 'auth/me';
-  static const String categories = 'categories';
-  static const String brands = 'brands';
-  static const String products = 'products';
-  static const String suppliers = 'suppliers';
-  static const String customers = 'customers';
-  static const String purchases = 'purchases';
-  static const String purchaseDetails = 'purchases/details';
-  static const String purchasesByDateRange = 'purchases/bydaterange';
-  static const String sales = 'sales';
-  static const String salesDetails = 'sales/details';
-  static const String salesByDateRange = 'sales/bydaterange';
-  static const String inventoryMovements = 'inventorymovements';
-  static const String inventory = 'inventory';
+  static const String users = '/users';
+  static const String byname = '/auth/byname';
+  static const String userById = '/users/\$id}';
+  static const String login = '/auth/login';
+  static const String me = '/auth/me';
+  static const String categories = '/categories';
+  static const String brands = '/brands';
+  static const String products = '/products';
+  static const String suppliers = '/suppliers';
+  static const String customers = '/customers';
+  static const String purchases = '/purchases';
+  static const String purchaseDetails = '/purchases/details';
+  static const String purchasesByDateRange = '/purchases/bydaterange';
+  static const String sales = '/sales';
+  static const String salesDetails = '/sales/details';
+  static const String salesByDateRange = '/sales/bydaterange';
+  static const String inventoryMovements = '/inventorymovements';
+  static const String inventory = '/inventory';
 
   static const Duration timeoutDuration = Duration(seconds: 30);
 
