@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'core/constant/app_routes.dart';
 import "presentations/app_state.dart";
@@ -18,7 +19,9 @@ import 'presentations/screens/inventory_movement/movement_details_screen.dart';
 import 'presentations/screens/users/users_screen.dart';
 import 'presentations/screens/report/report_screen.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => AppState(),
