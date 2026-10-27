@@ -1,22 +1,33 @@
 class TokenModel {
   final String accessToken;
-  final String refreshToken;
+  //final String refreshToken;
   final DateTime accessTokenExpiresAt;
-  final DateTime refreshTokenExpiresAt;
+  //final DateTime refreshTokenExpiresAt;
 
-  TokenModel({
+  TokenModel({ 
     required this.accessToken,
-    required this.refreshToken,
+    //required this.refreshToken,
     required this.accessTokenExpiresAt,
-    required this.refreshTokenExpiresAt,
+    //required this.refreshTokenExpiresAt,
   });
+
+  bool get isAccesTokenExpired => DateTime.now().isAfter(accessTokenExpiresAt);
 
   static TokenModel fromJson(Map<String, dynamic> json) {
     return TokenModel(
       accessToken: json['accessToken'],
-      refreshToken: json['refreshToken'],
+      //refreshToken: json['refreshToken'],
       accessTokenExpiresAt: DateTime.parse(json['accessTokenExpiresAt']),
-      refreshTokenExpiresAt: DateTime.parse(json['refreshTokenExpiresAt']),
+      //refreshTokenExpiresAt: DateTime.parse(json['refreshTokenExpiresAt']),
     );
+  }
+
+  Map<String, dynamic> toJson(){
+    return{
+      'accessToken':accessToken,
+      //'refreshToken':refreshToken,
+      'expiresAt':accessTokenExpiresAt.toIso8601String(),
+      //'refreshTokenExpiresAt':refreshTokenExpiresAt.toIso8601String(),
+    };
   }
 }
