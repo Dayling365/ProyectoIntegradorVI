@@ -3,13 +3,14 @@ import 'package:sistema_libreria_app/data/models/token_model.dart';
 //import 'package:sistema_libreria_app/data/models/token_model.dart';
 import 'package:sistema_libreria_app/data/models/user_model.dart';
 import 'package:sistema_libreria_app/data/repositories/auth_repository.dart';
+import 'package:sistema_libreria_app/data/repositories/token_repository.dart';
 
 class AuthService {
   final AuthRepository _authRepository;
-  //final TokenService _tokenService;
+  final TokenRepository _tokenRepository;
 
   //AuthService(this._authRepository, this._tokenService);
-  AuthService(this._authRepository);
+  AuthService(this._authRepository,this._tokenRepository);
 
   Future<void> login(String username, String password) async {
     final trimmedUsername = username.trim();
@@ -28,10 +29,12 @@ class AuthService {
     }
 
      final TokenModel token =await _authRepository.login(username, password);
+     await _tokenRepository.saveToken(token);
   }
 
   Future<UserModel> getCurrentUser() async {
     return await _authRepository.currentUser();
   } 
+  
 
 }
