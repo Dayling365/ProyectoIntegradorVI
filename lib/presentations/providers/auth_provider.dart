@@ -11,6 +11,7 @@ enum AuthStatus{
 class AuthProvider extends ChangeNotifier{
   final AuthService _authService;
   AuthProvider(this._authService);
+  int requestCount = 0;
 
   String? _errorMessage;
   AuthStatus _authStatus = AuthStatus.unknown;
@@ -19,14 +20,14 @@ class AuthProvider extends ChangeNotifier{
   bool _isSumitting = false;
   bool get isSubmitting => _isSumitting;
 
-  Future<void> login({required String email, required String password}) async{
+  Future<void> login({required String username, required String password}) async{
     if (_isSumitting) return;
 
     _isSumitting = true;
     notifyListeners();
 
     try{
-      await _authService.login(email, password);
+      await _authService.login(username, password);
       _authStatus = AuthStatus.authenticated;
 
     } on AppException catch(e){
