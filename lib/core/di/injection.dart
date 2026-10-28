@@ -8,8 +8,7 @@ import 'package:sistema_libreria_app/services/auth_service.dart';
 final getIt = GetIt.instance;
 
 void setupDependencies(){
-  getIt.registerLazySingleton<ApiClient>(() => ApiClient(), dispose: (client) => client.dispose());
-
+  getIt.registerLazySingleton<ApiClient>(() => ApiClient(getIt<TokenRepository>()), dispose: (client) => client.dispose());
   //Register repositories
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepository(getIt<ApiClient>()));
   getIt.registerLazySingleton<TokenRepository>(() => TokenRepository());

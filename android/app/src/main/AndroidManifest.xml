@@ -2,6 +2,7 @@
     <application
         android:label="sistema_libreria_app"
         android:name="${applicationName}"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
