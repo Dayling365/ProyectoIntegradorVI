@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constant/app_routes.dart';
-import '../../app_state.dart';
+import 'package:sistema_libreria_app/presentations/providers/auth_provider.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_theme.dart';
+import 'package:sistema_libreria_app/core/constant/app_routes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,12 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  static const Map<String, String> _credenciales = {
-    'admin': 'admin123',
-    'vendedor': 'vendedor123',
-    'carlos': 'carlos123',
-  };
-
+  final _globalKey = GlobalKey<FormState>();
   final _usuarioController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscure = true;
@@ -33,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     final username = _usuarioController.text.trim();
     final password = _passwordController.text;
 
@@ -45,13 +40,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (username.isEmpty || password.isEmpty) return;
 
-    final esperada = _credenciales[username.toLowerCase()];
+    final auth = context.read<AuthProvider>();
+    final ok = await auth.login(
+      username: username,
+      password: password,
+    );
 
-    if (esperada != null && esperada == password) {
-      context.read<AppState>().login(username);
+    if (!mounted) return;
+
+    if (ok) {
       Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
     } else {
-      setState(() => _loginError = 'Credenciales incorrectas');
+      setState(() => _loginError = auth.errorMessage);
     }
   }
 
@@ -193,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     height: 54,
                     child: ElevatedButton(
-                      onPressed: _submit,
+                      onPressed: context.watch<AuthProvider>().isSubmitting ? null : _submit,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         elevation: 0,

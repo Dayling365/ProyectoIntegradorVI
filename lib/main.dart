@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:sistema_libreria_app/core/di/injection.dart';
+import 'package:sistema_libreria_app/presentations/providers/auth_provider.dart';
 import 'core/constant/app_routes.dart';
-import "presentations/app_state.dart";
 import 'presentations/screens/dashboard/dashboard_screen.dart';
 import 'presentations/screens/login/login_screen.dart';
 import 'presentations/screens/inventory/inventory_screen.dart';
@@ -18,13 +20,16 @@ import 'presentations/screens/inventory_movement/movement_details_screen.dart';
 import 'presentations/screens/users/users_screen.dart';
 import 'presentations/screens/report/report_screen.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
+  setupDependencies();
+
   runApp(
     ChangeNotifierProvider(
-      create: (_) => AppState(),
-     child: const MyApp()
-     ),
- );
+    create: (_) => getIt<AuthProvider>(),
+    child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
