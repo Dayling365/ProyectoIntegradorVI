@@ -21,12 +21,20 @@ class TokenModel {
       //refreshTokenExpiresAt: DateTime.parse(json['refreshTokenExpiresAt']),
     );
   }
+    // Para la respuesta del LOGIN de la API: { id, userName, email, token, roles }
+  static TokenModel fromLoginJson(Map<String, dynamic> json) {
+    return TokenModel(
+      accessToken: json['token'] as String,
+      // La API crea el token con duración de 3 horas (AddHours(3) en AuthService)
+      accessTokenExpiresAt: DateTime.now().add(const Duration(hours: 3)),
+    );
+  }
 
   Map<String, dynamic> toJson(){
     return{
       'accessToken':accessToken,
       //'refreshToken':refreshToken,
-      'expiresAt':accessTokenExpiresAt.toIso8601String(),
+      'accessTokenExpiresAt':accessTokenExpiresAt.toIso8601String(),
       //'refreshTokenExpiresAt':refreshTokenExpiresAt.toIso8601String(),
     };
   }

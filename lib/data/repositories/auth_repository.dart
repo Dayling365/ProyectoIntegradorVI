@@ -17,7 +17,7 @@ class AuthRepository {
     
     if (json is! Map<String, dynamic>) throw ParsingException();
 
-    return TokenModel.fromJson(json);
+    return TokenModel.fromLoginJson(json);
   }
 
   Future<UserModel> currentUser() async {
