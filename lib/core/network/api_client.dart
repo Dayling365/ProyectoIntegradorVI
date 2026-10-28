@@ -3,9 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sistema_libreria_app/core/constant/api_constants.dart';
 import 'package:sistema_libreria_app/core/errors/app_exception.dart';
-
+import 'dart:io';
+import 'package:sistema_libreria_app/data/repositories/token_repository.dart';
+import 'package:flutter/foundation.dart';
 
 class ApiClient {
+  final TokenRepository _tokenRepository;
+  ApiClient(this._tokenRepository);
   final http.Client _client = http.Client();
   Future<dynamic> get(String path, {Map<String, String>? query}) async => _send('GET', path, query, null);
   Future<dynamic> post(String path, {Object? body}) async => _send('POST', path, null, body);
@@ -16,8 +20,10 @@ class ApiClient {
     final baseUrl = ApiConstants.instance.baseUrl;
     final uri = Uri.parse('$baseUrl$path').replace(queryParameters: query);
     final headers = {'Content-Type': 'application/json'};
-    if(body != null) {
-      headers['Content-Length'] = 'application/json';
+
+    final token= await _tokenRepository.getToken();
+    if(token != null) {
+      headers['Authorization'] = 'Bearer ${token.accessToken}';
     }
 
     final request = http.Request(method, uri)..headers.addAll(headers);
@@ -32,11 +38,14 @@ class ApiClient {
       .then(http.Response.fromStream);
     } on TimeoutException {
       throw const NetworkException('Request timed out. Please try again later.');
-    } on http.ClientException {
+    } on SocketException {
+      throw const NetworkException('No se pudo conectar con el servidor.');
+    }on http.ClientException {
       throw const NetworkException();
     }
 
     if (response.statusCode == 401) {
+      debugPrint('$method $uri -> ${response.statusCode} (token enviado: ${token != null})');
       throw const UnauthorizedException();
     }
 
