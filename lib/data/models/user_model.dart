@@ -17,7 +17,6 @@ class UserModel {
     this.lastLogin,
   });
 
-  /// Deserialización del UserDto de C# / .NET
   factory UserModel.fromJson(Map<String, dynamic> json) {
     List<String> parsedRoles = [];
     if (json['roles'] != null) {
@@ -50,11 +49,9 @@ class UserModel {
     };
   }
 
-  // Getters de compatibilidad con la guía del profesor Danny
   String get username => userName;
   String get fullName => userName;
 
-  /// Rol principal formateado (Administrador o Vendedor)
   String get primaryRole {
     if (roles.isEmpty) return 'Usuario';
     final role = roles.first.toLowerCase();
@@ -67,7 +64,6 @@ class UserModel {
 
   bool get isAdmin => roles.any((r) => r.toLowerCase().contains('admin'));
 
-  /// Iniciales para CircleAvatar (ej. "Admin" -> "AD", "Carlos Rojas" -> "CR")
   String get initials {
     final clean = userName.trim();
     if (clean.isEmpty) return '?';

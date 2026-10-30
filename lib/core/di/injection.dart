@@ -16,12 +16,10 @@ void setupDependencies() {
     dispose: (client) => client.dispose(),
   );
 
-  // Repositories
   getIt.registerLazySingleton<TokenRepository>(() => TokenRepository());
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepository(getIt<ApiClient>()));
   getIt.registerLazySingleton<UserRepository>(() => UserRepository(getIt<ApiClient>()));
 
-  // Services
   getIt.registerLazySingleton<AuthService>(
     () => AuthService(getIt<AuthRepository>(), getIt<TokenRepository>()),
   );
@@ -29,7 +27,6 @@ void setupDependencies() {
     () => UserService(getIt<UserRepository>()),
   );
 
-  // Providers
   getIt.registerLazySingleton<AuthProvider>(() => AuthProvider(getIt<AuthService>()));
   getIt.registerLazySingleton<UserProvider>(() => UserProvider(getIt<UserService>()));
 }

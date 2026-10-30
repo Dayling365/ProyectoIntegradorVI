@@ -8,7 +8,6 @@ class UserRepository {
 
   UserRepository(this._apiClient);
 
-  /// Resuelve la ruta asegurando el prefijo /api sin duplicarlo (Video 8)
   String get _endpoint {
     final base = ApiConstants.instance.baseUrl.trim();
     final path = ApiConstants.users;
@@ -21,7 +20,6 @@ class UserRepository {
     return path;
   }
 
-  /// Obtiene listado filtrado de usuarios (Video 8 - Regla 6: getAll)
   Future<List<UserModel>> getAll({Map<String, String>? query}) async {
     final response = await _apiClient.get(_endpoint, query: query);
 
@@ -29,7 +27,6 @@ class UserRepository {
       return <UserModel>[];
     }
 
-    // Soporte para respuesta en lista directa
     if (response is List) {
       return response
           .whereType<Map<String, dynamic>>()
@@ -37,7 +34,6 @@ class UserRepository {
           .toList();
     }
 
-    // Soporte para ApiResponse<IEnumerable<UserDto>> de C# ({ data: [...], meta: {...} })
     if (response is Map<String, dynamic>) {
       final data = response['data'] ?? response['Data'];
       if (data is List) {
@@ -51,7 +47,6 @@ class UserRepository {
     throw const ParsingException('La respuesta del servidor no es un listado válido.');
   }
 
-  /// Obtiene usuario único por identificador primario (Video 8 - Regla 6: getById)
   Future<UserModel> getById(int id) async {
     final response = await _apiClient.get('$_endpoint/$id');
     if (response == null || response is! Map<String, dynamic>) {
@@ -60,7 +55,6 @@ class UserRepository {
     return UserModel.fromJson(response);
   }
 
-  // Alias retrocompatibles
   Future<List<UserModel>> getUsers({Map<String, String>? params}) => getAll(query: params);
   Future<UserModel> getUserById(int id) => getById(id);
 }

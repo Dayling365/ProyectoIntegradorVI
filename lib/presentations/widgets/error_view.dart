@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
-/// Widget transversal reutilizable de estado de error (Video 9 - Sección 19.2)
 class ErrorView extends StatelessWidget {
   final String message;
   final VoidCallback? onRetry;

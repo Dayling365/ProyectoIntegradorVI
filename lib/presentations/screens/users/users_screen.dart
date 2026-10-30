@@ -61,7 +61,6 @@ class _UsersScreenState extends State<UsersScreen> {
           padding: const EdgeInsets.all(14),
           physics: const AlwaysScrollableScrollPhysics(),
           children: [
-            // Encabezado
             const Text(
               'Usuarios',
               style: AppText.heading,
@@ -72,8 +71,6 @@ class _UsersScreenState extends State<UsersScreen> {
               style: AppText.bodySecondary,
             ),
             const SizedBox(height: 16),
-
-            // Buscador conectado en tiempo real
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
@@ -111,8 +108,6 @@ class _UsersScreenState extends State<UsersScreen> {
               ),
             ),
             const SizedBox(height: 12),
-
-            // Filtros por rol (Administrador y Vendedor)
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -138,15 +133,11 @@ class _UsersScreenState extends State<UsersScreen> {
               ),
             ),
             const SizedBox(height: 14),
-
-            // Contador de usuarios
             Text(
               '${userProvider.userCount} ${userProvider.userCount == 1 ? 'usuario' : 'usuarios'}',
               style: AppText.caption,
             ),
             const SizedBox(height: 12),
-
-            // Evaluación canónica de ViewStatus (Video 8 y 9)
             _buildContent(context, userProvider),
           ],
         ),

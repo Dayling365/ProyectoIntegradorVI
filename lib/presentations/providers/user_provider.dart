@@ -3,7 +3,6 @@ import 'package:sistema_libreria_app/core/errors/app_exception.dart';
 import 'package:sistema_libreria_app/data/models/user_model.dart';
 import 'package:sistema_libreria_app/services/user_service.dart';
 
-/// Máquina de estados visuales canónica del profesor Danny (Video 8 - Regla 19)
 enum ViewStatus { initial, loading, success, error }
 
 class UserProvider extends ChangeNotifier {
@@ -29,14 +28,12 @@ class UserProvider extends ChangeNotifier {
   UserModel? _selectedUser;
   UserModel? get selectedUser => _selectedUser;
 
-  // Getters
   List<UserModel> get users => List.unmodifiable(_filteredUsers);
   List<UserModel> get allUsers => List.unmodifiable(_users);
   int get userCount => _filteredUsers.length;
   bool get hasUsers => _filteredUsers.isNotEmpty;
   bool get isLoading => _viewStatus == ViewStatus.loading;
 
-  /// Consulta asíncrona de usuarios con transiciones formales de estado (Video 8 - Sección 17.5)
   Future<void> fetchUsers({String? query}) async {
     _viewStatus = ViewStatus.loading;
     _errorMessage = null;
@@ -57,10 +54,8 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  // Alias compatible con pantallas
   Future<void> loadUsers({bool silent = false}) => fetchUsers();
 
-  /// Actualiza búsqueda y filtra la lista
   void setSearchQuery(String query) {
     if (_searchQuery == query) return;
     _searchQuery = query;
@@ -68,7 +63,6 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Filtro por rol (Todos / Administrador / Vendedor)
   void setSelectedRole(String role) {
     if (_selectedRole == role) return;
     _selectedRole = role;
@@ -76,7 +70,6 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Seleccionar usuario para modal de detalle
   void selectUser(UserModel user) {
     _selectedUser = user;
     notifyListeners();

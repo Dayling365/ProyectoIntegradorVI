@@ -6,7 +6,6 @@ class UserService {
 
   UserService(this._userRepository);
 
-  /// Búsqueda y consulta de usuarios (Video 8 - Regla 10: sanitización y validación)
   Future<List<UserModel>> searchUsers(String? searchTerm) async {
     final cleanSearch = searchTerm?.trim();
     final Map<String, String>? query = (cleanSearch != null && cleanSearch.isNotEmpty)
@@ -16,7 +15,6 @@ class UserService {
     return await _userRepository.getAll(query: query);
   }
 
-  /// Obtiene un usuario por ID con validación previa (Video 8 - Regla 10)
   Future<UserModel> getUserById(int id) async {
     if (id <= 0) {
       throw ArgumentError('El identificador del usuario debe ser un entero positivo.');
@@ -24,7 +22,6 @@ class UserService {
     return await _userRepository.getById(id);
   }
 
-  /// Filtrado de negocio en memoria por término de búsqueda y rol (Administrador / Vendedor)
   List<UserModel> filterUsers(
     List<UserModel> users, {
     String query = '',
@@ -51,7 +48,6 @@ class UserService {
     }).toList();
   }
 
-  // Alias retrocompatible
   Future<List<UserModel>> fetchUsers({Map<String, String>? params}) =>
       _userRepository.getAll(query: params);
 }

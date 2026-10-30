@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
-/// Widget transversal reutilizable de estado de carga (Video 9 - Sección 19.1)
 class LoadingView extends StatelessWidget {
   final String message;
 
