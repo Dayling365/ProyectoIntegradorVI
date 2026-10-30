@@ -1,27 +1,37 @@
 import 'package:flutter/material.dart';
-import '../../../../data/models/user_model.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_theme.dart';
-import 'user_ui_helper.dart';
 
 class UsersDetails extends StatelessWidget {
-  final UserModel user;
+  final String initials;
+  final String name;
+  final String email;
+  final String roleLabel;
+  final Color roleColor;
+  final Color roleBgColor;
+  final String statusLabel;
+  final Color statusColor;
+  final Color statusBgColor;
+  final String fechaRegistro;
+  final String ultimoAcceso;
 
   const UsersDetails({
     super.key,
-    required this.user,
+    required this.initials,
+    required this.name,
+    required this.email,
+    required this.roleLabel,
+    required this.roleColor,
+    required this.roleBgColor,
+    required this.statusLabel,
+    required this.statusColor,
+    required this.statusBgColor,
+    required this.fechaRegistro,
+    required this.ultimoAcceso,
   });
 
   @override
   Widget build(BuildContext context) {
-    final roleColor = UserUiHelper.getRoleColor(user);
-    final roleBgColor = UserUiHelper.getRoleBgColor(user);
-    final statusColor = UserUiHelper.getStatusColor(user);
-    final statusBgColor = UserUiHelper.getStatusBgColor(user);
-
-    final registrationDate = user.createdAt ?? '15 Mar 2023';
-    final lastAccess = user.lastLogin ?? 'Reciente';
-
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       decoration: const BoxDecoration(
@@ -35,6 +45,7 @@ class UsersDetails extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          
           Center(
             child: Container(
               width: 40,
@@ -46,6 +57,8 @@ class UsersDetails extends StatelessWidget {
               ),
             ),
           ),
+
+          
           Row(
             children: [
               const Expanded(
@@ -63,6 +76,8 @@ class UsersDetails extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
+
+          
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -70,7 +85,7 @@ class UsersDetails extends StatelessWidget {
                 radius: 26,
                 backgroundColor: AppColors.accentLight,
                 child: Text(
-                  user.initials,
+                  initials,
                   style: AppText.titlePrimary,
                 ),
               ),
@@ -80,14 +95,14 @@ class UsersDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      user.userName,
+                      name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.titlePrimary,
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      user.email,
+                      email,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.bodySecondary,
@@ -109,7 +124,7 @@ class UsersDetails extends StatelessWidget {
                               Icon(Icons.person, size: 12, color: roleColor),
                               const SizedBox(width: 4),
                               Text(
-                                user.primaryRole,
+                                roleLabel,
                                 style: TextStyle(
                                   color: roleColor,
                                   fontSize: 12,
@@ -144,7 +159,7 @@ class UsersDetails extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      user.statusLabel,
+                      statusLabel,
                       style: TextStyle(
                         color: statusColor,
                         fontSize: 12,
@@ -157,6 +172,8 @@ class UsersDetails extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
+
+          
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.borderLight),
@@ -164,23 +181,19 @@ class UsersDetails extends StatelessWidget {
             ),
             child: Column(
               children: [
-                _infoRow(Icons.person_outline, 'Rol', user.primaryRole),
+                _infoRow(Icons.person_outline, 'Rol', roleLabel),
                 _divider(),
-                _infoRowBadge(
-                  Icons.toggle_off_outlined,
-                  'Estado',
-                  user.statusLabel,
-                  statusColor,
-                  statusBgColor,
-                ),
+                _infoRowBadge(Icons.toggle_off_outlined, 'Estado', statusLabel, statusColor, statusBgColor),
                 _divider(),
-                _infoRow(Icons.calendar_today_outlined, 'Fecha de registro', registrationDate),
+                _infoRow(Icons.calendar_today_outlined, 'Fecha de registro', fechaRegistro),
                 _divider(),
-                _infoRow(Icons.access_time, 'Último acceso', lastAccess),
+                _infoRow(Icons.access_time, 'Último acceso', ultimoAcceso),
               ],
             ),
           ),
           const SizedBox(height: 16),
+
+          
           SizedBox(
             width: double.infinity,
             child: OutlinedButton.icon(
