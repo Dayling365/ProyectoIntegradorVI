@@ -348,7 +348,7 @@ class MovementDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Tarjeta: producto afectado
+            
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
