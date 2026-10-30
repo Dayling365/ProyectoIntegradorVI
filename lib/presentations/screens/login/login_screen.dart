@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sistema_libreria_app/presentations/app_state.dart';
 import 'package:sistema_libreria_app/presentations/providers/auth_provider.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_theme.dart';
@@ -49,6 +50,14 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!mounted) return;
 
     if (ok) {
+      final appState = context.read<AppState>();
+      final user = auth.user;
+      if (user != null && user.roles.any((r) => r.toLowerCase().contains('admin'))) {
+        appState.role = UserRole.admin;
+        appState.userName = user.userName;
+      } else {
+        appState.login(username);
+      }
       Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
     } else {
       setState(() => _loginError = auth.errorMessage);
@@ -310,3 +319,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

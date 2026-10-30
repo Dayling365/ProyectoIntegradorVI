@@ -10,7 +10,7 @@ class ApiConstants {
 
   static const String users = '/users';
   static const String byname = '/auth/byname';
-  static const String userById = '/users/\$id}';
+  static String userById(int id) => '$users/$id';
   static const String login = '/auth/login';
   static const String me = '/auth/me';
   static const String categories = '/categories';
@@ -28,5 +28,4 @@ class ApiConstants {
   static const String inventory = '/inventory';
 
   static const Duration timeoutDuration = Duration(seconds: 30);
-
 }

@@ -1,6 +1,5 @@
 import 'package:sistema_libreria_app/core/constant/regular_expressions.dart';
 import 'package:sistema_libreria_app/data/models/token_model.dart';
-//import 'package:sistema_libreria_app/data/models/token_model.dart';
 import 'package:sistema_libreria_app/data/models/user_model.dart';
 import 'package:sistema_libreria_app/data/repositories/auth_repository.dart';
 import 'package:sistema_libreria_app/data/repositories/token_repository.dart';
@@ -10,7 +9,6 @@ class AuthService {
   final AuthRepository _authRepository;
   final TokenRepository _tokenRepository;
 
-  //AuthService(this._authRepository, this._tokenService);
   AuthService(this._authRepository,this._tokenRepository);
 
   Future<void> login(String username, String password) async {
@@ -25,9 +23,7 @@ class AuthService {
       throw const FormatException('Invalid username format.');
     }
 
-    //if(!CommonRegex.passwordRegex.hasMatch(trimmedPassword)) {
-      //throw const FormatException('Invalid password format.');
-    //}
+    
 
     try {
       final TokenModel token = await _authRepository.login(trimmedUsername, password);
