@@ -1,288 +1,244 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/constant/app_routes.dart';
-import '../../widgets/app_scaffold.dart';
-import 'widgets/users_card.dart';
-import 'widgets/users_details.dart';
+import '../../../data/models/user_model.dart';
+import '../../providers/user_provider.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_theme.dart';
+import '../../widgets/app_scaffold.dart';
+import '../../widgets/error_view.dart';
+import '../../widgets/loading_view.dart';
+import 'widgets/users_card.dart';
+import 'widgets/users_details.dart';
 
-class UsersScreen extends StatelessWidget {
+class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
 
   @override
+  State<UsersScreen> createState() => _UsersScreenState();
+}
+
+class _UsersScreenState extends State<UsersScreen> {
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userProvider = context.read<UserProvider>();
+      if (userProvider.allUsers.isEmpty) {
+        userProvider.fetchUsers();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _showUserDetails(BuildContext context, UserModel user) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => UsersDetails(user: user),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserProvider>();
+
     return AppScaffold(
       currentRoute: AppRoutes.users,
-      body: ListView(
-        padding: const EdgeInsets.all(14),
-        children: [
-          // Encabezado
-          const Text(
-            'Usuarios',
-            style: AppText.heading,
-          ),
-          const SizedBox(height: 3),
-          const Text(
-            'Gestiona los usuarios del sistema y sus permisos.',
-            style: AppText.bodySecondary,
-          ),
-          const SizedBox(height: 16),
-
-          
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.borderLight),
+      body: RefreshIndicator(
+        onRefresh: () => userProvider.fetchUsers(),
+        color: AppColors.primary,
+        child: ListView(
+          padding: const EdgeInsets.all(14),
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            // Encabezado
+            const Text(
+              'Usuarios',
+              style: AppText.heading,
             ),
-            child: Row(
-              children: [
-                Icon(Icons.search, color: AppColors.textMuted, size: 20),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Buscar por nombre, usuario o correo...',
-                      hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 13),
-                      border: InputBorder.none,
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 12),
+            const SizedBox(height: 3),
+            const Text(
+              'Gestiona los usuarios del sistema y sus permisos.',
+              style: AppText.bodySecondary,
+            ),
+            const SizedBox(height: 16),
+
+            // Buscador conectado en tiempo real
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.borderLight),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.search, color: AppColors.textMuted, size: 20),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: (value) => userProvider.setSearchQuery(value),
+                      decoration: InputDecoration(
+                        hintText: 'Buscar por nombre, usuario o correo...',
+                        hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+                        border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                        suffixIcon: _searchController.text.isNotEmpty
+                            ? IconButton(
+                                icon: const Icon(Icons.clear, size: 18, color: AppColors.textSecondary),
+                                onPressed: () {
+                                  _searchController.clear();
+                                  userProvider.setSearchQuery('');
+                                },
+                              )
+                            : null,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-          
-          Row(
-            children: [
-              Expanded(child: _dropdownChip('Estado', Icons.toggle_off_outlined)),
-              const SizedBox(width: 10),
-              Expanded(child: _dropdownChip('Ordenar por', Icons.calendar_today_outlined)),
-            ],
-          ),
-          const SizedBox(height: 12),
-
-          
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                _roleChip('Todos', selected: true),
-                const SizedBox(width: 8),
-                _roleChip('Administrador', selected: false),
-                const SizedBox(width: 8),
-                _roleChip('Vendedor', selected: false),
-              ],
+            // Filtros por rol (Administrador y Vendedor)
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _roleChip(
+                    'Todos',
+                    selected: userProvider.selectedRole == 'Todos',
+                    onTap: () => userProvider.setSelectedRole('Todos'),
+                  ),
+                  const SizedBox(width: 8),
+                  _roleChip(
+                    'Administrador',
+                    selected: userProvider.selectedRole == 'Administrador',
+                    onTap: () => userProvider.setSelectedRole('Administrador'),
+                  ),
+                  const SizedBox(width: 8),
+                  _roleChip(
+                    'Vendedor',
+                    selected: userProvider.selectedRole == 'Vendedor',
+                    onTap: () => userProvider.setSelectedRole('Vendedor'),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 14),
+            const SizedBox(height: 14),
 
-          // Contador
-          const Text(
-            '4 usuarios',
-            style: AppText.caption,
-          ),
-          const SizedBox(height: 12),
-
-          
-          UsersCard(
-            initials: 'AM',
-            name: 'Ana Morales',
-            email: 'ana.morales@gmail.com',
-            roleLabel: 'Administrador',
-            roleColor: AppColors.primary,
-            roleBgColor: AppColors.primaryLight,
-            statusLabel: 'Activo',
-            statusColor: AppColors.success,
-            statusBgColor: AppColors.successBackground,
-            onMenuTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                builder: (_) => const UsersDetails(
-                  initials: 'AM',
-                  name: 'Ana Morales',
-                  email: 'ana.morales@gmail.com',
-                  roleLabel: 'Administrador',
-                  roleColor: AppColors.primary,
-                  roleBgColor: AppColors.primaryLight,
-                  statusLabel: 'Activo',
-                  statusColor: AppColors.success,
-                  statusBgColor: AppColors.successBackground,
-                  fechaRegistro: '15 Mar 2023',
-                  ultimoAcceso: 'Hace 2 horas',
-                ),
-              );
-            },
-          ), 
-          const SizedBox(height: 10),
-          UsersCard(
-            initials: 'CR',
-            name: 'Carlos Rojas',
-            email: 'crojas@gmail.com',
-            roleLabel: 'Vendedor',
-            roleColor: AppColors.warning,
-            roleBgColor: AppColors.warningBackground,
-            statusLabel: 'Activo',
-            statusColor: AppColors.success,
-            statusBgColor: AppColors.successBackground,
-            onMenuTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                builder: (_) => const UsersDetails(
-                  initials: 'CR',
-                  name: 'Carlos Rojas',
-                  email: 'crojas@gmail.com',
-                  roleLabel: 'Vendedor',
-                  roleColor: AppColors.warning,
-                  roleBgColor: AppColors.warningBackground,
-                  statusLabel: 'Activo',
-                  statusColor: AppColors.success,
-                  statusBgColor: AppColors.successBackground,
-                  fechaRegistro: '02 Jun 2023',
-                  ultimoAcceso: 'Hace 1 día',
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 10),
-          UsersCard(
-            initials: 'MV',
-            name: 'Miguel Vargas',
-            email: 'mvargas@gmail.com',
-            roleLabel: 'Administrador',
-            roleColor: AppColors.primary,
-            roleBgColor: AppColors.primaryLight,
-            statusLabel: 'Inactivo',
-            statusColor: AppColors.textSecondary!,
-            statusBgColor: AppColors.surfaceMuted,
-            onMenuTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                builder: (_) => UsersDetails(
-                  initials: 'MV',
-                  name: 'Miguel Vargas',
-                  email: 'mvargas@gmail.com',
-                  roleLabel: 'Administrador',
-                  roleColor: AppColors.primary,
-                  roleBgColor: AppColors.primaryLight,
-                  statusLabel: 'Inactivo',
-                  statusColor: AppColors.textSecondary!,
-                  statusBgColor: AppColors.surfaceMuted,
-                  fechaRegistro: '20 Ene 2023',
-                  ultimoAcceso: 'Hace 3 semanas',
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 10),
-          UsersCard(
-            initials: 'LG',
-            name: 'Laura Gómez',
-            email: 'lgomez@gmail.com',
-            roleLabel: 'Vendedor',
-            roleColor: AppColors.warning,
-            roleBgColor: AppColors.warningBackground,
-            statusLabel: 'Activo',
-            statusColor: AppColors.success,
-            statusBgColor: AppColors.successBackground,
-            onMenuTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ), 
-                builder: (_) => const UsersDetails(
-                  initials: 'LG',
-                  name: 'Laura Gómez',
-                  email: 'lgomez@gmail.com',
-                  roleLabel: 'Vendedor',
-                  roleColor: AppColors.warning,
-                  roleBgColor: AppColors.warningBackground,
-                  statusLabel: 'Activo',
-                  statusColor: AppColors.success,
-                  statusBgColor: AppColors.successBackground,
-                  fechaRegistro: '10 Ago 2023',
-                  ultimoAcceso: 'Hace 5 horas',
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _dropdownChip(String label, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.borderLight),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 16, color: AppColors.textSecondary),
-          const SizedBox(width: 6),
-          Expanded(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.body,
+            // Contador de usuarios
+            Text(
+              '${userProvider.userCount} ${userProvider.userCount == 1 ? 'usuario' : 'usuarios'}',
+              style: AppText.caption,
             ),
-          ),
-          Icon(Icons.keyboard_arrow_down, size: 18, color: AppColors.textSecondary),
-        ],
-      ),
-    );
-  }
+            const SizedBox(height: 12),
 
-  Widget _roleChip(String label, {required bool selected}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-      decoration: BoxDecoration(
-        color: selected ? AppColors.accent : AppColors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: selected ? AppColors.accent : AppColors.borderLight,
+            // Evaluación canónica de ViewStatus (Video 8 y 9)
+            _buildContent(context, userProvider),
+          ],
         ),
       ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: selected ? AppColors.primary : AppColors.textSecondary,
-          fontWeight: FontWeight.w500,
-          fontSize: 13,
+    );
+  }
+
+  Widget _buildContent(BuildContext context, UserProvider provider) {
+    switch (provider.viewStatus) {
+      case ViewStatus.loading:
+        return const LoadingView(
+          message: 'Cargando directorio de usuarios...',
+        );
+
+      case ViewStatus.error:
+        return ErrorView(
+          message: provider.errorMessage ?? 'Error al conectar con la API',
+          onRetry: () => provider.fetchUsers(),
+        );
+
+      case ViewStatus.success:
+      default:
+        if (provider.users.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.person_off_outlined, size: 48, color: AppColors.textMuted),
+                  const SizedBox(height: 12),
+                  const Text('No se encontraron usuarios', style: AppText.title),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'Prueba ajustando los filtros o el término de búsqueda.',
+                    style: AppText.bodySecondary,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  TextButton(
+                    onPressed: () {
+                      _searchController.clear();
+                      provider.resetFilters();
+                    },
+                    child: const Text('Restablecer filtros'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: provider.users.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 10),
+          itemBuilder: (context, index) {
+            final user = provider.users[index];
+            return UsersCard(
+              user: user,
+              onMenuTap: () => _showUserDetails(context, user),
+            );
+          },
+        );
+    }
+  }
+
+  Widget _roleChip(
+    String label, {
+    required bool selected,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.accent : AppColors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: selected ? AppColors.accent : AppColors.borderLight,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: selected ? AppColors.primary : AppColors.textSecondary,
+            fontWeight: FontWeight.w500,
+            fontSize: 13,
+          ),
         ),
       ),
     );
