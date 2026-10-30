@@ -21,7 +21,7 @@ class TokenModel {
       //refreshTokenExpiresAt: DateTime.parse(json['refreshTokenExpiresAt']),
     );
   }
-    
+    // Para la respuesta del LOGIN de la API: { id, userName, email, token, roles }
   static TokenModel fromLoginJson(Map<String, dynamic> json) {
     return TokenModel(
       accessToken: json['token'] as String,
