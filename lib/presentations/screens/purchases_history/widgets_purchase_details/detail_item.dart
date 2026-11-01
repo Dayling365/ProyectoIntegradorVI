@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_theme.dart';
 
 class DetailItem extends StatelessWidget {
   final String nombre;
   final String precioTotal;
-  final String categoria;
   final String desglose;
 
   const DetailItem({
     super.key,
     required this.nombre,
     required this.precioTotal,
-    required this.categoria,
     required this.desglose,
   });
 
@@ -31,28 +28,11 @@ class DetailItem extends StatelessWidget {
               children: [
                 Text(nombre,
                   style: AppText.bodyStrong,
-                    ),
+                ),
                 const SizedBox(height: 4),
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,),
-                      decoration: BoxDecoration(color: AppColors.surfaceMuted,
-                        borderRadius: BorderRadius.circular(20),
-                        ),
-                      child: Text(
-                        categoria,
-                        style: AppText.micro,
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      desglose,
-                      style: AppText.micro,
-                    ),
-                  ],
+                Text(
+                  desglose,
+                  style: AppText.micro,
                 ),
               ],
             ),
