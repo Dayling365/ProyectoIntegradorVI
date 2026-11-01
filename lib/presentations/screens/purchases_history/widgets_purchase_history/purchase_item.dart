@@ -4,6 +4,7 @@ import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_theme.dart';
 
 class PurchaseItem extends StatelessWidget {
+  final int id;
   final String codigo;
   final String proveedor;
   final String fecha;
@@ -11,6 +12,7 @@ class PurchaseItem extends StatelessWidget {
 
   const PurchaseItem({
     super.key,
+    required this.id,
     required this.codigo,
     required this.proveedor,
     required this.fecha,
@@ -24,7 +26,7 @@ class PurchaseItem extends StatelessWidget {
       onTap: () => Navigator.pushNamed(
         context,
         AppRoutes.purchaseDetails,
-        arguments: codigo,
+        arguments: id,
       ),
       child: Container(
         width: double.infinity,
@@ -35,19 +37,15 @@ class PurchaseItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
             color: AppColors.border,
-          ),
+            ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              codigo,
-              style: AppText.subtitle,
-            ),
+            Text(codigo, style: AppText.subtitle),
             const SizedBox(height: 3),
-            Text('Proveedor: $proveedor',
-              style: AppText.caption,
-            ),
+            Text('Proveedor: $proveedor', 
+            style: AppText.caption),
             const SizedBox(height: 17),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,10 +69,7 @@ class PurchaseItem extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Text(
-                  monto,
-                  style: AppText.title,
-                ),
+                Text(monto, style: AppText.title),
               ],
             ),
             const SizedBox(height: 14),
@@ -83,15 +78,9 @@ class PurchaseItem extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: const [
-                  Text('Ver detalle',
-                    style: AppText.captionInfo,
-                  ),
+                  Text('Ver detalle', style: AppText.captionInfo),
                   SizedBox(width: 4),
-                  Icon(
-                    Icons.arrow_forward,
-                    size: 14,
-                    color: AppColors.accent,
-                  ),
+                  Icon(Icons.arrow_forward, size: 14, color: AppColors.accent),
                 ],
               ),
             ),
