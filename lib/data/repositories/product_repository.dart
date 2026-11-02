@@ -33,4 +33,25 @@ class ProductRepository {
 
     return PagedResponse.fromJson(response, ProductModel.fromJson);
   }
+
+  Future<ProductModel> getById(int id) async {
+    final dynamic response;
+    try {
+      response = await _apiClient.get(ApiConstants.productById(id));
+    } on ServerException catch (e) {
+      if (e.statusCode == 404) {
+        throw const ServerException('El producto solicitado no existe.', statusCode: 404);
+      }
+      rethrow;
+    }
+
+    // Este endpoint devuelve el producto directo, sin { data, meta }.
+    if (response is! Map<String, dynamic>) {
+      throw const ParsingException(
+        'La respuesta del servidor no contiene un producto válido.',
+      );
+    }
+
+    return ProductModel.fromJson(response);
+  }
 }
