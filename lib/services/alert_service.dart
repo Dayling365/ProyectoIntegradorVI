@@ -40,4 +40,7 @@ class AlertService {
       pageSize: alerts.pageSize,
     );
   }
+
+  AlertSeverity severityOf(AlertModel alert) =>
+      alert.unitsInStock <= 0 ? AlertSeverity.critical : AlertSeverity.warning;
 }
