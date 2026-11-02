@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
 
 class InventoryPagination extends StatelessWidget {
   final int currentPage;
@@ -52,7 +53,7 @@ class InventoryPagination extends StatelessWidget {
           ],
         ),
         Text('Página $currentPage de $totalPages',
-            style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+            style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
       ],
     );
   }
@@ -67,15 +68,15 @@ class InventoryPagination extends StatelessWidget {
         height: 32,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFF1B2A5C) : Colors.white,
+          color: selected ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: AppColors.border),
         ),
         child: Text('$page',
             style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: selected ? Colors.white : const Color(0xFF1A1F36))),
+                color: selected ? AppColors.white : AppColors.textPrimary)),
       ),
     );
   }
