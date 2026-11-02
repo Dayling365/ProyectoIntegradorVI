@@ -50,4 +50,6 @@ class AlertProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> retry() => fetchAlerts(page: _requestedPage);
 }
