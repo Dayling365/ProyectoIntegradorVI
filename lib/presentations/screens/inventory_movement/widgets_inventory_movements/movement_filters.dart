@@ -2,8 +2,107 @@ import 'package:flutter/material.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_theme.dart';
 
-class MovementFilters extends StatelessWidget {
-  const MovementFilters({super.key});
+class MovementFilters extends StatefulWidget {
+  final String initialSearch;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final String selectedType;
+  final String selectedSort;
+
+  final ValueChanged<String> onSearchChanged;
+  final ValueChanged<DateTime?> onStartDateChanged;
+  final ValueChanged<DateTime?> onEndDateChanged;
+  final ValueChanged<String> onTypeChanged;
+  final ValueChanged<String> onSortChanged;
+
+  const MovementFilters({
+    super.key,
+    this.initialSearch = '',
+    this.startDate,
+    this.endDate,
+    this.selectedType = 'Todos',
+    this.selectedSort = 'newest',
+    required this.onSearchChanged,
+    required this.onStartDateChanged,
+    required this.onEndDateChanged,
+    required this.onTypeChanged,
+    required this.onSortChanged,
+  });
+
+  @override
+  State<MovementFilters> createState() => _MovementFiltersState();
+}
+
+class _MovementFiltersState extends State<MovementFilters> {
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController(text: widget.initialSearch);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  String _formatDate(DateTime? date, String fallback) {
+    if (date == null) return fallback;
+
+    return '${date.day.toString().padLeft(2, '0')}/'
+        '${date.month.toString().padLeft(2, '0')}/${date.year}';
+  }
+
+  Future<void> _pickDate(bool isStart) async {
+    final selectedDate = isStart ? widget.startDate : widget.endDate;
+
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked == null || !mounted) return;
+
+    if (isStart && widget.endDate != null && picked.isAfter(widget.endDate!)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'La fecha inicial no puede ser posterior a la fecha final.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    if (!isStart &&
+        widget.startDate != null &&
+        picked.isBefore(widget.startDate!)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'La fecha final no puede ser anterior a la fecha inicial.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    if (isStart) {
+      widget.onStartDateChanged(picked);
+    } else {
+      widget.onEndDateChanged(picked);
+    }
+  }
+
+  String _sortLabel() {
+    return widget.selectedSort == 'oldest'
+        ? 'Más antiguas'
+        : 'Más recientes';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +129,10 @@ class MovementFilters extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextField(
+                      controller: _searchController,
+                      onChanged: widget.onSearchChanged,
                       decoration: const InputDecoration(
-                        hintText: 'Buscar producto o movimiento...',
+                        hintText: 'Buscar movimiento',
                         hintStyle: AppText.caption,
                         border: InputBorder.none,
                         isDense: true,
@@ -47,14 +148,22 @@ class MovementFilters extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _filtro( 
-                    Icons.calendar_today_outlined, '01/09/2025',
+                  child: GestureDetector(
+                    onTap: () => _pickDate(true),
+                    child: _filtro(
+                      Icons.calendar_today_outlined,
+                      _formatDate(widget.startDate, 'Fecha inicial'),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: _filtro(
-                    Icons.calendar_today_outlined, '30/09/2025',
+                  child: GestureDetector(
+                    onTap: () => _pickDate(false),
+                    child: _filtro(
+                      Icons.calendar_today_outlined,
+                      _formatDate(widget.endDate, 'Fecha final'),
+                    ),
                   ),
                 ),
               ],
@@ -65,18 +174,58 @@ class MovementFilters extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _filtro(
-                    Icons.swap_vert, 'Tipo mov.',
-                    subtitulo: 'Todos',
-                    arrow: true,
+                  child: PopupMenuButton<String>(
+                    onSelected: widget.onTypeChanged,
+                    itemBuilder: (context) => const [
+                      PopupMenuItem<String>(
+                        value: 'Todos',
+                        child: Text('Todos', style: AppText.body),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'Entrada',
+                        child: Text('Entrada', style: AppText.body),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'Salida',
+                        child: Text('Salida', style: AppText.body),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'Baja',
+                        child: Text('Baja', style: AppText.body),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'Ajuste',
+                        child: Text('Ajuste', style: AppText.body),
+                      ),
+                    ],
+                    child: _filtro(
+                      Icons.swap_vert,
+                      'Tipo mov.',
+                      subtitulo: widget.selectedType,
+                      arrow: true,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: _filtro(
-                    Icons.flag_outlined, 'Motivo',
-                    subtitulo: 'Todos',
-                    arrow: true,
+                  child: PopupMenuButton<String>(
+                    onSelected: widget.onSortChanged,
+                    itemBuilder: (context) => const [
+                      PopupMenuItem<String>(
+                        value: 'newest',
+                        child: Text('Más recientes', style: AppText.body),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'oldest',
+                        child: Text('Más antiguas', style: AppText.body),
+                      ),
+                    ],
+                    child: _filtro(
+                      Icons.swap_vert,
+                      'Ordenar por',
+                      subtitulo: _sortLabel(),
+                      arrow: true,
+                    ),
                   ),
                 ),
               ],
@@ -94,7 +243,7 @@ class MovementFilters extends StatelessWidget {
     bool arrow = false,
   }) {
     return Container(
-      height: subtitulo != null ? 56 : 48,
+      height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -127,6 +276,7 @@ class MovementFilters extends StatelessWidget {
                       Text(
                         subtitulo,
                         style: AppText.micro,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
