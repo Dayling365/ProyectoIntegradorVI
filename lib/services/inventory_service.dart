@@ -40,6 +40,22 @@ class InventoryService {
     return inventory.map((item) => item.withProduct(productsById[item.productId])).toList();
   }
 
+  /// Trae el producto y su inventario al mismo tiempo, y los une.
+  Future<InventoryModel> getProductDetail(int productId) async {
+    if (productId <= 0) {
+      throw ArgumentError('El identificador del producto debe ser mayor a 0.');
+    }
+
+    final results = await Future.wait([
+      _inventoryRepository.getByProductId(productId),
+      _productRepository.getById(productId),
+    ]);
+
+    final inventory = results[0] as InventoryModel;
+    final product = results[1] as ProductModel;
+    return inventory.withProduct(product);
+  }
+
   List<String> categoriesOf(List<InventoryModel> items) =>
       _optionsOf(items.map((i) => i.categoryName));
 
