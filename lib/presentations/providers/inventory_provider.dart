@@ -40,6 +40,19 @@ class InventoryProvider extends ChangeNotifier {
   int get totalRecords => _page.totalRecords;
   bool get isLoading => _viewStatus == ViewStatus.loading;
 
+  // Estado propio del detalle, para que un error aquí no cambie la pantalla de la lista.
+  InventoryModel? _selectedItem;
+  InventoryModel? get selectedItem => _selectedItem;
+
+  ViewStatus _detailStatus = ViewStatus.initial;
+  ViewStatus get detailStatus => _detailStatus;
+
+  String? _detailErrorMessage;
+  String? get detailErrorMessage => _detailErrorMessage;
+
+  String get selectedAvailability =>
+      _selectedItem == null ? '' : _inventoryService.availabilityLevel(_selectedItem!);
+
   List<String> get categories => _inventoryService.categoriesOf(_allItems);
   List<String> get brands => _inventoryService.brandsOf(_allItems);
   List<String> get statuses => InventoryService.statuses;
@@ -60,6 +73,26 @@ class InventoryProvider extends ChangeNotifier {
     } catch (e) {
       _errorMessage = 'No se pudo cargar el inventario: $e';
       _viewStatus = ViewStatus.error;
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchProductDetail(int productId) async {
+    _selectedItem = null;
+    _detailStatus = ViewStatus.loading;
+    _detailErrorMessage = null;
+    notifyListeners();
+
+    try {
+      _selectedItem = await _inventoryService.getProductDetail(productId);
+      _detailStatus = ViewStatus.success;
+    } on AppException catch (e) {
+      _detailErrorMessage = e.message;
+      _detailStatus = ViewStatus.error;
+    } catch (e) {
+      _detailErrorMessage = 'No se pudo cargar el producto: $e';
+      _detailStatus = ViewStatus.error;
     } finally {
       notifyListeners();
     }
