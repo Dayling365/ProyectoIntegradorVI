@@ -33,4 +33,25 @@ class InventoryRepository {
 
     return PagedResponse.fromJson(response, InventoryModel.fromJson);
   }
+
+  Future<InventoryModel> getByProductId(int productId) async {
+    final dynamic response;
+    try {
+      response = await _apiClient.get(ApiConstants.inventoryByProductId(productId));
+    } on ServerException catch (e) {
+      if (e.statusCode == 404) {
+        throw const ServerException('No hay inventario registrado para este producto.', statusCode: 404);
+      }
+      rethrow;
+    }
+
+    // Este endpoint devuelve el inventario directo, sin { data, meta }.
+    if (response is! Map<String, dynamic>) {
+      throw const ParsingException(
+        'La respuesta del servidor no contiene un inventario válido.',
+      );
+    }
+
+    return InventoryModel.fromJson(response);
+  }
 }
