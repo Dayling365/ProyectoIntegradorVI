@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
 import '../../../../data/models/inventory_model.dart';
 
 class ProductHeader extends StatelessWidget {
@@ -8,8 +9,8 @@ class ProductHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final badgeColor = item.isLowStock ? const Color(0xFFF59E0B) : const Color(0xFF16A34A);
-    final badgeBg = item.isLowStock ? const Color(0xFFFEF3C7) : const Color(0xFFDCFCE7);
+    final badgeColor = item.isLowStock ? AppColors.warning : AppColors.success;
+    final badgeBg = item.isLowStock ? AppColors.warningBackground : AppColors.successBackground;
     final badgeText = item.isLowStock ? 'Stock bajo' : 'En stock';
     final subtitle = [item.categoryName, item.variantLabel]
         .whereType<String>()
@@ -22,30 +23,30 @@ class ProductHeader extends StatelessWidget {
           width: 56,
           height: 56,
           decoration: BoxDecoration(
-            color: const Color(0xFF1B2A5C).withValues(alpha: 0.1),
+            color: AppColors.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: const Icon(Icons.inventory_2_outlined, color: Color(0xFF1B2A5C), size: 28),
+          child: const Icon(Icons.inventory_2_outlined, color: AppColors.primary, size: 28),
         ),
         const SizedBox(height: 10),
         Text(
           item.productName,
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF1A1F36)),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
         ),
         if (subtitle.isNotEmpty) ...[
           const SizedBox(height: 4),
           Text(
             subtitle,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 13, color: Color(0xFF8A94A6)),
+            style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
           ),
         ],
         if (item.brandName != null) ...[
           const SizedBox(height: 2),
           Text(
             'Marca: ${item.brandName}',
-            style: const TextStyle(fontSize: 13, color: Color(0xFF8A94A6)),
+            style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
           ),
         ],
         const SizedBox(height: 8),
