@@ -1,141 +1,74 @@
-import 'package:flutter/material.dart'; 
-import 'logs_item.dart'; 
-import '../../../theme/app_colors.dart'; 
-import '../../../theme/app_icons.dart'; 
+import 'package:flutter/material.dart';
+import 'package:sistema_libreria_app/data/models/logs_model.dart';
+import 'logs_item.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_icons.dart';
 
-class LogsLista extends StatelessWidget { 
-  const LogsLista({super.key}); 
+class LogsLista extends StatelessWidget {
+  final List<LogModel> logs;
 
-  @override 
-  Widget build(BuildContext context) { 
+  const LogsLista({
+    super.key,
+    required this.logs,
+  });
 
-    return Column( 
-      crossAxisAlignment: CrossAxisAlignment.start, 
-      children: [ 
+  String _formatTime(DateTime? date) {
+    if (date == null) return 'Sin hora';
 
-        LogItem( 
-          icon: AppIcons.edit, 
-          iconColor: AppColors.link, 
-          iconBg: AppColors.link.withValues(alpha: 0.12), 
-          titulo: 'Don César Admin', 
-          hora: '10:45 AM', 
-          subtitulo: 'Inicio de sesión exitoso', 
-          etiqueta: 'Seguridad', 
-          etiquetaColor: AppColors.link, 
-          etiquetaBg: AppColors.link.withValues(alpha: 0.1), 
-        ), 
+    final localDate = date.toLocal();
+    final hour = localDate.hour > 12
+        ? localDate.hour - 12
+        : localDate.hour == 0
+            ? 12
+            : localDate.hour;
+    final suffix = localDate.hour >= 12 ? 'PM' : 'AM';
+    final minute = localDate.minute.toString().padLeft(2, '0');
 
-        LogItem( 
-          icon: AppIcons.warning, 
-          iconColor: AppColors.error, 
-          iconBg: AppColors.error.withValues(alpha: 0.12), 
-          titulo: 'Ana García', 
-          hora: '09:12 AM', 
-          subtitulo: 'Producto desactivado: El Quijote (Ed. Especial)', 
-          etiqueta: 'Inventario', 
-          etiquetaColor: AppColors.error, 
-          etiquetaBg: AppColors.error.withValues(alpha: 0.1), 
-        ), 
+    return '$hour:$minute $suffix';
+  }
 
-        LogItem( 
-          icon: AppIcons.edit, 
-          iconColor: AppColors.warning, 
-          iconBg: AppColors.warning.withValues(alpha: 0.12), 
-          titulo: 'Don César Admin', 
-          hora: '08:30 AM', 
-          subtitulo: 'Cambio de estado: Miguel Vargas', 
-          etiqueta: 'Usuarios', 
-          etiquetaColor: AppColors.success, 
-          etiquetaBg: AppColors.success.withValues(alpha: 0.1), 
-        ), 
+  bool _isSuccessful(String? status) {
+    final cleanStatus = status?.toLowerCase().trim() ?? '';
+    return cleanStatus == 'exitoso' ||
+        cleanStatus == 'success' ||
+        cleanStatus == 'successful';
+  }
 
-        LogItem( 
-          icon: AppIcons.edit, 
-          iconColor: AppColors.link, 
-          iconBg: AppColors.link.withValues(alpha: 0.12), 
-          titulo: 'Don César Admin', 
-          hora: '10:45 AM', 
-          subtitulo: 'Inicio de sesión exitoso', 
-          etiqueta: 'Seguridad', 
-          etiquetaColor: AppColors.link, 
-          etiquetaBg: AppColors.link.withValues(alpha: 0.1), 
-        ), 
+  @override
+  Widget build(BuildContext context) {
 
-        LogItem( 
-          icon: AppIcons.edit, 
-          iconColor: AppColors.success, 
-          iconBg: AppColors.success.withValues(alpha: 0.12), 
-          titulo: 'Ana García', 
-          hora: '08:15 AM', 
-          subtitulo: 'Producto actualizado: Cuaderno Universitario', 
-          etiqueta: 'Inventario', 
-          etiquetaColor: AppColors.success, 
-          etiquetaBg: AppColors.success.withValues(alpha: 0.1), 
-        ), 
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ...logs.map((log) {
+          final exitoso = _isSuccessful(log.status);
+          final color = exitoso ? AppColors.success : AppColors.error;
+          final etiqueta = log.entity?.trim().isNotEmpty == true
+              ? log.entity!
+              : log.requestType?.trim().isNotEmpty == true
+                  ? log.requestType!
+                  : log.status ?? 'Actividad';
 
-        LogItem( 
-          icon: AppIcons.edit, 
-          iconColor: AppColors.link, 
-          iconBg: AppColors.link.withValues(alpha: 0.12), 
-          titulo: 'Don César Admin', 
-          hora: '07:50 AM', 
-          subtitulo: 'Nuevo proveedor registrado: Distribuidora Escolar', 
-          etiqueta: 'Proveedores', 
-          etiquetaColor: AppColors.link, 
-          etiquetaBg: AppColors.link.withValues(alpha: 0.1), 
-        ), 
+          final titulo = log.userName?.trim().isNotEmpty == true
+              ? log.userName!
+              : (log.performedBy?.trim().isNotEmpty == true
+                  ? log.performedBy!
+                  : 'Sin usuario');
 
-        LogItem( 
-          icon: AppIcons.warning, 
-          iconColor: AppColors.warning, 
-          iconBg: AppColors.warning.withValues(alpha: 0.12), 
-          titulo: 'Ana García', 
-          hora: '07:25 AM', 
-          subtitulo: 'Stock actualizado: Lápiz Grafito HB', 
-          etiqueta: 'Inventario', 
-          etiquetaColor: AppColors.warning, 
-          etiquetaBg: AppColors.warning.withValues(alpha: 0.1), 
-        ), 
-
-        LogItem( 
-          icon: AppIcons.edit, 
-          iconColor: AppColors.success, 
-          iconBg: AppColors.success.withValues(alpha: 0.12), 
-          titulo: 'Don César Admin', 
-          hora: '06:40 AM', 
-          subtitulo: 'Nueva categoría registrada: Material Escolar', 
-          etiqueta: 'Catálogos', 
-          etiquetaColor: AppColors.success, 
-          etiquetaBg: AppColors.success.withValues(alpha: 0.1), 
-        ), 
-
-        LogItem( 
-          icon: AppIcons.warning, 
-          iconColor: AppColors.error, 
-          iconBg: AppColors.error.withValues(alpha: 0.12), 
-          titulo: 'Ana García', 
-          hora: '06:15 AM', 
-          subtitulo: 'Intento de inicio de sesión fallido', 
-          etiqueta: 'Seguridad', 
-          etiquetaColor: AppColors.error, 
-          etiquetaBg: AppColors.error.withValues(alpha: 0.1), 
-        ), 
-
-        LogItem( 
-          icon: AppIcons.edit, 
-          iconColor: AppColors.link, 
-          iconBg: AppColors.link.withValues(alpha: 0.12), 
-          titulo: 'Don César Admin', 
-          hora: '05:50 AM', 
-          subtitulo: 'Compra registrada: CP-2026-088', 
-          etiqueta: 'Compras', 
-          etiquetaColor: AppColors.link, 
-          etiquetaBg: AppColors.link.withValues(alpha: 0.1), 
-        ), 
-
-        const SizedBox(height: 10), 
-      ], 
-    ); 
-  } 
+          return LogItem(
+            icon: exitoso ? Icons.receipt_long_outlined : AppIcons.warning,
+            iconColor: color,
+            iconBg: color.withValues(alpha: 0.12),
+            titulo: titulo,
+            hora: _formatTime(log.timestamp),
+            subtitulo: log.description ?? 'Sin descripción',
+            etiqueta: etiqueta,
+            etiquetaColor: color,
+            etiquetaBg: color.withValues(alpha: 0.1),
+          );
+        }),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
 }
-
