@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../models_product/product.dart';
+import '../../../../data/models/inventory_model.dart';
 
 class ProductStats extends StatelessWidget {
-  final Product product;
+  final InventoryModel item;
 
-  const ProductStats({super.key, required this.product});
+  const ProductStats({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: _StatBox(label: 'PRECIO UNITARIO', value: 'C\$${product.price.toStringAsFixed(2)}')),
+        Expanded(child: _StatBox(label: 'PRECIO UNITARIO', value: 'C\$${item.salePrice.toStringAsFixed(2)}')),
         const SizedBox(width: 12),
-        Expanded(child: _StatBox(label: 'EXISTENCIAS', value: '${product.stock} unidades')),
+        Expanded(child: _StatBox(label: 'EXISTENCIAS', value: '${item.unitsInStock} unidades')),
       ],
     );
   }

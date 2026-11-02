@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../models_product/product.dart';
+import '../../../../data/models/inventory_model.dart';
 
 class ProductDescription extends StatelessWidget {
-  final Product product;
+  final InventoryModel item;
 
-  const ProductDescription({super.key, required this.product});
+  const ProductDescription({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ProductDescription extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: const Color(0xFFE2E8F0)),
           ),
-          child: Text(product.description, style: const TextStyle(fontSize: 13, color: Color(0xFF1A1F36), height: 1.5)),
+          child: Text(item.description ?? 'Sin descripción.', style: const TextStyle(fontSize: 13, color: Color(0xFF1A1F36), height: 1.5)),
         ),
       ],
     );
