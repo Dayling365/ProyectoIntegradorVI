@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
 
 class InventoryFilters extends StatelessWidget {
   final List<String> categories;
@@ -36,7 +37,6 @@ class InventoryFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color info = Color(0xFF2563EB);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,10 +93,10 @@ class InventoryFilters extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: TextButton.icon(
             onPressed: onClear,
-            icon: const Icon(Icons.close, size: 16, color: info),
+            icon: const Icon(Icons.close, size: 16, color: AppColors.info),
             label: const Text(
               'Limpiar filtros',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: info),
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.info),
             ),
           ),
         ),
@@ -126,8 +126,8 @@ class _FilterDropdown extends StatelessWidget {
       tooltip: '',
       position: PopupMenuPosition.under,
       offset: const Offset(0, 4),
-      color: Colors.white,
-      surfaceTintColor: Colors.white,
+      color: AppColors.white,
+      surfaceTintColor: AppColors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       onSelected: onSelected,
       itemBuilder: (context) => options.map((o) {
@@ -142,11 +142,11 @@ class _FilterDropdown extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                    color: selected ? const Color(0xFF1B2A5C) : const Color(0xFF1A1F36),
+                    color: selected ? AppColors.primary : AppColors.textPrimary,
                   ),
                 ),
               ),
-              if (selected) const Icon(Icons.check, size: 16, color: Color(0xFF1B2A5C)),
+              if (selected) const Icon(Icons.check, size: 16, color: AppColors.primary),
             ],
           ),
         );
@@ -154,13 +154,13 @@ class _FilterDropdown extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: AppColors.border),
         ),
         child: Row(
           children: [
-            Icon(icon, size: 16, color: const Color(0xFF1B2A5C)),
+            Icon(icon, size: 16, color: AppColors.primary),
             const SizedBox(width: 8),
             Expanded(
               child: Column(
@@ -168,15 +168,15 @@ class _FilterDropdown extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(label,
-                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF1A1F36))),
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
                   Text(value,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 11, color: Color(0xFF8A94A6))),
+                      style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
                 ],
               ),
             ),
-            const Icon(Icons.keyboard_arrow_down, size: 16, color: Color(0xFF8A94A6)),
+            const Icon(Icons.keyboard_arrow_down, size: 16, color: AppColors.textSecondary),
           ],
         ),
       ),
