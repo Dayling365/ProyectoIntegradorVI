@@ -21,7 +21,7 @@ class InventorySearchBar extends StatelessWidget {
             child: TextField(
               controller: controller,
               decoration: const InputDecoration(
-                hintText: 'Buscar producto, código o descripción...',
+                hintText: 'Buscar producto, marca o descripción...',
                 hintStyle: TextStyle(fontSize: 13, color: Color(0xFF8A94A6)),
                 border: InputBorder.none,
                 isDense: true,
