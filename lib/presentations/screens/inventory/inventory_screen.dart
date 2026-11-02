@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constant/app_routes.dart';
 import '../../providers/inventory_provider.dart';
@@ -57,10 +58,10 @@ class _InventoryScreenState extends State<InventoryScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text('Inventario',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF1A1F36))),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
             const SizedBox(height: 4),
             const Text('Consulta y gestiona todos los productos de la papelería.',
-                style: TextStyle(fontSize: 13, color: Color(0xFF8A94A6))),
+                style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
             const SizedBox(height: 16),
             InventorySearchBar(controller: _searchController),
             const SizedBox(height: 14),
@@ -82,7 +83,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
             const SizedBox(height: 14),
             if (provider.viewStatus == ViewStatus.success)
               Text('$count ${count == 1 ? 'producto' : 'productos'}',
-                  style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+                  style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
             const SizedBox(height: 12),
             _buildContent(provider),
           ],
@@ -109,7 +110,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
             padding: EdgeInsets.symmetric(vertical: 32),
             child: Center(
               child: Text('No se encontraron productos.',
-                  style: TextStyle(fontSize: 13, color: Color(0xFF8A94A6))),
+                  style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
             ),
           );
         }
