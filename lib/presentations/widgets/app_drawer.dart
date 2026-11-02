@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/constant/app_routes.dart';
-import '../app_state.dart';
+import '../../data/models/user_model.dart';
+import '../providers/auth_provider.dart';
+
+const _admin = 'Administrador';
+const _vendedor = 'Vendedor';
 
 class _MenuEntry {
   final IconData icon;
   final String title;
   final String subtitle;
   final String route;
-  final List<UserRole> allowedRoles;
+  final List<String> allowedRoles;
 
   const _MenuEntry(
     this.icon,
@@ -30,14 +34,14 @@ class AppDrawer extends StatelessWidget {
       'Dashboard',
       'Resumen general',
       AppRoutes.dashboard,
-      [UserRole.admin, UserRole.vendedor],
+      [_admin, _vendedor],
     ),
     _MenuEntry(
       Icons.shopping_cart_outlined,
       'Historial de compras',
       'Revisa tus compras pasadas',
       AppRoutes.purchasesHistory,
-      [UserRole.admin],
+      [_admin],
     ),
 
     _MenuEntry(
@@ -45,14 +49,14 @@ class AppDrawer extends StatelessWidget {
       'Historial de ventas',
       'Revisa tus ventas pasadas',
       AppRoutes.salesHistory,
-      [UserRole.admin],
+      [_admin],
     ),
     _MenuEntry(
       Icons.sell_outlined,
       "Historial de Mis Ventas",
       "Revisa tus ventas pasadas",
       AppRoutes.salesHistory,
-      [UserRole.vendedor],
+      [_vendedor],
     ),
 
     _MenuEntry(
@@ -60,14 +64,14 @@ class AppDrawer extends StatelessWidget {
       'Inventario',
       'Gestiona tus productos y stock',
       AppRoutes.inventory,
-      [UserRole.admin, UserRole.vendedor],
+      [_admin, _vendedor],
     ),
     _MenuEntry(
       Icons.swap_vert,
       'Movimientos de inventario',
       'Consulta entradas y salidas ',
       AppRoutes.inventoryMovement,
-      [UserRole.admin, UserRole.vendedor],
+      [_admin, _vendedor],
     ),
 
     _MenuEntry(
@@ -75,7 +79,7 @@ class AppDrawer extends StatelessWidget {
       'Reportes',
       'Visualiza y analiza tu información',
       AppRoutes.report,
-      [UserRole.admin],
+      [_admin],
     ),
 
     _MenuEntry(
@@ -83,7 +87,7 @@ class AppDrawer extends StatelessWidget {
       'Logs',
       'Historial de actividades',
       AppRoutes.logs,
-      [UserRole.admin],
+      [_admin],
     ),
 
     _MenuEntry(
@@ -91,7 +95,7 @@ class AppDrawer extends StatelessWidget {
       'Usuarios',
       'Gestiona los usuarios de la app',
       AppRoutes.users,
-      [UserRole.admin],
+      [_admin],
     ),
 
     _MenuEntry(
@@ -99,12 +103,13 @@ class AppDrawer extends StatelessWidget {
       'Preferencias',
       'Configura tu aplicación',
       AppRoutes.preferences,
-      [UserRole.admin, UserRole.vendedor],
+      [_admin, _vendedor],
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<AuthProvider>().user;
     return Drawer(
       backgroundColor: Colors.white,
       width: MediaQuery.of(context).size.width * 0.72,
@@ -113,16 +118,13 @@ class AppDrawer extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _header(context),
+          _header(user),
           const SizedBox(height: 8),
           Expanded(
             child: ListView(
               padding: EdgeInsets.zero,
               children: _items
-                  .where(
-                    (e) =>
-                        e.allowedRoles.contains(context.watch<AppState>().role),
-                  )
+                  .where((e) => e.allowedRoles.contains(user?.primaryRole))
                   .map((e) => _tile(context, e, e.route == currentRoute))
                   .toList(),
             ),
@@ -143,9 +145,13 @@ class AppDrawer extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            onTap: () => Navigator.of(
-              context,
-            ).pushNamedAndRemoveUntil(AppRoutes.login, (_) => false),
+            onTap: () async {
+              final auth = context.read<AuthProvider>();
+              final navigator = Navigator.of(context);
+
+              await auth.logout();
+              navigator.pushNamedAndRemoveUntil(AppRoutes.login, (_) => false);
+            }
           ),
           const SizedBox(height: 8),
         ],
@@ -153,9 +159,7 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Widget _header(BuildContext context) {
-  final appState = context.watch<AppState>();
-
+  Widget _header(UserModel? user) {
   return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 48, 20, 22),
@@ -181,7 +185,7 @@ class AppDrawer extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  appState.userName,
+                  user?.userName ??'',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
@@ -190,7 +194,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  appState.isAdmin ? 'Administrador' : 'Vendedor',
+                  user?.primaryRole ?? '',
                   style: TextStyle(color: Colors.white70, fontSize: 12),
                 ),
               ],
