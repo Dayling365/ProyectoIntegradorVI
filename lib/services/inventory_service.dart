@@ -56,6 +56,12 @@ class InventoryService {
     return inventory.withProduct(product);
   }
 
+  String availabilityLevel(InventoryModel item) {
+    if (item.isLowStock) return 'Bajo';
+    if (item.unitsInStock <= item.minStock * 2) return 'Medio';
+    return 'Óptimo';
+  }
+
   List<String> categoriesOf(List<InventoryModel> items) =>
       _optionsOf(items.map((i) => i.categoryName));
 
