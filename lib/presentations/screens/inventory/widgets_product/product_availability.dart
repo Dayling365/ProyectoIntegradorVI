@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../models_product/product.dart';
+import '../../../../data/models/inventory_model.dart';
 
 class ProductAvailability extends StatelessWidget {
-  final Product product;
+  final InventoryModel item;
+  final String level;
 
-  const ProductAvailability({super.key, required this.product});
+  const ProductAvailability({super.key, required this.item, required this.level});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class ProductAvailability extends StatelessWidget {
                 style: const TextStyle(fontSize: 13, color: Color(0xFF1A1F36)),
                 children: [
                   const TextSpan(text: 'Nivel de disponibilidad: '),
-                  TextSpan(text: product.availabilityLevel, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: level, style: const TextStyle(fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -37,7 +38,7 @@ class ProductAvailability extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: const Color(0xFFE2E8F0)),
             ),
-            child: Text('Min. ${product.minStock}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF8A94A6))),
+            child: Text('Min. ${item.minStock}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF8A94A6))),
           ),
         ],
       ),
