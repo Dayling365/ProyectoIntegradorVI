@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constant/app_routes.dart';
 import '../../providers/inventory_provider.dart';
@@ -41,8 +42,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const Color textPrimary = Color(0xFF1A1F36);
-    const Color textSecondary = Color(0xFF8A94A6);
 
     final provider = context.watch<InventoryProvider>();
 
@@ -56,12 +55,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           children: [
             const Text(
               'Detalle de Producto',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textPrimary),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
             ),
             const SizedBox(height: 4),
             const Text(
               'Información y movimientos registrados en inventario.',
-              style: TextStyle(fontSize: 12, color: textSecondary),
+              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 20),
             _buildContent(provider),
