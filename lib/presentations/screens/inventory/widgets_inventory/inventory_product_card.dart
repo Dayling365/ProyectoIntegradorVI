@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import '../../models_product/product.dart';
+import '../../../../data/models/inventory_model.dart';
 import '../../../../core/constant/app_routes.dart';
 
 class InventoryProductCard extends StatelessWidget {
-  final Product product;
+  final InventoryModel item;
 
-  const InventoryProductCard({super.key, required this.product});
+  const InventoryProductCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
-    final badgeColor = product.inStock ? const Color(0xFF16A34A) : const Color(0xFFF59E0B);
-    final badgeBg = product.inStock ? const Color(0xFFDCFCE7) : const Color(0xFFFEF3C7);
-    final badgeText = product.inStock ? 'En stock' : 'Stock bajo';
+    final badgeColor = item.isLowStock ? const Color(0xFFF59E0B) : const Color(0xFF16A34A);
+    final badgeBg = item.isLowStock ? const Color(0xFFFEF3C7) : const Color(0xFFDCFCE7);
+    final badgeText = item.isLowStock ? 'Stock bajo' : 'En stock';
+    final subtitle = [item.categoryName, item.variantLabel]
+        .whereType<String>()
+        .where((value) => value.isNotEmpty)
+        .join(' • ');
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -31,9 +35,11 @@ class InventoryProductCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(product.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF1A1F36))),
-                    const SizedBox(height: 2),
-                    Text('${product.category} • ${product.subcategory}', style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+                    Text(item.productName, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF1A1F36))),
+                    if (subtitle.isNotEmpty) ...[
+                      const SizedBox(height: 2),
+                      Text(subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF8A94A6))),
+                    ],
                   ],
                 ),
               ),
@@ -52,11 +58,11 @@ class InventoryProductCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Text('C\$${product.price.toStringAsFixed(2)}',
+          Text('C\$${item.salePrice.toStringAsFixed(2)}',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1B2A5C))),
           const SizedBox(height: 8),
           GestureDetector(
-              onTap: () => Navigator.pushNamed(context, AppRoutes.productDetails, arguments: product),
+              onTap: () => Navigator.pushNamed(context, AppRoutes.productDetails, arguments: item.productId),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
