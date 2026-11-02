@@ -1,136 +1,96 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../app_state.dart';
-import '../../../../core/constant/app_routes.dart';
-import '../sales_data.dart';
-import '../sales_details_screen.dart';
+import 'package:sistema_libreria_app/data/models/sale_model.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_theme.dart';
 
 class SalesList extends StatelessWidget {
-  final List<SaleRecord> sales;
+  final List<SaleModel> sales;
 
-  const SalesList({super.key, required this.sales});
+  const SalesList({
+    super.key,
+    required this.sales,
+  });
+
+  String _formatMoney(double value) {
+    final parts = value.toStringAsFixed(2).split('.');
+    final whole = parts[0].replaceAllMapped(
+      RegExp(r'\B(?=(\d{3})+(?!\d))'),
+      (_) => ',',
+    );
+    return 'C\$${whole}.${parts[1]}';
+  }
+
+  String _formatDate(DateTime date) {
+    final day = date.day.toString().padLeft(2, '0');
+    final month = date.month.toString().padLeft(2, '0');
+    return '$day/$month/${date.year}';
+  }
 
   @override
   Widget build(BuildContext context) {
-    final isAdmin = context.watch<AppState>().isAdmin;
-
     return Column(
-      children: sales.map((sale) {
-        final isLast = sale == sales.last;
+      children: sales.asMap().entries.map((entry) {
+        final index = entry.key;
+        final sale = entry.value;
+        final isLast = index == sales.length - 1;
 
-        return GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              AppRoutes.saleDetails,
-              arguments: SaleDetail(
-                invoiceNumber: sale.invoiceNumber,
-                totalAmount: sale.amount,
-                date: sale.dateLabel,
-                clientName: sale.clientName,
-                seller: sale.sellerName,
-                items: sale.items,
-                subtotal: sale.subtotal,
-                total: sale.total,
-                cashGiven: sale.cashGiven,
-                changeGiven: sale.change,
-              ),
-            );
-          },
-          child: Container(
-            margin: EdgeInsets.only(bottom: isLast ? 0 : 12),
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: AppColors.borderLight),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        sale.invoiceNumber,
-                        style: AppText.title,
-                      ),
+        return Container(
+          margin: EdgeInsets.only(bottom: isLast ? 0 : 12),
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: AppColors.borderLight),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Venta #${sale.id}',
+                      style: AppText.title,
                     ),
-                    Text(
-                      sale.amount,
-                      style: AppText.titlePrimary,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Text.rich(
-                  TextSpan(
-                    style: AppText.bodySecondary,
-                    children: [
-                      const TextSpan(text: 'Cliente: '),
-                      TextSpan(
-                        text: sale.clientName,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                    ],
                   ),
-                ),
-                if (isAdmin) ...[
-                  const SizedBox(height: 4),
-                  Text.rich(
-                    TextSpan(
-                      style: AppText.bodySecondary,
-                      children: [
-                        const TextSpan(text: 'Vendedor: '),
-                        TextSpan(
-                          text: sale.sellerName,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ],
-                    ),
+                  Text(
+                    _formatMoney(sale.totalAmount),
+                    style: AppText.titlePrimary,
                   ),
                 ],
-                const SizedBox(height: 4),
-                Row(
+              ),
+              const SizedBox(height: 6),
+              Text.rich(
+                TextSpan(
+                  style: AppText.bodySecondary,
                   children: [
-                    const Icon(Icons.calendar_today_outlined, size: 12, color: AppColors.textSecondary),
-                    const SizedBox(width: 4),
-                    Text(
-                      sale.dateLabel,
-                      style:AppText.caption,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        sale.productsSummary,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.caption,
+                    const TextSpan(text: 'Cliente: '),
+                    TextSpan(
+                      text: sale.costumerTypeName ?? 'Sin tipo',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    const Text(
-                      'Ver detalle',
-                      style: AppText.captionInfo,
-                    ),
-                    const SizedBox(width: 4),
-                    const Icon(Icons.arrow_forward, size: 12, color: AppColors.accent),
                   ],
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_today_outlined,
+                    size: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    _formatDate(sale.saleDate),
+                    style: AppText.caption,
+                  ),
+                ],
+              ),
+            ],
           ),
         );
       }).toList(),
