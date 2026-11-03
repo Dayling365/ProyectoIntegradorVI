@@ -8,7 +8,6 @@ class AlertModel {
   final int unitsInStock;
   final int minStock;
 
-  // No viene en /api/alerts/stock: se completa desde /api/products (ver withProduct).
   final String? categoryName;
 
   AlertModel({

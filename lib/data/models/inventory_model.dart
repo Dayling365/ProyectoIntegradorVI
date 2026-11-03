@@ -13,7 +13,6 @@ class InventoryModel {
   final String? stockStatus;
   final int? unitsMissing;
 
-  // No vienen en /api/Inventories: se completan desde /api/Products (ver withProduct).
   final String? categoryName;
   final String? brandName;
   final String? description;

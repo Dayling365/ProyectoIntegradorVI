@@ -45,7 +45,6 @@ class ProductRepository {
       rethrow;
     }
 
-    // Este endpoint devuelve el producto directo, sin { data, meta }.
     if (response is! Map<String, dynamic>) {
       throw const ParsingException(
         'La respuesta del servidor no contiene un producto válido.',
