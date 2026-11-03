@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:sistema_libreria_app/data/models/sale_detail_model.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_theme.dart';
 
-class SaleLineItem {
-  final String name;
-  final String category;
-  final int quantity;
-  final double unitPrice;
-  final double subtotal;
-
-  const SaleLineItem(
-    this.name,
-    this.category,
-    this.quantity,
-    this.unitPrice,
-    this.subtotal,
-  );
-}
-
 class SalesItemsList extends StatelessWidget {
-  final List<SaleLineItem> items;
+  final List<SaleDetailModel> items;
 
-  const SalesItemsList({super.key, required this.items});
+  const SalesItemsList({
+    super.key,
+    required this.items,
+  });
+
+  String _dinero(double valor) => 'C\$${valor.toStringAsFixed(2)}';
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +27,19 @@ class SalesItemsList extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.receipt_long_outlined, size: 16, color: AppColors.primary),
-              const SizedBox(width: 8),
-              const Text(
-                'Ítems facturados',
-                style: AppText.subtitle,
+              const Icon(
+                Icons.receipt_long_outlined,
+                size: 16,
+                color: AppColors.primary,
               ),
+              const SizedBox(width: 8),
+              const Text('Ítems facturados', style: AppText.subtitle),
               const Spacer(),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.background,
                   borderRadius: BorderRadius.circular(20),
@@ -60,14 +54,20 @@ class SalesItemsList extends StatelessWidget {
           const SizedBox(height: 12),
           for (final item in items) ...[
             _itemRow(item),
-            if (item != items.last) const Divider(height: 20, color: AppColors.border),
+            if (item != items.last)
+              const Divider(height: 20, color: AppColors.border),
           ],
         ],
       ),
     );
   }
 
-  Widget _itemRow(SaleLineItem item) {
+  Widget _itemRow(SaleDetailModel item) {
+    final variante = [
+      item.colorName,
+      item.presentationName,
+    ].where((valor) => valor != null && valor.isNotEmpty).join(' · ');
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,25 +75,22 @@ class SalesItemsList extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                item.name,
-                style: AppText.subtitle,
-              ),
+              Text(item.productName, style: AppText.subtitle),
+              if (variante.isNotEmpty) ...[
+                const SizedBox(height: 2),
+                Text(variante, style: AppText.caption),
+              ],
               const SizedBox(height: 2),
               Text(
-                '• ${item.category}',
-                style: AppText.caption,
-              ),
-              const SizedBox(height: 2),
-              Text(
-                '${item.quantity} un. × C\$${item.unitPrice.toStringAsFixed(2)}',
+                '${item.quantity} un. × ${_dinero(item.salePrice)}',
                 style: AppText.caption,
               ),
             ],
           ),
         ),
+        const SizedBox(width: 8),
         Text(
-          'C\$${item.subtotal.toStringAsFixed(2)}',
+          _dinero(item.lineTotal),
           style: AppText.subtitle,
         ),
       ],

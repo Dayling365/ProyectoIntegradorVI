@@ -3,9 +3,13 @@ import 'package:sistema_libreria_app/data/models/sale_model.dart';
 import 'package:sistema_libreria_app/presentations/providers/purchase_provider.dart'
     show ViewStatus;
 import 'package:sistema_libreria_app/services/sale_service.dart';
+import 'package:sistema_libreria_app/data/models/sale_detail_model.dart';
 
 class SaleProvider extends ChangeNotifier {
   final SaleService _saleService;
+
+  SaleModel? _selectedSale;
+  SaleModel? get selectedSale => _selectedSale;
 
   SaleProvider(this._saleService);
 
@@ -16,6 +20,7 @@ class SaleProvider extends ChangeNotifier {
   DateTime? _startDate;
   DateTime? _endDate;
   String _sortOrder = 'newest';
+  
 
   ViewStatus _viewStatus = ViewStatus.initial;
   ViewStatus get viewStatus => _viewStatus;
@@ -35,6 +40,14 @@ class SaleProvider extends ChangeNotifier {
   bool get hasSales => _filteredSales.isNotEmpty;
   bool get isLoading => _viewStatus == ViewStatus.loading;
 
+  List<SaleDetailModel> _saleDetails = [];
+  List<SaleDetailModel> get saleDetails => List.unmodifiable(_saleDetails);
+
+  bool _isLoadingSaleDetails = false;
+  bool get isLoadingSaleDetails => _isLoadingSaleDetails;
+
+  String? _saleDetailsError;
+  String? get saleDetailsError => _saleDetailsError;
 
 
   Map<int, String> get customerTypes {
@@ -70,6 +83,39 @@ class SaleProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+  Future<SaleModel?> getSaleDetailsById(int id) async {
+    _selectedSale = null;
+    _errorMessage = null;
+    _viewStatus = ViewStatus.loading;
+    notifyListeners();
+
+    try {
+      _selectedSale = await _saleService.getSaleDetailsById(id);
+      _viewStatus = ViewStatus.success;
+      return _selectedSale;
+    } catch (e) {
+      _errorMessage = 'No se pudo cargar el detalle: $e';
+      _viewStatus = ViewStatus.error;
+      return null;
+    } finally {
+      notifyListeners();
+    }
+  }
+  Future<void> fetchSaleDetails(int saleId) async {
+  _isLoadingSaleDetails = true;
+  _saleDetailsError = null;
+  _saleDetails = [];
+  notifyListeners();
+
+  try {
+    _saleDetails = await _saleService.getSaleDetails(saleId);
+  } catch (e) {
+    _saleDetailsError = 'No se pudo cargar el detalle: $e';
+  } finally {
+    _isLoadingSaleDetails = false;
+    notifyListeners();
+  }
+}
 
   void setCustomerType(int? id){
     _customerTypeId = id;

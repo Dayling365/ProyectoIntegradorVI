@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sistema_libreria_app/core/constant/app_routes.dart';
 import 'package:sistema_libreria_app/data/models/sale_model.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_theme.dart';
@@ -11,19 +12,12 @@ class SalesList extends StatelessWidget {
     required this.sales,
   });
 
-  String _formatMoney(double value) {
-    final parts = value.toStringAsFixed(2).split('.');
-    final whole = parts[0].replaceAllMapped(
-      RegExp(r'\B(?=(\d{3})+(?!\d))'),
-      (_) => ',',
-    );
-    return 'C\$${whole}.${parts[1]}';
-  }
+  String _dinero(double valor) => 'C\$${valor.toStringAsFixed(2)}';
 
-  String _formatDate(DateTime date) {
-    final day = date.day.toString().padLeft(2, '0');
-    final month = date.month.toString().padLeft(2, '0');
-    return '$day/$month/${date.year}';
+  String _fecha(DateTime fecha) {
+    final dia = fecha.day.toString().padLeft(2, '0');
+    final mes = fecha.month.toString().padLeft(2, '0');
+    return '$dia/$mes/${fecha.year}';
   }
 
   @override
@@ -32,65 +26,71 @@ class SalesList extends StatelessWidget {
       children: sales.asMap().entries.map((entry) {
         final index = entry.key;
         final sale = entry.value;
-        final isLast = index == sales.length - 1;
 
-        return Container(
-          margin: EdgeInsets.only(bottom: isLast ? 0 : 12),
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.borderLight),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Venta #${sale.id}',
-                      style: AppText.title,
-                    ),
-                  ),
-                  Text(
-                    _formatMoney(sale.totalAmount),
-                    style: AppText.titlePrimary,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6),
-              Text.rich(
-                TextSpan(
-                  style: AppText.bodySecondary,
+        return InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              AppRoutes.saleDetails,
+              arguments: sale.id,
+            );
+          },
+          child: Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(
+              bottom: index == sales.length - 1 ? 0 : 12,
+            ),
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.borderLight),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    const TextSpan(text: 'Cliente: '),
-                    TextSpan(
-                      text: sale.costumerTypeName ?? 'Sin tipo',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
+                    Expanded(
+                      child: Text(
+                        'Venta #${sale.id}',
+                        style: AppText.title,
                       ),
+                    ),
+                    Text(
+                      _dinero(sale.totalAmount),
+                      style: AppText.titlePrimary,
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.calendar_today_outlined,
-                    size: 12,
-                    color: AppColors.textSecondary,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    _formatDate(sale.saleDate),
-                    style: AppText.caption,
-                  ),
-                ],
-              ),
-            ],
+                const SizedBox(height: 6),
+                Text(
+                  'Cliente: ${sale.costumerTypeName ?? 'Sin tipo'}',
+                  style: AppText.bodySecondary,
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.calendar_today_outlined,
+                      size: 12,
+                      color: AppColors.textSecondary,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(_fecha(sale.saleDate), style: AppText.caption),
+                    const Spacer(),
+                    const Text('Ver detalle', style: AppText.captionInfo),
+                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.arrow_forward,
+                      size: 12,
+                      color: AppColors.accent,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       }).toList(),
