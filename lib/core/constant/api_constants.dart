@@ -16,6 +16,7 @@ class ApiConstants {
   static const String categories = '/categories';
   static const String brands = '/brands';
   static const String products = '/products';
+  static String productById(int id) => '$products/$id';
   static const String suppliers = '/suppliers';
   static const String customers = '/customers';
   static const String purchases = '/purchases';
@@ -25,7 +26,10 @@ class ApiConstants {
   static const String salesDetails = '/sales/details';
   static const String salesByDateRange = '/sales/bydaterange';
   static const String inventoryMovements = '/inventorymovements';
-  static const String inventory = '/inventory';
+  static const String inventory = '/inventories';
+  static String inventoryByProductId(int id) => '$inventory/product/$id';
+  static const String stockAlerts = '/alerts/stock';
+  static const String logs = '/logs';
 
   static const Duration timeoutDuration = Duration(seconds: 30);
 }
