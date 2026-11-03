@@ -80,15 +80,18 @@ class LowStockSection extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(AppRoutes.inventory);
+                  Navigator.of(context).pushNamed(
+                    AppRoutes.productDetails,
+                    arguments: item.productId,
+                  );
                 },
               ),
             ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(AppRoutes.inventory);
+              Navigator.of(context).pushNamed(AppRoutes.alertStock);
             },
-            child: const Text('Ver inventario'),
+            child: const Text('Ver todas las alertas'),
           ),
         ],
       ),
