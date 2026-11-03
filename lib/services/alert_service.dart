@@ -12,7 +12,6 @@ class AlertService {
 
   static const int _productsPageSize = 100;
 
-  /// Pide UNA página de alertas a la API y le agrega la categoría de cada producto.
   Future<PagedResponse<AlertModel>> getAlertsPage({
     required int pageNumber,
     required int pageSize,

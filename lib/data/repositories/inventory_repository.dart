@@ -45,7 +45,6 @@ class InventoryRepository {
       rethrow;
     }
 
-    // Este endpoint devuelve el inventario directo, sin { data, meta }.
     if (response is! Map<String, dynamic>) {
       throw const ParsingException(
         'La respuesta del servidor no contiene un inventario válido.',

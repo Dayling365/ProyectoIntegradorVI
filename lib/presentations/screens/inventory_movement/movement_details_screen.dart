@@ -72,7 +72,6 @@ class MovementDetailsScreen extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            // Encabezado
             const Text(
               'Detalle de Movimiento',
               style: TextStyle(
@@ -105,7 +104,6 @@ class MovementDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // N° de registro + badge de tipo
                   Row(
                     children: [
                       Expanded(

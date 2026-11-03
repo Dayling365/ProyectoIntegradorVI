@@ -22,7 +22,6 @@ class InventoryService {
   static const List<String> statuses = [all, statusInStock, statusLowStock];
   static const List<String> sortOptions = [sortByName, sortByPriceAsc, sortByPriceDesc];
 
-  /// Descarga todas las páginas de inventario y de productos, y las une por productId.
   Future<List<InventoryModel>> getAllInventory() async {
     final results = await Future.wait([
       PagedResponse.fetchAll<InventoryModel>(
@@ -40,7 +39,6 @@ class InventoryService {
     return inventory.map((item) => item.withProduct(productsById[item.productId])).toList();
   }
 
-  /// Trae el producto y su inventario al mismo tiempo, y los une.
   Future<InventoryModel> getProductDetail(int productId) async {
     if (productId <= 0) {
       throw ArgumentError('El identificador del producto debe ser mayor a 0.');
@@ -119,7 +117,6 @@ class InventoryService {
     return result;
   }
 
-  /// Corta la lista ya filtrada en la página pedida. Si la página no existe, usa la más cercana.
   PagedResponse<InventoryModel> paginate(
     List<InventoryModel> items, {
     required int pageNumber,

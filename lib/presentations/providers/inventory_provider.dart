@@ -40,7 +40,6 @@ class InventoryProvider extends ChangeNotifier {
   int get totalRecords => _page.totalRecords;
   bool get isLoading => _viewStatus == ViewStatus.loading;
 
-  // Estado propio del detalle, para que un error aquí no cambie la pantalla de la lista.
   InventoryModel? _selectedItem;
   InventoryModel? get selectedItem => _selectedItem;
 
