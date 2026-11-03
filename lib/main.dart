@@ -3,7 +3,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:sistema_libreria_app/core/di/injection.dart';
 import 'package:sistema_libreria_app/presentations/app_state.dart';
+import 'package:sistema_libreria_app/presentations/providers/alert_provider.dart';
 import 'package:sistema_libreria_app/presentations/providers/auth_provider.dart';
+import 'package:sistema_libreria_app/presentations/providers/dashboard_provider.dart';
+import 'package:sistema_libreria_app/presentations/providers/inventory_movement_provider.dart';
+import 'package:sistema_libreria_app/presentations/providers/inventory_provider.dart';
+import 'package:sistema_libreria_app/presentations/providers/logs_provider.dart';
+import 'package:sistema_libreria_app/presentations/providers/purchase_provider.dart';
+import 'package:sistema_libreria_app/presentations/providers/sale_provider.dart';
 import 'package:sistema_libreria_app/presentations/providers/user_provider.dart';
 import 'core/constant/app_routes.dart';
 import 'presentations/screens/dashboard/dashboard_screen.dart';
@@ -33,6 +40,13 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => AppState()),
         ChangeNotifierProvider(create: (_) => getIt<AuthProvider>()),
         ChangeNotifierProvider(create: (_) => getIt<UserProvider>()),
+        ChangeNotifierProvider(create: (_) => getIt<InventoryProvider>()),
+        ChangeNotifierProvider(create: (_) => getIt<AlertProvider>()),
+        ChangeNotifierProvider(create: (_) => getIt<DashboardProvider>()),
+        ChangeNotifierProvider(create: (_) => getIt<PurchaseProvider>()),
+        ChangeNotifierProvider(create: (_) => getIt<InventoryMovementProvider>()),
+        ChangeNotifierProvider(create: (_) => getIt<LogsProvider>()),
+        ChangeNotifierProvider(create: (_) => getIt<SaleProvider>()),
       ],
       child: const MyApp(),
     ),
