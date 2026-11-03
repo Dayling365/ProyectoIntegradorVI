@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../../../core/constant/app_routes.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/app_scaffold.dart';
-import 'widgets/category_sales_section.dart';
 import 'widgets/low_stock_section.dart';
 import 'widgets/stat_card.dart';
 import '../../theme/app_colors.dart';
@@ -32,17 +31,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final user = context.watch<AuthProvider>().user;
     final isAdmin = user?.isAdmin ?? false;
     final dashboard = context.watch<DashboardProvider>();
-    final error = dashboard?.errorMessage;
+    final error = dashboard.errorMessage;
+    
 
-    final String purchasesValue;
-    if (dashboard == null) {
-      purchasesValue = '18';
-    } else if (dashboard.isLoading) {
-      purchasesValue = '...';
-    } else {
-      purchasesValue = dashboard.purchaseThisMonth?.toString() ?? '—';
-    }
-
+    final purchasesValue = dashboard.isLoading
+        ? 'Cargando...'
+        : dashboard.purchaseThisMonth?.toString() ?? '-';
+    final salesValue = dashboard.isLoading
+    ? 'Cargando...'
+    : dashboard.salesTodayTotal == null
+        ? '—'
+        : 'C\$${dashboard.salesTodayTotal!.toStringAsFixed(2)}';
+    final salesCountValue = dashboard.isLoading
+      ? 'Cargando...'
+      : dashboard.salesTodayCount?.toString() ?? '—';
+    final inventoryValue = dashboard.isLoading
+    ? 'Cargando...'
+    : dashboard.unitsInInventory?.toString() ?? '—';
 
     return AppScaffold(
       currentRoute: AppRoutes.dashboard,
@@ -97,18 +102,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
               crossAxisSpacing: 12,
               childAspectRatio: 0.95,
               children: [
-                const StatCard(
+                StatCard(
                   icon: Icons.point_of_sale,
                   iconColor: AppColors.info,
                   label: 'Ventas del día',
-                  value: 'C\$124,500.00',
+                  value: salesValue,
                 ),
 
-                const StatCard(
+                StatCard(
                   icon: Icons.inventory_2,
                   iconColor: AppColors.warning,
                   label: 'Productos en inventario',
-                  value: '1,245',
+                  value: inventoryValue,
                 ),
                 
                 if (isAdmin) 
@@ -116,14 +121,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     icon: Icons.local_offer,
                     iconColor: AppColors.success,
                     label: 'Compras del mes',
-                    value: 'purchasesValue',
+                    value: purchasesValue,
                   ),
 
-                const StatCard(
-                  icon: Icons.people_outline,
+                StatCard(
+                  icon: Icons.receipt_long,
                   iconColor: AppColors.info,
-                  label: 'Clientes activos',
-                  value: '156',
+                  label: 'Ventas registradas hoy',
+                  value: salesCountValue,
                 ),
               ],
             ),
@@ -136,11 +141,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
             const SizedBox(height: 20),
 
-            const LowStockSection(),
+            LowStockSection(
+              items: dashboard.inventoryItems
+                  .where((item) => item.isLowStock || item.unitsInStock <= item.minStock)
+                  .toList(),
+              isLoading: dashboard.isLoading,
+            ),
 
-            const SizedBox(height: 20),
-
-            const CategorySalesSection(),
           ],
         ),
       ),
