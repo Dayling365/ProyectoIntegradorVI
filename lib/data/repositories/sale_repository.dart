@@ -2,6 +2,7 @@ import 'package:sistema_libreria_app/core/constant/api_constants.dart';
 import 'package:sistema_libreria_app/core/errors/app_exception.dart';
 import 'package:sistema_libreria_app/core/network/api_client.dart';
 import 'package:sistema_libreria_app/data/models/sale_model.dart';
+import 'package:sistema_libreria_app/data/models/sale_detail_model.dart';
 
 class SaleRepository {
   final ApiClient _apiClient;
@@ -113,6 +114,33 @@ class SaleRepository {
     }
 
     return SaleModel.fromJson(data);
+  }
+
+  Future<List<SaleDetailModel>> getSaleDetails(int saleId) async {
+    final response = await _apiClient.get('$_endpoint/details/$saleId');
+
+    if (response == null){
+      return [];
+    }
+
+    dynamic data = response;
+
+    if (response is Map<String, dynamic>){
+      data = response['data'] ?? response['Data'];
+    }
+
+    if (data is! List){
+      throw const ParsingException(
+        'La respuesta del servidor no contiene una lista de detalle valida.',
+
+      );
+    }
+
+    return data
+      .whereType<Map<String, dynamic>>()
+      .map(SaleDetailModel.fromJson)
+      .toList();
+
   }
 
   Future<List<SaleModel>> getSalesByDateRange(
