@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/app_colors.dart';
 
 class InventorySearchBar extends StatelessWidget {
   final TextEditingController controller;
@@ -9,20 +10,20 @@ class InventorySearchBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Row(
         children: [
-          const Icon(Icons.search, color: Color(0xFF8A94A6), size: 20),
+          const Icon(Icons.search, color: AppColors.textSecondary, size: 20),
           const SizedBox(width: 8),
           Expanded(
             child: TextField(
               controller: controller,
               decoration: const InputDecoration(
-                hintText: 'Buscar producto, código o descripción...',
-                hintStyle: TextStyle(fontSize: 13, color: Color(0xFF8A94A6)),
+                hintText: 'Buscar producto, marca o descripción...',
+                hintStyle: TextStyle(fontSize: 13, color: AppColors.textSecondary),
                 border: InputBorder.none,
                 isDense: true,
                 contentPadding: EdgeInsets.symmetric(vertical: 14),

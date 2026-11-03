@@ -1,63 +1,121 @@
 import 'package:flutter/material.dart';
+import 'package:sistema_libreria_app/data/models/supplier_model.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_theme.dart';
 
 class PurchaseFilters extends StatefulWidget {
-  final ValueChanged<String> onProveedorChanged;
+  final List<SupplierModel> proveedores;
+  final int? proveedorSeleccionado;
+  final DateTime? fechaInicio;
+  final DateTime? fechaFin;
+  final String ordenSeleccionado;
 
-  const PurchaseFilters({super.key, required this.onProveedorChanged});
+  final ValueChanged<String> onSearchChanged;
+  final ValueChanged<int?> onProveedorChanged;
+  final ValueChanged<DateTime?> onStartDateChanged;
+  final ValueChanged<DateTime?> onEndDateChanged;
+  final ValueChanged<String> onSortChanged;
+
+  const PurchaseFilters({
+    super.key,
+    required this.proveedores,
+    required this.proveedorSeleccionado,
+    required this.fechaInicio,
+    required this.fechaFin,
+    required this.ordenSeleccionado,
+    required this.onSearchChanged,
+    required this.onProveedorChanged,
+    required this.onStartDateChanged,
+    required this.onEndDateChanged,
+    required this.onSortChanged,
+  });
 
   @override
   State<PurchaseFilters> createState() => _PurchaseFiltersState();
 }
 
 class _PurchaseFiltersState extends State<PurchaseFilters> {
-  DateTime? fechaInicio;
-  DateTime? fechaFin;
-    String proveedorSeleccionado = 'Todos';
-
-  final List<String> proveedores = [
-    'Todos',
-    'Distribuidora Faber S.A.',
-    'Útiles y Tintas del Pacífico',
-    'Editorial Cervantes',
-  ];
-
   String _formatearFecha(DateTime? fecha, String textoDefault) {
     if (fecha == null) return textoDefault;
-    return '${fecha.day.toString().padLeft(2, '0')}/${fecha.month.toString().padLeft(2, '0')}/${fecha.year}';
+    return '${fecha.day.toString().padLeft(2, '0')}/''${fecha.month.toString().padLeft(2, '0')}/${fecha.year}';
   }
 
   Future<void> _seleccionarFecha(bool esInicio) async {
-    final DateTime? seleccionada = await showDatePicker(
+    final fechaActual =
+        esInicio ? widget.fechaInicio : widget.fechaFin;
+
+    final seleccionada = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      initialDate: fechaActual ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2060),
     );
 
-    if (seleccionada != null) {
-      setState(() {
-        if (esInicio) {
-          fechaInicio = seleccionada;
-        } else {
-          fechaFin = seleccionada;
-        }
-      });
+    if (seleccionada == null) return;
+
+    if (esInicio &&
+        widget.fechaFin != null &&
+        seleccionada.isAfter(widget.fechaFin!)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'La fecha inicial no puede ser posterior a la fecha final.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    if (!esInicio &&
+        widget.fechaInicio != null &&
+        seleccionada.isBefore(widget.fechaInicio!)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'La fecha final no puede ser anterior a la fecha inicial.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    if (esInicio) {
+      widget.onStartDateChanged(seleccionada);
+    } else {
+      widget.onEndDateChanged(seleccionada);
     }
   }
 
-    void _seleccionarProveedor(String proveedor) {
-    setState(() {
-      proveedorSeleccionado = proveedor;
-    });
-    widget.onProveedorChanged(proveedor);
+  String _nombreProveedorSeleccionado() {
+    if (widget.proveedorSeleccionado == null) {
+      return 'Todos';
+    }
+
+    for (final proveedor in widget.proveedores) {
+      if (proveedor.id == widget.proveedorSeleccionado) {
+        return proveedor.supplierName;
+      }
+    }
+
+    return 'Todos';
   }
 
+  String _nombreOrdenSeleccionado() {
+    switch (widget.ordenSeleccionado) {
+      case 'oldest':
+        return 'Más antiguas';
+      case 'amountAsc':
+        return 'Menor total';
+      case 'amountDesc':
+        return 'Mayor total';
+      case 'newest':
+      default:
+        return 'Más recientes';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -85,6 +143,7 @@ class _PurchaseFiltersState extends State<PurchaseFilters> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextField(
+                      onChanged: widget.onSearchChanged,
                       decoration: const InputDecoration(
                         hintText: 'Buscar',
                         hintStyle: AppText.caption,
@@ -106,7 +165,7 @@ class _PurchaseFiltersState extends State<PurchaseFilters> {
                     onTap: () => _seleccionarFecha(true),
                     child: _filtro(
                       Icons.calendar_today_outlined,
-                      _formatearFecha(fechaInicio, '01/10/2026'),
+                      _formatearFecha(widget.fechaInicio, 'Fecha inicial'),
                     ),
                   ),
                 ),
@@ -116,7 +175,7 @@ class _PurchaseFiltersState extends State<PurchaseFilters> {
                     onTap: () => _seleccionarFecha(false),
                     child: _filtro(
                       Icons.calendar_today_outlined,
-                      _formatearFecha(fechaFin, '31/10/2026'),
+                      _formatearFecha(widget.fechaFin, 'Fecha final'),
                     ),
                   ),
                 ),
@@ -128,33 +187,61 @@ class _PurchaseFiltersState extends State<PurchaseFilters> {
             Row(
               children: [
                 Expanded(
-                  child: PopupMenuButton<String>(
-                    onSelected: _seleccionarProveedor,
-                    itemBuilder: (context) => proveedores
-                        .map(
-                          (proveedor) => PopupMenuItem<String>(
-                            value: proveedor,
-                            child: Text(
-                              proveedor,
-                              style: AppText.body,
-                            ),
+                  child: PopupMenuButton<int>(
+                    onSelected: (id) {
+                      widget.onProveedorChanged(id == 0 ? null : id);
+                    },
+                    itemBuilder: (context) => [
+                      const PopupMenuItem<int>(
+                        value: 0,
+                        child: Text('Todos', style: AppText.body),
+                      ),
+                      ...widget.proveedores.map(
+                        (proveedor) => PopupMenuItem<int>(
+                          value: proveedor.id,
+                          child: Text(
+                            proveedor.supplierName,
+                            style: AppText.body,
                           ),
-                        )
-                        .toList(),
+                        ),
+                      ),
+                    ],
                     child: _filtro(
                       Icons.local_shipping_outlined,
                       'Proveedor',
-                      subtitulo: proveedorSeleccionado,
-                      arrow: true,)
+                      subtitulo: _nombreProveedorSeleccionado(),
+                      arrow: true,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: _filtro(
-                    Icons.swap_vert,
-                    'Ordenar por',
-                    subtitulo: 'Más recientes',
-                    arrow: true,
+                  child: PopupMenuButton<String>(
+                    onSelected: widget.onSortChanged,
+                    itemBuilder: (context) => const [
+                      PopupMenuItem<String>(
+                        value: 'newest',
+                        child: Text('Más recientes', style: AppText.body),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'oldest',
+                        child: Text('Más antiguas', style: AppText.body),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'amountAsc',
+                        child: Text('Menor total', style: AppText.body),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'amountDesc',
+                        child: Text('Mayor total', style: AppText.body),
+                      ),
+                    ],
+                    child: _filtro(
+                      Icons.swap_vert,
+                      'Ordenar por',
+                      subtitulo: _nombreOrdenSeleccionado(),
+                      arrow: true,
+                    ),
                   ),
                 ),
               ],
@@ -206,6 +293,7 @@ class _PurchaseFiltersState extends State<PurchaseFilters> {
                       Text(
                         subtitulo,
                         style: AppText.micro,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

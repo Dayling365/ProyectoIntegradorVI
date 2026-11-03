@@ -36,6 +36,9 @@ class AuthService {
   Future<UserModel> getCurrentUser() async {
     return await _authRepository.currentUser();
   } 
+  Future<void> logout() async {
+    await _tokenRepository.removeToken();
+  }
   
 
 }

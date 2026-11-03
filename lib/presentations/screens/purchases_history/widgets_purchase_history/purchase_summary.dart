@@ -4,33 +4,34 @@ import '../../../theme/app_text_theme.dart';
 
 class PurchaseSummary extends StatelessWidget {
   final int total;
+  final VoidCallback onClearFilters;
 
-  const PurchaseSummary({super.key, required this.total});
+  const PurchaseSummary({super.key, required this.total, required this.onClearFilters,});
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: const [
-            Icon(
-              Icons.close,
-              size: 16,
-              color: AppColors.primary,
-            ),
-            SizedBox(width: 4),
-            Text(
-              'Limpiar filtros',
-              style: AppText.bodyStrongPrimary,
-            ),
-          ],
+        InkWell(
+          onTap: onClearFilters,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Icon(
+                Icons.close,
+                size: 16,
+                color: AppColors.primary,
+              ),
+              SizedBox(width: 4),
+              Text(
+                'Limpiar filtros',
+                style: AppText.bodyStrongPrimary,
+              ),
+            ],
+          ),
         ),
-
         const SizedBox(height: 4),
-
         Text(
           '$total compras registradas',
           style: AppText.bodySecondary,
@@ -39,5 +40,3 @@ class PurchaseSummary extends StatelessWidget {
     );
   }
 }
-
-

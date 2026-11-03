@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sistema_libreria_app/presentations/app_state.dart';
 import '../../../core/constant/app_routes.dart';
+import '../../providers/purchase_provider.dart' show ViewStatus;
+import '../../providers/sale_provider.dart';
 import '../../widgets/app_scaffold.dart';
-import 'sales_data.dart';
 import 'widgets_sales_history/sales_filters.dart';
 import 'widgets_sales_history/sales_list.dart';
 import 'widgets_sales_history/sales_pagination.dart';
@@ -18,78 +18,31 @@ class SalesHistoryScreen extends StatefulWidget {
 }
 
 class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
-  static const int _perPage = 10;
-
+  static const int _itemsperPage = 10;
   int _currentPage = 1;
-  DateTime _from = DateTime(2026, 10, 1);
-  DateTime _to = DateTime(2026, 10, 31);
-  String _client = 'Todos';
 
-  List<SaleRecord> _filtered(bool isAdmin, String userName) {
-    final fromDay = DateTime(_from.year, _from.month, _from.day);
-    final toDay = DateTime(_to.year, _to.month, _to.day, 23, 59, 59);
-
-    return kSales.where((s) {
-      if (!isAdmin && s.sellerName != userName) return false;
-      if (_client != 'Todos' && s.clientName != _client) return false;
-      if (s.date.isBefore(fromDay) || s.date.isAfter(toDay)) return false;
-      return true;
-    }).toList();
-  }
-
-  Future<void> _pickDate({required bool isFrom}) async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: isFrom ? _from : _to,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
-    );
-    if (picked == null || !mounted) return;
-
-    if (isFrom && picked.isAfter(_to)) {
-      _showError('La fecha inicial no puede ser mayor que la final.');
-      return;
-    }
-    if (!isFrom && picked.isBefore(_from)) {
-      _showError('La fecha final no puede ser menor que la inicial.');
-      return;
-    }
-
-    setState(() {
-      if (isFrom) {
-        _from = picked;
-      } else {
-        _to = picked;
-      }
-      _currentPage = 1;
-    });
-  }
-
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: AppColors.error),
-    );
-  }
-
-  void _clearFilters() {
-    setState(() {
-      _from = DateTime(2026, 10, 1);
-      _to = DateTime(2026, 10, 31);
-      _client = 'Todos';
-      _currentPage = 1;
+ @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<SaleProvider>().fetchSales();
     });
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final appState = context.watch<AppState>();
-    final isAdmin = appState.isAdmin;
+    final provider = context.watch<SaleProvider>();
+    final filteredSales = provider.filteredSales;
 
-    final filtered = _filtered(isAdmin, appState.userName);
-    final totalPages = filtered.isEmpty ? 1 : (filtered.length / _perPage).ceil();
-    final page = _currentPage > totalPages ? totalPages : _currentPage;
-    final pageItems = filtered.skip((page - 1) * _perPage).take(_perPage).toList();
+    final totalPages = filteredSales.isEmpty
+        ? 1
+        : (filteredSales.length / _itemsperPage).ceil();
+    final safePage = _currentPage > totalPages ? totalPages : _currentPage;
+    final pageItems = filteredSales
+        .skip((safePage - 1) * _itemsperPage)
+        .take(_itemsperPage)
+        .toList();
 
     return AppScaffold(
       currentRoute: AppRoutes.salesHistory,
@@ -98,75 +51,120 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              isAdmin ? 'Historial de Ventas' : 'Mis Ventas Realizadas',
+            const Text(
+              'Historial de Ventas',
               style: AppText.heading,
             ),
             const SizedBox(height: 4),
-            Text(
-              isAdmin
-                  ? 'Registro cronológico de facturas y ventas realizadas.'
-                  : 'Registro de facturas y cobros emitidos por ti.',
+            const Text(
+              'Registro cronológico de facturas y ventas realizadas.',
               style: AppText.bodySecondary,
             ),
-            const SizedBox(height: 16),
 
             SalesFilters(
-              dateFrom: _from,
-              dateTo: _to,
-              onPickFrom: () => _pickDate(isFrom: true),
-              onPickTo: () => _pickDate(isFrom: false),
-              selectedClient: _client,
-              onClientChanged: (c) => setState(() {
-                _client = c;
-                _currentPage = 1;
-              }),
-              onClear: _clearFilters,
+              tiposCliente: provider.customerTypes,
+              tipoClienteSeleccionado: provider.customerTypeId,
+              fechaInicio: provider.startDate,
+              fechaFin: provider.endDate,
+              ordenSeleccionado: provider.sortOrder,
+              onSearchChanged: (texto) {
+                provider.searchSales(texto);
+                setState(() => _currentPage = 1);
+              },
+              onTipoClienteChanged: (id) {
+                provider.setCustomerType(id);
+                setState(() => _currentPage = 1);
+              },
+              onStartDateChanged: (fecha) {
+                provider.setDateRange(fecha, provider.endDate);
+                setState(() => _currentPage = 1);
+              },
+              onEndDateChanged: (fecha) {
+                provider.setDateRange(provider.startDate, fecha);
+                setState(() => _currentPage = 1);
+              },
+              onSortChanged: (orden) {
+                provider.setSortOrder(orden);
+                setState(() => _currentPage = 1);
+              },
+              onClearFilters: () {
+                provider.resetFilters();
+                setState(() => _currentPage = 1);
+              },
             ),
-
             const SizedBox(height: 16),
-
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '${filtered.length} ventas registradas',
-                style: AppText.caption,
-              ),
+            InkWell(
+              onTap: () {
+                provider.resetFilters();
+                setState(() => _currentPage = 1);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(Icons.close, size: 16, color: AppColors.primary),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Limpiar filtros',
+                    style: AppText.bodyStrongPrimary,
+                  ),
+                ]
+              )
             ),
 
-            const SizedBox(height: 12),
-
-            if (filtered.isEmpty)
+            const SizedBox(height: 4),
+            Text(
+              '${filteredSales.length} ventas registradas',
+              style: AppText.bodySecondary,
+            ),
+            const SizedBox(height: 20),
+            if (provider.isLoading && provider.sales.isEmpty)
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 32),
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            else if (provider.viewStatus == ViewStatus.error &&
+                provider.sales.isEmpty)
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.border),
+                ),
+                child: Text(
+                  provider.errorMessage ?? 'No se pudieron cargar las ventas.',
+                  style: AppText.bodySecondary,
+                ),
+              )
+            else if (pageItems.isEmpty)
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 32),
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(color: AppColors.borderLight),
                 ),
-                child: const Column(
-                  children: [
-                    Icon(Icons.search_off, size: 36, color: AppColors.textSecondary),
-                    SizedBox(height: 8),
-                    Text(
-                      'No se encontraron ventas.',
-                      textAlign: TextAlign.center,
-                      style: AppText.bodySecondary,
-                    ),
-                  ],
+                child: const Center(
+                  child: Text(
+                    'No se encontraron ventas.',
+                    style: AppText.bodySecondary,
+                  ),
                 ),
               )
             else
               SalesList(sales: pageItems),
-
-            const SizedBox(height: 16),
-
-            if (filtered.isNotEmpty)
+            const SizedBox(height: 20),
+            if (filteredSales.isNotEmpty)
               SalesPagination(
-                currentPage: page,
+                currentPage: safePage,
                 totalPages: totalPages,
-                onPageChanged: (p) => setState(() => _currentPage = p),
+                onPageChanged: (pagina) {
+                  setState(() => _currentPage = pagina);
+                },
               ),
           ],
         ),
